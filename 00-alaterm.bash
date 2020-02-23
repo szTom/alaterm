@@ -1,5 +1,6 @@
 #!/bin/bash
-# Part of the alaterm project, https://github.com/cargocultprog/alaterm
+# Part of the alaterm project, https://github.com/cargocultprog/alaterm/
+# This file is: https://raw.githubusercontent.com/cargocultprog/alaterm/master/00-alaterm.bash
 declare versionID=1.0.1
 # Usage within Termux home on selected Android devices:
 # bash alaterm.bash action
@@ -82,10 +83,11 @@ if [ "$?" -ne 0 ] ; then
 	exit 1
 fi
 
-# If necessary, download the component scripts:
+# If necessary, download the component scripts to the current directory:
+mainurl="https://raw.githubusercontent.com/cargocultprog/alaterm/master"
 for nn in 01 02 03 04 05 06 07 08 09 10 11 12 13 ; do
 	if [ ! -r "$nn-alaterm.bash" ] ;then
-		wget https://github.com/cargocultprog/alaterm/raw/$nn-alaterm.bash
+		wget "$mainurl/$nn-alaterm.bash"
 	fi
 done
 
