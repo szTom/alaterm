@@ -326,6 +326,7 @@ if [ "$nextPart" -eq 7 ] ; then
 	create_banmenuitemsHook
 	create_mimeappslistHook
 	cd "$archTop"
+	echo "Almost done..."
 	let nextPart=8
 	echo -e "let nextPart=8" >> status
 fi
