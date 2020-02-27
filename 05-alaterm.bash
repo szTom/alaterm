@@ -143,17 +143,24 @@ if [ "$removedUseless" != "yes" ] ; then
 	if [ "$CPUABI" = "$CPUABI7" ] ; then
 		pacman -Rc linux-armv7 linux-firmware --noconfirm >/dev/null 2>&1
 		sleep .5
-		sed -i 's/#IgnorePkg.*/IgnorePkg = linux-armv7 linux-firmware/g' /etc/pacman.conf
+		sed -i 's/^#IgnorePkg.*/IgnorePkg = linux-armv7 linux-firmware/g' /etc/pacman.conf
 	fi
 	if [ "$CPUABI" = "$CPUABI8" ] ; then
 		pacman -Rc linux-aarch64 linux-firmware --noconfirm >/dev/null 2>&1
 		sleep .5
-		sed -i 's/#IgnorePkg.*/IgnorePkg = linux-aarch64 linux-firmware/g' /etc/pacman.conf
+		sed -i 's/^#IgnorePkg.*/IgnorePkg = linux-aarch64 linux-firmware/g' /etc/pacman.conf
 	fi
 	pacman -Qdtq | pacman -Rc - --noconfirm >/dev/null 2>&1 # Autoremoves orphan stuff.
 	sleep .5
 	pacman -Qdtq | pacman -Rc - --noconfirm >/dev/null 2>&1 # Yes, again.
 	sleep .5
+	if [ "$CPUABI" = "$CPUABI7" ] ; then
+		sed -i 's/^#IgnorePkg.*/IgnorePkg = linux-armv7 linux-firmware/g' /etc/pacman.conf
+	fi
+	if [ "$CPUABI" = "$CPUABI8" ] ; then
+		sed -i 's/^#IgnorePkg.*/IgnorePkg = linux-aarch64 linux-firmware/g' /etc/pacman.conf
+	fi
+	sleep .2
 	rm -r -f /boot/*
 	rm -r -f /usr/lib/firmware
 	rm -r -f /usr/lib/modules
@@ -360,8 +367,9 @@ if [ "$nextPart" -eq 5 ] ; then
 	echo "unset LD_PRELOAD" > "$HOME/prsTmp"
 	echo "exec $prsPre" >> "$HOME/prsTmp" # Termux home, not alaterm /home.
 	bash "$HOME/prsTmp"
-	if [ "$?" -ne 0 ] ; then
-		echo -e "$PROBLEM Code $?. The alaterm pre-configure was interrupted."
+	ecodeb="$?"
+	if [ "$ecodeb" -ne 0 ] ; then
+		echo -e "$PROBLEM Code $ecodeb. The alaterm pre-configure was interrupted."
 		echo "Poor Internet connection, or server maintenance."
 		echo "Wait awhile, then try again. Script resumes where it left off."
 		rm -f "$HOME/prsTmp"
