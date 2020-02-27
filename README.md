@@ -28,7 +28,7 @@ The script is written for the benefit of those who have little or no knowledge o
 ```
 3. Allow Termux permission to access files in the shared areas of your device. This will allow Termux, and alaterm, to do things such as transfer files into the system for editing, then ship them back out to where other apps can find them. If you deny this permission, then Termux (and alaterm) have no way to communicate with shared files in your device. Command:
 ```
-termux-setup-storage
+  termux-setup-storage
 ```
 
 4. Download the alaterm setup script into Termux. The following command is all one line, even if it wraps here:
