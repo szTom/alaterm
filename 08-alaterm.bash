@@ -121,6 +121,11 @@ if [ "$nextPart" = 8 ] ; then
 	if [ "$?" -ne 0 ] ; then
 		echo -e "echo \"To launch alaterm: $launchCommand.  View at 127.0.0.1:5901  password=password.\"\n" >> ~/.bashrc
 	fi
+	cd "$hereiam"
+	for nn in 01 02 03 04 05 06 07 08
+	do
+		rm -f "$nn-alaterm.bash"
+	done
 	echo -e "\n\e[1;92mDONE. To launch alaterm: $launchCommand.  View at 127.0.0.1:5901  password=password.\e[0m\n"
 	let nextPart=9
 	echo "let nextPart=9" >> "$alatermTop/status"
