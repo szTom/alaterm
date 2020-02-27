@@ -77,7 +77,7 @@ select_otherMirror() { # If previous selection fails.
 	echo "You may manually select a mirror from this short list."
 	echo "Language does not matter. Your choices are:"
 	echo "  1 = Aachen, Germany."
-	echo "  2 = Los Angeles, California, USA"
+	echo "  2 = Miami, Florida, USA"
 	echo "  3 = Sao Paolo, Brazil"
 	echo "  4 = Johannesburg, South Africa"
 	echo "  5 = Sydney, Australia"
@@ -87,7 +87,7 @@ select_otherMirror() { # If previous selection fails.
 	printf "Now $enter your choice [1-7] : " ; read readvar
 	case "$readvar" in
 		1 ) tMirror="de3.mirror.archlinuxarm.org" ;;
-		2 ) tMirror="ca.us.mirror.archlinuxarm.org" ;;
+		2 ) tMirror="fl.us.mirror.archlinuxarm.org" ;;
 		3 ) tMirror="br2.mirror.archlinuxarm.org" ;;
 		4 ) tMirror="za.mirror.archlinuxarm.org" ;;
 		5 ) tMirror="au.mirror.archlinuxarm.org" ;;
