@@ -95,7 +95,7 @@ preconfExit() {
 trap preconfSignal HUP INT TERM QUIT
 trap preconfExit EXIT
 #
-. /status || exit 71
+source /status || exit 71
 if [ "$localeGenerated" != "yes" ] ; then
 	locale-gen
 	chmod 644 /etc/environment
@@ -141,8 +141,6 @@ if [ "$removedUseless" != "yes" ] ; then
 	# For bare-metal support, Linux packages are required, but proot is less than bare-metal!
 	# Unlike a booted distributing Arch in proot cannot compile kernel modules.
 	if [ "$CPUABI" = "$CPUABI7" ] ; then
-
-echo "at 7"
 		pacman -Rc linux-armv7 linux-firmware --noconfirm >/dev/null 2>&1
 		sleep .5
 		sed -i 's/^#IgnorePkg.*/IgnorePkg = linux-armv7 linux-firmware/g' /etc/pacman.conf
@@ -157,7 +155,6 @@ echo "at 7"
 	pacman -Qdtq | pacman -Rc - --noconfirm >/dev/null 2>&1 # Yes, again.
 	sleep .5
 	if [ "$CPUABI" = "$CPUABI7" ] ; then
-echo "again 7"
 		sed -i 's/^#IgnorePkg.*/IgnorePkg = linux-armv7 linux-firmware/g' /etc/pacman.conf
 	fi
 	if [ "$CPUABI" = "$CPUABI8" ] ; then
@@ -243,7 +240,7 @@ cat << 'EOC' > .bashrc # No hyphen, quoted marker.
 # File $HOME/.bashrc
 export PS1='\e[1;38;5;195m[alatermUser@\W]$\e[0m '
 export DISPLAY=:1
-[ -f /status ] && . /status
+source /status
 getThese="nano wget python python-xdg python2-xdg python2-numpy python2-lxml pygtk tk"
 getThese+=" ghostscript tigervnc lxde evince poppler-data pstoedit poppler-glib pkgfile pigz freeglut"
 getThese+=" xterm gpicview netsurf leafpad geany geany-plugins ghex man"
