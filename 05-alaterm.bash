@@ -63,10 +63,6 @@ if [ "\$?" -ne 0 ] ; then PATH="\$PATH:/data/data/com.termux/files/usr/bin" ; ex
 echo "\$PATH" | grep "\$HOME/bin" >/dev/null 2>&1
 if [ "\$?" -ne 0 ] ; then PATH="\$HOME/bin:\$PATH" ; export PATH ; fi
 #
-alias pacman='sudo pacman'
-alias fc-cache='sudo fc-cache'
-alias vncviewer='echo -e "\e[33mYou need to use the separate VNC Viewer app.\e[0m" #'
-##
 EOC
 }
 
@@ -193,6 +189,11 @@ if [ "$gotSudo" != "yes" ] ; then
 		echo "gotSudo=\"yes\"" >> /status
 	fi
 	echo "Added sudo..."
+	#
+	echo "alias pacman='sudo pacman'" >> /etc/bash.bashrc
+	echo "alias fc-cache='sudo fc-cache'" >> /etc/bash.bashrc
+	echo "alias vncviewer='echo -e \"\e[33mYou need to use the separate VNC Viewer app.\e[0m\" \#'" >> /etc/bash.bashrc
+	echo "##" >> /etc/bash.bashrc
 fi
 sleep 1
 logout # Returns to Termux script.
