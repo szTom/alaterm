@@ -141,6 +141,8 @@ if [ "$removedUseless" != "yes" ] ; then
 	# For bare-metal support, Linux packages are required, but proot is less than bare-metal!
 	# Unlike a booted distributing Arch in proot cannot compile kernel modules.
 	if [ "$CPUABI" = "$CPUABI7" ] ; then
+
+echo "at 7"
 		pacman -Rc linux-armv7 linux-firmware --noconfirm >/dev/null 2>&1
 		sleep .5
 		sed -i 's/^#IgnorePkg.*/IgnorePkg = linux-armv7 linux-firmware/g' /etc/pacman.conf
@@ -155,6 +157,7 @@ if [ "$removedUseless" != "yes" ] ; then
 	pacman -Qdtq | pacman -Rc - --noconfirm >/dev/null 2>&1 # Yes, again.
 	sleep .5
 	if [ "$CPUABI" = "$CPUABI7" ] ; then
+echo "again 7"
 		sed -i 's/^#IgnorePkg.*/IgnorePkg = linux-armv7 linux-firmware/g' /etc/pacman.conf
 	fi
 	if [ "$CPUABI" = "$CPUABI8" ] ; then
