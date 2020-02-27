@@ -49,10 +49,10 @@ find_locale() {
 	else
 		userLocale="en_US" # Default.
 	fi
-	echo -e "Arch will use locale $userLocale with UTF-8 encoding.\n"
-	# Arch has etc/locale.gen, a commented-out list of available locales.
+	echo -e "alaterm will use locale $userLocale with UTF-8 encoding.\n"
+	# alaterm has /etc/locale.gen, a commented-out list of available locales.
 	# This uncomments the line corresponding to the above locale:
-	local lg="$archTop/etc/locale.gen"
+	local lg="$alatermTop/etc/locale.gen"
 	if [ -w "$lg" ] ; then
 		sed -i "/\\#$userLocale.UTF-8 UTF-8/{s/#//g;s/@/-at-/g;}" "$lg"
 	else echo "$userLocale.UTF-8 UTF-8" > "$lg"
@@ -61,9 +61,9 @@ find_locale() {
 
 create_etcLocaleConf() {
 # Create etc/locale.conf and request UTF-8 encoding.
-# Knowledgeable power users can change lines, from within Arch.
-cat << EOC > "$archTop/etc/locale.conf" # No hyphen, unquoted marker.
-#  File /etc/locale.conf created from Termux during Arch installation.
+# Knowledgeable power users can change lines, from within alaterm.
+cat << EOC > "$alatermTop/etc/locale.conf" # No hyphen, unquoted marker.
+#  File /etc/locale.conf created from Termux during alaterm installation.
 LANG="$userLocale.UTF-8"
 # If you need to customize any of the following, do it here,
 # then run locale-gen.
@@ -88,7 +88,7 @@ if [ "$nextPart" -eq 3 ] ; then
 	create_etcLocaleConf
 	sleep .5
 	declare -g LANG="$userLocale.UTF-8"
-	cd "$archTop"
+	cd "$alatermTop"
 	echo "# Locale will use UTF-8 encoding." >> status
 	echo -e "userLocale=\"$userLocale\"" >> status
 	echo "Set locale. Continuing..."

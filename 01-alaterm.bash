@@ -10,7 +10,7 @@ fi
 
 
 ##############################################################################
-## INSTALLER PART 01. Installer: Download Arch.
+## INSTALLER PART 01. Installer: Download Arch Linux ARM.
 ##############################################################################
 
 
@@ -46,7 +46,7 @@ select_architecture() { # Must be ARM processor, running Android.
 find_localArchive() { # If archive and md5 in same directory as this script.
 	if [ "$partialArchive" = "yes" ] ; then
 		localArchive="no"
-	elif [ -f "$archTop/$archAr" ] && [ -f "$archTop/$archAr.md5" ] ; then
+	elif [ -f "$alatermTop/$archAr" ] && [ -f "$alatermTop/$archAr.md5" ] ; then
 		localArchive="yes"
 	fi
 }
@@ -99,7 +99,7 @@ select_otherMirror() { # If previous selection fails.
 	echo -e "Using manually selected mirror $tMirror\n"
 }
 
-download_archive() { # Currently in $archTop.
+download_archive() { # Currently in $alatermTop.
 	echo -e "Attempting to download $archAr and its md5 file...\n"
 	local md="$tMirror/os/$archAr.md5"
 	local ar="$tMirror/os/$archAr"
@@ -129,13 +129,13 @@ download_archive() { # Currently in $archTop.
 	fi
 }
 
-retry_downloadNow() { # Currently in $archTop.
+retry_downloadNow() { # Currently in $alatermTop.
 	echo "Re-try of current mirror..."
 	sleep 4
 	download_archive
 }
 
-check_archive() { # Currently in $archTop.
+check_archive() { # Currently in $alatermTop.
 	echo "Now checking md5 sum..."
 	if md5sum -c "$archAr.md5" >/dev/null ; then
 		echo -e "Successful md5 check. Continuing...\n"
@@ -154,7 +154,7 @@ check_archive() { # Currently in $archTop.
 
 
 if [ "$nextPart" -eq 1 ] ; then
-	cd "$archTop"
+	cd "$alatermTop"
 	select_architecture
 	find_localArchive
 	if [ "$localArchive" = "yes" ] ; then

@@ -38,14 +38,14 @@ create_fakePS() { # Takes one argument: 4 6 or 8.
 		intr+=" 0"
 		let n=n+1
 	done
-	printf "$cpu\n" > "$archTop/var/binds/fakePS"
-	printf "$intr\n" >> "$archTop/var/binds/fakePS"
-	printf "ctxt 1234567890\n" >> "$archTop/var/binds/fakePS"
-	printf "btime 1234567890\n" >> "$archTop/var/binds/fakePS"
-	printf "processes 1234567\n" >> "$archTop/var/binds/fakePS"
-	printf "procs_running 3\n" >> "$archTop/var/binds/fakePS"
-	printf "procs_blocked 0\n" >> "$archTop/var/binds/fakePS"
-	printf "softirq 23456789 12345 1234567 234567 3456 56789 45678 123456 24680 13579\n" >> "$archTop/var/binds/fakePS"
+	printf "$cpu\n" > "$alatermTop/var/binds/fakePS"
+	printf "$intr\n" >> "$alatermTop/var/binds/fakePS"
+	printf "ctxt 1234567890\n" >> "$alatermTop/var/binds/fakePS"
+	printf "btime 1234567890\n" >> "$alatermTop/var/binds/fakePS"
+	printf "processes 1234567\n" >> "$alatermTop/var/binds/fakePS"
+	printf "procs_running 3\n" >> "$alatermTop/var/binds/fakePS"
+	printf "procs_blocked 0\n" >> "$alatermTop/var/binds/fakePS"
+	printf "softirq 23456789 12345 1234567 234567 3456 56789 45678 123456 24680 13579\n" >> "$alatermTop/var/binds/fakePS"
 }
 
 count_processors() { # This picks the appropriate size, counting from 0:
@@ -67,7 +67,7 @@ count_processors() { # This picks the appropriate size, counting from 0:
 }
 
 create_fakePV() {
-cat << 'EOC' > "$archTop/var/binds/fakePV" # No hyphen, quoted marker.
+cat << 'EOC' > "$alatermTop/var/binds/fakePV" # No hyphen, quoted marker.
 Linux version 4.14.15 (user@fake.example.com)
 (gcc version 8.2.1 20180730 (Android Linux 9.1.1))
 #1 Wed Dec 12 12:34:50 PST 2018
@@ -76,8 +76,8 @@ EOC
 
 
 if [ "$nextPart" -eq 4 ] ; then
-	mkdir -p "$archTop/var/binds"
-	cd "$archTop"
+	mkdir -p "$alatermTop/var/binds"
+	cd "$alatermTop"
         if [ ! -r /proc/stat ] ; then
 		count_processors
 		create_fakePS "$processors"

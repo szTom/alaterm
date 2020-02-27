@@ -10,17 +10,17 @@ fi
 
 
 ##############################################################################
-## INSTALLER PART 05. Arch /etc/bash.bashrc, root/.bash_profile, root/.bashrc
+## INSTALLER PART 05. /etc/bash.bashrc, root/.bash_profile, root/.bashrc
 ##############################################################################
 
 
 construct_prsPre() { # Only used during post-install routines.
-	prsPre="proot --kill-on-exit --link2symlink -v -1 -0 -r $archTop " # 0 is zero.
+	prsPre="proot --kill-on-exit --link2symlink -v -1 -0 -r $alatermTop " # 0 is zero.
 	prsPre+="-b /proc -b /dev -b /sys -b /data "
-	[ ! -r /dev/ashmem ] && prsPre+="-b $archTop/tmp:/dev/ashmem " # Probably OK as-is.
-	[ ! -r /dev/shm ] && prsPre+="-b $archTop/tmp:/dev/shm " # Probably does not exist, but is expected.
-	[ ! -r /proc/stat ] && prsPre+="-b $archTop/var/binds/fakePS:/proc/stat "
-	[ ! -r /proc/version ] && prsPre+="-b $archTop/var/binds/fakePV:/proc/version "
+	[ ! -r /dev/ashmem ] && prsPre+="-b $alatermTop/tmp:/dev/ashmem " # Probably OK as-is.
+	[ ! -r /dev/shm ] && prsPre+="-b $alatermTop/tmp:/dev/shm " # Probably does not exist, but is expected.
+	[ ! -r /proc/stat ] && prsPre+="-b $alatermTop/var/binds/fakePS:/proc/stat "
+	[ ! -r /proc/version ] && prsPre+="-b $alatermTop/var/binds/fakePV:/proc/version "
 	prsPre+="-w /root "
 	prsPre+="/usr/bin/env - TERM=$TERM HOME=/root TMPDIR=/tmp "
 	prsPre+="/bin/bash -l"
@@ -30,9 +30,9 @@ create_etcBashBashrc() { # In /etc. Over-writes original.
 cat << EOC > "bash.bashrc" # No hyphen. Unquoted marker.
 # File /etc/.bash.bashrc
 # Created by installation script. Replaced original file.
-export THOME="$HOME" # Termux home directory, seen from within Arch.
+export THOME="$HOME" # Termux home directory, seen from within alaterm.
 export TUSR="$PREFIX" # This is the usr directory in Termux.
-export ARCHDIR="$archTop"
+export ALATERMDIR="$alatermTop"
 export EDITOR=/usr/bin/nano
 export BROWSER=/usr/bin/netsurf
 export ANDROID_DATA=/data
@@ -74,14 +74,14 @@ EOC
 }
 
 ## Functions within function.
-create_rootBashrc() { # In Arch /root. Will be replaced later in this script.
+create_rootBashrc() { # In alaterm /root. Will be replaced later in this script.
 cat << 'EOC' > ".bashrc" # No hyphen, quoted marker.
 # File /root/.bashrc
 # Created by installation script. Over-wrote original.
 # Ensure that wakelock is removed if script is interrupted:
 preconfSignal() {
-	echo -e "PROBLEM. Arch pre-configuration was interrupted."
-	echo -e "Arch will exit now. You will be returned to Termux.\n"
+	echo -e "PROBLEM. alaterm pre-configuration was interrupted."
+	echo -e "Script will exit now. You will be returned to Termux.\n"
 	exit 71
 }
 preconfExit() {
@@ -89,7 +89,7 @@ preconfExit() {
 	if [ "$badstuff" -ne 0 ] && [ "$badstuff" -ne 71 ] ; then
 		echo -e "PROBLEM. Something caused preconfigure to exit early."
 	echo -e "Exit code $badstuff."
-	echo -e "Arch will exit now. You will be returned to Termux.\n"
+	echo -e "Script will exit now. You will be returned to Termux.\n"
 	fi
 }
 trap preconfSignal HUP INT TERM QUIT
@@ -157,7 +157,7 @@ if [ "$removedUseless" != "yes" ] ; then
 	rm -r -f /boot/*
 	rm -r -f /usr/lib/firmware
 	rm -r -f /usr/lib/modules
-	echo "Removed Arch packages irrelevant in proot..."
+	echo "Removed packages irrelevant in proot..."
 	echo -e "removedUseless=\"yes\"" >> /status
 fi
 if [ "$updgradedArch" != "yes" ] ; then
@@ -204,7 +204,7 @@ EOC
 }
 # End functions within function.
 
-recreate_rootBashrc() { # In Arch /root.
+recreate_rootBashrc() { # In alaterm /root.
 cat << 'EOC' > ".bashrc" # No hyphen, quoted marker.
 # File /root/.bashrc
 # Created by installation script.
@@ -213,9 +213,9 @@ alias ls='ls --color=auto'
 # These responses from Android exist, but may be useless:
 alias top='/system/bin/top'
 alias ps='/system/bin/ps'
-export PS1='\e[1;38;5;75m[Arch:\e[1;91mroot\e[1;38;5;75m@\W]#\e[0m '
-echo -e "\e[33mOnly use root if necessary. Root is within Arch, not Android."
-echo -e "To leave root and return to ordinary Arch user:  exit\e[0m"
+export PS1='\e[1;38;5;75m[alaterm:\e[1;91mroot\e[1;38;5;75m@\W]#\e[0m '
+echo -e "\e[33mOnly use root if necessary. Root is within alaterm, not Android."
+echo -e "To leave root and return to ordinary alaterm user:  exit\e[0m"
 alias su='exit #'
 #
 ## Your custom commands, if any, go below:
@@ -231,7 +231,7 @@ create_userBashProfile() { # In /home.
 create_userBashrc() { # In /home. Used in the next part of script. Then changed.
 cat << 'EOC' > .bashrc # No hyphen, quoted marker.
 # File $HOME/.bashrc
-export PS1='\e[1;38;5;195m[ArchUser@\W]$\e[0m '
+export PS1='\e[1;38;5;195m[alatermUser@\W]$\e[0m '
 export DISPLAY=:1
 [ -f /status ] && . /status
 getThese="nano wget python python-xdg python2-xdg python2-numpy python2-lxml pygtk tk"
@@ -246,8 +246,8 @@ else
 	declare -g gotTCLI="no"
 fi
 if [ "$gotThem" != "yes" ] ; then
-	echo "Downloading new packages for Arch LXDE Desktop..."
-	pacman -S --noconfirm $getThese
+	echo "Downloading new packages for LXDE Desktop..."
+	pacman -S --noconfirm --needed $getThese
 	if [ "$?" -ne 0 ] ; then
 		exit 82
 	else
@@ -269,7 +269,7 @@ create_userVncConfig() { # In /home/.vnc.
 	echo "# This may be less than the full pixel resolution, but same aspect ratio." >> config
 	echo "# For example, 1280x800 works with 1920x1200 screens." >> config
 	echo "# If you edit the geometry, the result will not immediately appear." >> config
-	echo "# It will be activated the next time you launch Arch." >> config
+	echo "# It will be activated the next time you launch alaterm." >> config
 	echo "# This geometry may be over-ridden by the LXDE Desktop Menu" >> config
 	echo "# using Preferences > Monitor Settings." >> config
 	echo "# Also see file ~/.config/autostart/lxrandr-autostart.desktop" >> config
@@ -342,38 +342,38 @@ EOC
 
 
 if [ "$nextPart" -eq 5 ] ; then
-	mkdir -p "$archTop/home/.local/share/applications"
-	cd "$archTop/etc"
+	mkdir -p "$alatermTop/home/.local/share/applications"
+	cd "$alatermTop/etc"
 	chmod 666 pacman.conf
 	sed -i '/^#Color/s/^#//' pacman.conf 2>/dev/null
 	chmod 644 pacman.conf
 	chmod 666 bash.bashrc
 	create_etcBashBashrc
 	chmod 644 bash.bashrc
-	cd "$archTop/root"
+	cd "$alatermTop/root"
 	create_rootBashProfile
 	chmod 644 .bash_profile
 	create_rootBashrc
 	chmod 666 .bashrc
-	cd "$HOME" # Termux home. Ensures being outside Arch.
+	cd "$HOME" # Termux home. Ensures being outside alaterm.
 	construct_prsPre
 	echo "unset LD_PRELOAD" > "$HOME/prsTmp"
-	echo "exec $prsPre" >> "$HOME/prsTmp" # Termux home, not Arch /home.
+	echo "exec $prsPre" >> "$HOME/prsTmp" # Termux home, not alaterm /home.
 	bash "$HOME/prsTmp"
 	if [ "$?" -ne 0 ] ; then
-		echo -e "$PROBLEM Code $?. Arch pre-configure was interrupted."
+		echo -e "$PROBLEM Code $?. The alaterm pre-configure was interrupted."
 		echo "Poor Internet connection, or server maintenance."
 		echo "Wait awhile, then try again. Script resumes where it left off."
 		rm -f "$HOME/prsTmp"
 		exit 1
 	fi
 	rm -f "$HOME/prsTmp"
-	echo -e "alias pacman='sudo pacman'\n##" >> "$archTop/etc/bash.bashrc"
-	cd "$archTop/root"
+	echo -e "alias pacman='sudo pacman'\n##" >> "$alatermTop/etc/bash.bashrc"
+	cd "$alatermTop/root"
 	recreate_rootBashrc
 	chmod 644 .bashrc
-	cd "$archTop/etc"
-	cd "$archTop/home"
+	cd "$alatermTop/etc"
+	cd "$alatermTop/home"
 	create_userBashProfile
 	chmod 666 .bash_profile
 	create_userBashrc
@@ -384,7 +384,7 @@ if [ "$nextPart" -eq 5 ] ; then
 		cd ".local/share/Trash"
 		create_trashReadme
 	fi
-	cd "$archTop"
+	cd "$alatermTop"
 	mkdir -p var/android/dalvik-cache # Possibly not needed.
 	mkdir -p usr/var/android/dalvik-cache # Possibly not needed.
 	echo "Pre-configuration done."

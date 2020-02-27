@@ -10,17 +10,17 @@ fi
 
 
 ##############################################################################
-## INSTALLER PART 06. Get Arch packages for the LXDE Desktop.
+## INSTALLER PART 06. Get Arch Linux ARM packages for the LXDE Desktop.
 ##############################################################################
 
 
-construct_prsUser() { # Tells Termux how to launch Arch.
-	prsUser="proot --kill-on-exit --link2symlink -v -1 -0 -r $archTop " # zero
+construct_prsUser() { # Tells Termux how to launch alaterm.
+	prsUser="proot --kill-on-exit --link2symlink -v -1 -0 -r $alatermTop " # zero
 	prsUser+="-b /proc -b /system -b /sys -b /dev -b /data -b /vendor "
-	[ ! -r /dev/ashmem ] && prsUser+="-b $archTop/tmp:/dev/ashmem " # Probably OK as-is.
-	[ ! -r /dev/shm ] && prsUser+="-b $archTop/tmp:/dev/shm " # Probably does not exist, but is expected.
-	[ ! -r /proc/stat ] && prsUser+="-b $archTop/var/binds/fakePS:/proc/stat "
-	[ ! -r /proc/version ] && prsUser+="-b $archTop/var/binds/fakePV:/proc/version "
+	[ ! -r /dev/ashmem ] && prsUser+="-b $alatermTop/tmp:/dev/ashmem " # Probably OK as-is.
+	[ ! -r /dev/shm ] && prsUser+="-b $alatermTop/tmp:/dev/shm " # Probably does not exist, but is expected.
+	[ ! -r /proc/stat ] && prsUser+="-b $alatermTop/var/binds/fakePS:/proc/stat "
+	[ ! -r /proc/version ] && prsUser+="-b $alatermTop/var/binds/fakePV:/proc/version "
 	[ -d /sdcard ] && prsUser+="-b /sdcard "
 	[ -d /storage ] && prsUser+="-b /storage "
 	prsUser+="-b /proc/self/fd/0:/dev/stdin -b /proc/self/fd/1:/dev/stdout -b /proc/self/fd/2:/dev/stderr "
@@ -30,10 +30,10 @@ construct_prsUser() { # Tells Termux how to launch Arch.
 }
 
 edit_etcProfile() {
-	echo "# Added by installer script:" >> "$archTop/etc/profile"
-	echo "PATH=/usr/local/scripts:$PATH:/data/data/com.termux/files/usr/bin" >> "$archTop/etc/profile"
-	echo "export PATH" >> "$archTop/etc/profile"
-	echo "##" >> "$archTop/etc/profile"
+	echo "# Added by installer script:" >> "$alatermTop/etc/profile"
+	echo "PATH=/usr/local/scripts:$PATH:/data/data/com.termux/files/usr/bin" >> "$alatermTop/etc/profile"
+	echo "export PATH" >> "$alatermTop/etc/profile"
+	echo "##" >> "$alatermTop/etc/profile"
 }
 
 recreate_userBashProfile() { # In /home.
@@ -61,7 +61,7 @@ fi
 rm -f ~/.ICEauthority
 rm -f ~/.vnc/localhost*
 export DISPLAY=:1
-echo -e "\e[1;92mStarting Arch. Just a moment...\e[0m"
+echo -e "\e[1;92mStarting alaterm. Just a moment...\e[0m"
 ban-menu-items 2>/dev/null
 edit-mimeinfo-cache 2>/dev/null
 if [ -w "/bin/vncserver" ] ; then
@@ -69,7 +69,7 @@ if [ -w "/bin/vncserver" ] ; then
 	if [ -f ~/.vnc/xstartup ] ; then
 		newhost="New \$host:\$displayNumber at 127.0.0.1:590\$displayNumber.\\n"
 		newhost+="LXDE Desktop is visible in VNC Viewer app. Password: password\\n"
-		newhost+="To leave Arch and return to Termux: logout\\\n"
+		newhost+="To leave alaterm and return to Termux: logout\\\n"
 		sed -i "/.*warn.*desktop is.*/c\warn \"$newhost\";" "/bin/vncserver"
 	fi
 	sed -i '/.*warn.*applications specified in.*/c\warn "\\n";' "/bin/vncserver"
@@ -103,7 +103,7 @@ cat << 'EOC' > .bashrc # No hyphen, quoted marker.
 # File /home/.bashrc created by installation script.
 # Most initialization code is in file /etc/bash.bashrc or ~/.bash_profile.
 # But do not edit those files unless absolutely necessary.
-export PS1='\e[1;38;5;75m[Arch:$(whoami)@\W]$\e[0m '
+export PS1='\e[1;38;5;75m[alaterm:$(whoami)@\W]$\e[0m '
 ##
 # If you have any custom login code, put it below:
 
@@ -114,27 +114,27 @@ EOC
 
 
 if [ "$nextPart" -eq 6 ] ; then
-	cd "$HOME" # Termux home. Ensures being outside Arch.
+	cd "$HOME" # Termux home. Ensures being outside alaterm.
 	echo "Creating the LXDE graphical desktop..."
 	construct_prsUser
 	echo "unset LD_PRELOAD" > "$HOME/prsTmp"
-	echo "exec $prsUser" >> "$HOME/prsTmp" # Termux home, not Arch /home.
+	echo "exec $prsUser" >> "$HOME/prsTmp" # Termux home, not alaterm /home.
 	bash "$HOME/prsTmp"
 	if [ "$?" -ne 0 ] ; then
-		echo -e "$PROBLEM Code $?. Arch desktop preparation was interrupted."
+		echo -e "$PROBLEM Code $?. Desktop preparation was interrupted."
 		echo "Poor Internet connection, or server maintenance."
 		echo "Wait awhile, then try again. Script resumes where it left off."
 		rm -f "$HOME/prsTmp"
 	exit 1
 	fi
 	rm -f "$HOME/prsTmp"
-	cd "$archTop/home"
+	cd "$alatermTop/home"
 	edit_etcProfile
 	recreate_userBashProfile
 	recreate_userBashrc
-	cp .bash_profile "$archTop/etc/skel"
-	cp .bashrc "$archTop/etc/skel"
-	cd "$archTop"
+	cp .bash_profile "$alatermTop/etc/skel"
+	cp .bashrc "$alatermTop/etc/skel"
+	cd "$alatermTop"
 	let nextPart=7
 	echo "let nextPart=7" >> status
 fi

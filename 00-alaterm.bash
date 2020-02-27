@@ -11,7 +11,7 @@ declare versionID=1.0.1
 #
 # Copyright and License at bottom of this file.
 #
-# * This BASH script installs portions of Arch Linux into the Termux app,
+# * This BASH script installs portions of Arch Linux ARM into the Termux app,
 #   for Android-based devices that have an ARM processor.
 #   This includes many tablets and Chromebooks, but not all of them.
 # * You do not need root access. This script does not enable root access.
@@ -21,9 +21,9 @@ declare versionID=1.0.1
 # * The installation is optimized for ordinary users, rather than programmers.
 #   It assumes that you intend to run programs such as GIMP image editor,
 #   but you do not intend to setup a file server or upload packages.
-# * This is not a dual-boot. Android runs alongside Arch at all times.
+# * This is not a dual-boot. Android runs alongside alaterm at all times.
 #   For example, Android can play Bluetooth music and connect to the Internet,
-#   even while you are using a program such as GIMP in Arch.
+#   even while you are using a program such as GIMP in alaterm.
 # * If your intended usage is programmer-friendly file server things,
 #   then the Termux Arch project by SDRausty is better suited to your needs.
 # * This script is compatible only with devices that have an ARM processor,
@@ -35,20 +35,20 @@ declare versionID=1.0.1
 ##############################################################################
 # THESE ARE THE ONLY USER-CUSTOMIZABLE SETTINGS:
 # You can install via this script and SDRausty script independently,
-# as long as archTop and launchCommand are different. OK by default.
-# 1. Where Arch will be installed. Default: installDirectory=archx
-declare installDirectory=archx
+# as long as alatermTop and launchCommand are different. OK by default.
+# 1. Where alaterm will be installed. Default: installDirectory=alaterm
+declare installDirectory=alaterm
 #    * In Android, Termux is at /data/data/com.termux directory.
 #    * That contains several directories. Among them:
 #      /data/data/com.termux/files/usr is where Termux keeps its own programs.
 #      /data/data/com.termux/files/home is home, where Termux starts.
 #    * If you install to the recommended default location, then
-#      /data/data/com.termux/archx will be the Arch / root directory.
-#      That root directory will contain Arch /bin, /etc, /home, and so forth.
+#      /data/data/com.termux/alaterm will be the alaterm / root directory.
+#      That root directory will contain alaterm /bin, /etc, /home, and so forth.
 #    * The alternative, by SDRausty, installs to Termux home/arch.
 #    * Advantage of installing to the default location is that
-#      Arch will not be accidentally removed, if you clean Termux home.
-# 2. To launch Arch from Termux. Default: launchCommand=alaterm
+#      alaterm will not be accidentally removed, if you clean Termux home.
+# 2. To launch alaterm from Termux. Default: launchCommand=alaterm
 declare launchCommand=alaterm
 #    * The alternative script, by SDRausty, uses: startarch
 # END OF USER-CUSTOMIZABLE SETTINGS.
@@ -88,7 +88,7 @@ declare scriptLocation="$hereiam"
 cd "$termuxTop"
 termuxTop=`pwd` # Gets the full Android path, without any ../
 cd "$pwDir"
-declare archTop="$termuxTop/$installDirectory"
+declare alatermTop="$termuxTop/$installDirectory"
 declare PROBLEM="\e[1;91mPROBLEM.\e[0m" # Bold light red. Use with echo -e
 declare WARNING="\e[1;33mWARNING.\e[0m" # Bold yellow. Use with echo -e
 declare HELP="\e[1;92mHELP\e[0m" # Bold light green. Use with echo -e
@@ -99,14 +99,14 @@ declare enter="\e[1;92menter\e[0m" # Bold light green. Use with echo -e
 [ -w "$termuxTop/acct" ] && sorry="yes"
 if [ "$sorry" = "yes" ] ; then
 	echo -e "\n$PROBLEM. Termux is not at expected Android location."
-	echo "This script cannot install Arch Linux ARM on your device."
+	echo "This script cannot install alaterm on your device."
 	echo -e "Sorry about that. This script will now exit.\n" ; exit 1
 fi
 
 ## Show usage, unless exactly one argument provided: i r h v.
 show_usage() {
         echo "$(basename $0), version $versionID."
-        echo "Installs or removes Arch Linux within Termux."
+        echo "Installs or removes alaterm within Termux."
 	echo "For selected Android devices with ARM processors."
         echo "Usage:  bash $(basename $0) <install|remove|help|version>"
         echo "Exactly one argument required. May abbreviate as: i r h v"
@@ -126,7 +126,7 @@ declare actionMode="none"
 
 ## Show help, if requested:
 if [ "$actionMode" = "help" ] ; then
-	echo "This alaterm can install, or remove, Arch Linux ARM in Termux."
+	echo "This script installs or removes alaterm: Arch Linux ARM in Termux."
 	echo "Your device must run 32-bit or 64-bit Android 8 or later."
 	echo "The CPU must be ARM architecture, not Intel or AMD."
 	echo "Various screen sizes are supported, with or without touchscreen."
@@ -147,27 +147,28 @@ fi
 ## Remove previous installation, if requested.
 ## Must be same location as the one specified for installatiion:
 if [ "$actionMode" = "remove" ] ; then
-	if [ ! -d "$archTop" ] ; then
-		echo -e "$PROBLEM Did not find Arch at default location $archTop."
-		echo "Either Arch was not installed by alaterm, or it is elsewhere."
+	if [ ! -d "$alatermTop" ] ; then
+		echo -e "$PROBLEM Did not find alaterm at default location $alatermTop."
+		echo "Either it was not installed, or was installed  elsewhere."
 		echo "If you installed it to a different location, then uninstall manually."
 		echo -e "Nothing was removed. This script will now exit.\n"
 		exit 1
 	else
-		echo "Found Arch at expected location $archTop."
+		echo "Found alaterm at expected location $alatermTop."
 		echo "Do you wish to remove it?"
 		printf "Now $enter yes or no. Default no. [y|N] : " ; read readvar
 		case "$readvar" in
-			y*|Y* ) echo "You answered yes. That will remove $archTop"
+			y*|Y* ) echo "You answered yes. That will remove $alatermTop"
 			echo "and also remove any files contained within it."
 			printf "Are you sure? Default no. [y|N] : " ; read readnewvar
 			case "$readnewvar" in
 				y*|Y* ) echo "Now removing prior installation. Takes awhile..."
-				rm -r -f "${archTop:?}"/* 2>/dev/null
-				find  "$archTop" -type d -exec chmod 700 {} \; 2>/dev/null
-				rm -r -f "$archTop" 2>/dev/null
+				rm -r -f "${alatermTop:?}"/* 2>/dev/null
+				find  "$alatermTop" -type d -exec chmod 700 {} \; 2>/dev/null
+				rm -r -f "$alatermTop" 2>/dev/null
 				rm -f "$PREFIX/bin/$launchCommand" 2>/dev/null
-				sed -i '/scriptreminder/d' ~/.bashrc 2>/dev/null
+				rm -f "$PREFIX/bin/query-tvnc" 2>/dev/null
+				sed -i '/alaterm/d' ~/.bashrc 2>/dev/null
 				sleep 1
 				echo -e "Done. This script will now exit.\n"
 				exit 0 ;;
@@ -221,10 +222,9 @@ declare userLocale="en_US" # Default. Measured later. Always UTF-8.
 declare prsPre="" # Becomes part of the launch command.
 declare prsUser="" # Becomes part of the launch command.
 let processors=0 # Becomes number of processors in CPU: 4, 6, 8.
-declare helpdir="" # Somewhere in Arch /usr/local/share, if helpfile exists.
 let nextPart=0 # Keeps track of progress. Recorded in status file.
 # Get variables stored by previously running this script, if any:
-[ -f "$archTop/status" ] && source "$archTop/status"
+[ -f "$alatermTop/status" ] && source "$alatermTop/status"
 
 ## Compatibility tests:
 reject_incompatibleSystem() { # If script does not like your system.
@@ -268,7 +268,7 @@ ignore_proxy() { # If Termux has proxy, this script does not copy it.
 	done
 	if [ "$termuxProxy" = "ignored" ] ; then
 		echo -e "$WARNING Looks like you have a Termux proxy server."
-		echo -e "This script does not configure Arch for proxy."
+		echo -e "This script does not configure alaterm for proxy."
 		echo -e "Script will continue. Termux unaffected."
 	fi
 }
@@ -346,10 +346,10 @@ check_freeSpace() { # Not re-checked later. df -k delivers data in kiloblocks.
 }
 
 check_priorInstall() { # Warn if existing installation in same location.
-	if [ ! -f "$archTop/bin/env" ] ; then return ; fi
-	if [ ! -f "$archTop/bin/pacman" ] ; then return ; fi
-	if [ -f "$archTop/status" ] ; then return ; fi
-	echo -e "$WARNING An installation is already present in $archTop."
+	if [ ! -f "$alatermTop/bin/env" ] ; then return ; fi
+	if [ ! -f "$alatermTop/bin/pacman" ] ; then return ; fi
+	if [ -f "$alatermTop/status" ] ; then return ; fi
+	echo -e "$WARNING An installation is already present in $alatermTop."
 	echo "If you install, then you will lose the previous installation."
 	echo "Nothing will be saved. Do you really wish to install?"
 	echo "  y = Yes, install and lose previous installation."
@@ -360,10 +360,15 @@ check_priorInstall() { # Warn if existing installation in same location.
 		echo "Are you sure? yes=install. n=keep and exit [default]."
 		printf "Now $enter your choice [y|N] : " ; read newreadvar
 		case "$newreadvar" in
-			y*|Y* ) echo "Removing prior installation..."
-			remove_Arch
-			priorInstall="yes"
-			echo "Prior installation removed. Continuing...\n" ;;
+			y*|Y* ) echo "Removing prior installation. Takes awhile..."
+				rm -r -f "${alatermTop:?}"/* 2>/dev/null
+				find  "$alatermTop" -type d -exec chmod 700 {} \; 2>/dev/null
+				rm -r -f "$alatermTop" 2>/dev/null
+				rm -f "$PREFIX/bin/$launchCommand" 2>/dev/null
+				rm -f "$PREFIX/bin/query-tvnc" 2>/dev/null
+				sed -i '/alaterm/d' ~/.bashrc 2>/dev/null
+				priorInstall="yes"
+				echo "Prior installation removed. Continuing...\n" ;;
 			* ) echo -e "You chose not to continue. Nothing changed. Exiting.\n" ; exit 0 ;;
 		esac ;;
 			* ) echo -e "You chose not to continue. Nothing changed. Exiting.\n" ; exit 0 ;;
@@ -399,7 +404,7 @@ scriptExit() {
 	echo -e "This script will now exit.$wakelockMessage\n"
 }
 
-check_connection() { # Function ping works in both Termux and Arch.
+check_connection() { # Function ping works in both Termux and alaterm.
 	ping -c 3 -W 5 "$1" >/dev/null 2>/dev/null
 	if [ "$?" -ne 0 ]; then
 		echo -e "$WARNING Looks like your Internet is disconected."
@@ -451,7 +456,7 @@ verify_storageEnabled() { # Needs termux-setup-storage.
 	fi
 }
 
-update_termuxPackages() { # Needed to provide platform for Arch.
+update_termuxPackages() { # Needed to provide platform for alaterm.
 	echo "Checking if Termux is up-to-date, and upgrading if necessary..."
 	check_connection github.com
 	apt-get -y update && apt-get -y dist-upgrade
@@ -465,8 +470,6 @@ update_termuxPackages() { # Needed to provide platform for Arch.
 
 get_moreTermux() {
 	local getThese=""
-	# Why pulseaudio? The native Arch audio software does not communicate
-	# with Android. The Termux version does.
 	for needPkg in wget bsdtar proot nano ; do
 		hash "$needPkg" >/dev/null 2>&1
 		[ "$?" -ne 0 ] && getThese+="$needPkg "
@@ -496,8 +499,8 @@ get_moreTermux() {
 	fi
 }
 
-create_archTop() { # Verifies that chosen location can be used.
-	mkdir -p "$archTop" 2>/dev/null
+create_alatermTop() { # Verifies that chosen location can be used.
+	mkdir -p "$alatermTop" 2>/dev/null
 	if [ "$?" -ne 0 ] ; then
 		echo -e "$PROBLEM Could not create the install directory."
 		echo -e "Pehaps its parent directory is not writeable."
@@ -511,7 +514,7 @@ create_statusFile() { # Records progress of installation, and stores variables.
 cat << EOC > status # No hyphen. Unquoted marker.
 # File /status created by script during install.
 # Records progress of installation by Termux.
-# Retains important data for use by Arch post-install script.
+# Retains important data for use by alaterm post-install script.
 # Do not edit this file unless you know what you are doing.
 # Do not remove this file, even after successful installation.
 # In case of later patches, the info here is needed.
@@ -521,7 +524,7 @@ termuxTop="$termuxTop"
 termuxPrefix="$PREFIX"
 termuxHome="$HOME"
 termuxLdPreload="$LD_PRELOAD"
-archTop="$archTop"
+alatermTop="$alatermTop"
 launchCommand="$launchCommand"
 isRooted="$isRooted"
 termuxProxy="$termuxProxy"
@@ -533,15 +536,15 @@ EOC
 
 ## If nextPart is not 0, it means that this portion was already completed:
 if [ "$nextPart" -eq 0 ] ; then
-	if [ ! -f "$archTop/status" ] ; then
+	if [ ! -f "$alatermTop/status" ] ; then
 		caution_rooters
 		ignore_proxy
 		check_ABI
 		check_freeSpace
 		check_priorInstall
 		sleep .2
-		create_archTop
-		cd "$archTop"
+		create_alatermTop
+		cd "$alatermTop"
 		create_statusFile
 		chmod 666 status
 		echo -e "Your device passed preliminary inspection. Continuing...\n"
@@ -550,7 +553,7 @@ if [ "$nextPart" -eq 0 ] ; then
 	get_moreTermux
 	verify_storageEnabled
 	sleep .5
-	cd "$archTop"
+	cd "$alatermTop"
 	let nextPart=1
 	echo -e "let nextPart=1" >> status
 fi

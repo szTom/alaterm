@@ -94,7 +94,7 @@ showdrhelp() {
 	echo "where W and H are 3 to 4 digit numbers."
 	echo "Installation default is  1280x800"
 	echo "This routine changes the default LXDE Desktop resolution."
-	echo "Change is not activated until next time Arch is launched."
+	echo "Change is not activated until next time alaterm is launched."
 	echo "If your desired default is on the LXDE Desktop Menu in"
 	echo "Preferences > Monitor Settings, then use the menu instead."
 	echo "But if the desired setting is not listed, this command adds it."
@@ -120,7 +120,7 @@ h="$(expr $h + 0 )"
 if [ "$w" -lt 480 ] || [ "$w" -gt 9600 ] ; then oor ; fi
 if [ "$h" -lt 480 ] || [ "$h" -gt 9600 ] ; then oor ; fi
 sed -i "s/^geometry.*/geometry=$wxh/g" ~/.vnc/config
-echo "Default screen will be $wxh when you re-launch Arch."
+echo "Default screen will be $wxh when you re-launch alaterm."
 ##
 EOC
 }
@@ -198,8 +198,8 @@ Exec = /usr/local/scripts/mimeapps-list
 EOC
 }
 
-configure_desktop() { # In $archTop/home.
-	h="$archTop/home"
+configure_desktop() { # In $alatermTop/home.
+	h="$alatermTop/home"
 	if [ -f .config/openbox/lxde-rc.xml ] ; then
 		cd .config/openbox
 		sed -i 's/<number>2<\/number>/<number>1<\/number>/g' lxde-rc.xml 2>/dev/null
@@ -233,10 +233,10 @@ configure_desktop() { # In $archTop/home.
 	##### Edit ~/.config/openbox/menu.xml
 }
 
-create_configPanel() { # In $archTop/home.
+create_configPanel() { # In $alatermTop/home.
 	# This configures items appearing on the taskbar, removes logout button, and adds help to the menu.
 	# Rationale: The default LXDE configuration provides widgets and menu items that are inapplicable here.
-	local panels="$archTop/home/.config/lxpanel/LXDE/panels"
+	local panels="$alatermTop/home/.config/lxpanel/LXDE/panels"
 	mkdir -p "$panels"
 	cd "$panels"
 	local t="\n "
@@ -263,7 +263,7 @@ create_configPanel() { # In $archTop/home.
 	printf "$f FlatButton=0$f MaxTaskWidth=150$f spacing=1$t }\n}" >> panel
 }
 
-create_configMenusL() { # In $archTop/home/.config/menus
+create_configMenusL() { # In $alatermTop/home/.config/menus
 cat << 'EOC' > lxde-applications.menu # No hyphen. Quoted marker.
 <!DOCTYPE Menu PUBLIC '-//freedesktop//DTD Menu 1.0//EN'
  'http://www.freedesktop.org/standards/menu-spec/menu-1.0.dtd'>
@@ -289,8 +289,8 @@ create_bookmarks() { # In /home.
 	if [ -e "$HOME/storage/dcim" ] ; then
 		echo "file://$HOME/storage/dcim Android DCIM" >> .gtk-bookmarks
 	fi
-	if [ -e "$archTop/storage" ] ; then
-		echo "file://$archTop/storage Removable Storage" >> .gtk-bookmarks
+	if [ -e "$alatermTop/storage" ] ; then
+		echo "file://$alatermTop/storage Removable Storage" >> .gtk-bookmarks
 	fi
 }
 
@@ -303,29 +303,29 @@ download_help() { # In /usr/local
 
 
 if [ "$nextPart" -eq 7 ] ; then
-	cd "$archTop/home"
+	cd "$alatermTop/home"
 	configure_desktop
 	create_configPanel
 	create_bookmarks
-	mkdir -p "$archTop/home/.config/menus"
-	cd "$archTop/home/.config/menus"
+	mkdir -p "$alatermTop/home/.config/menus"
+	cd "$alatermTop/home/.config/menus"
 	create_configMenusL
-	mkdir -p "$archTop/home/.local/share/applications"
-	mkdir -p "$archTop/usr/local/scripts"
-	cd "$archTop/usr/local/scripts"
+	mkdir -p "$alatermTop/home/.local/share/applications"
+	mkdir -p "$alatermTop/usr/local/scripts"
+	cd "$alatermTop/usr/local/scripts"
 	create_banMenuItems
 	chmod 755 ban-menu-items
 	create_mimeappsList
 	chmod 755 mimeapps-list
 	create_defaultResolution
 	chmod 755 default-resolution
-	cd "$archTop/usr/local"
+	cd "$alatermTop/usr/local"
 	download_help
 	chmod 666 help-alaterm.html
-	cd "$archTop/etc/pacman.d/hooks"
+	cd "$alatermTop/etc/pacman.d/hooks"
 	create_banmenuitemsHook
 	create_mimeappslistHook
-	cd "$archTop"
+	cd "$alatermTop"
 	echo "Almost done..."
 	let nextPart=8
 	echo -e "let nextPart=8" >> status
