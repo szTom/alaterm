@@ -31,7 +31,7 @@ construct_prsUser() { # Tells Termux how to launch alaterm.
 
 edit_etcProfile() {
 	echo "# Added by installer script:" >> "$alatermTop/etc/profile"
-	echo "PATH=/usr/local/scripts:$PATH:/data/data/com.termux/files/usr/bin" >> "$alatermTop/etc/profile"
+	echo "PATH=/usr/local/scripts:\$PATH:/data/data/com.termux/files/usr/bin" >> "$alatermTop/etc/profile"
 	echo "export PATH" >> "$alatermTop/etc/profile"
 	echo "##" >> "$alatermTop/etc/profile"
 }
