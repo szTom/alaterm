@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+
+<!-- This file is intended to be viewed in a web browser. -->
+<!-- Download into Alaterm is automatic. -->
+<!-- If you are reading this at GitHub, it may appear as plain text. -->
+<!-- let helpversion=1 -->
+
+<title>HELP for Alaterm</title>
+<style type="text/css">
+code {color:red; font-weight:bold}
+</style>
+</head>
+<body>
+<h1>HELP for Alaterm - Arch Linux ARM in Termux</h1>
+<p>Help version 1. February 27, 2020</p>
+
+<p>This help file is intended for those who already installed Alaterm,
+and are reading it from within the installation.
+But if you are reading the raw text at GitHub, this information is incomplete.</p>
+
+<p>Topics:<br/>
+<a href="#alaterm">1. Capabilities and Limitations</a><br/>
+<a href="#desktop">2. LXDE Desktop, taskbar, and Menu</a><br/>
+<a href="#pacman">3. Installing and removing software packages</a><br/>
+<a href="#soft">4. Suggested Software</a></p>
+
+
+<a id="alaterm"></a>
+<h2>1. Capabilities and Limitations</h2>
+
+<p>The LXDE Desktop works with touchscreens. Usage is tricky. First, you move the cursor
+by sliding your finger. Then, when the cursor is over its destination, you tap.
+The trick is that your finger does not have to be over the cursor.</p>
+
+<p>Since most of the useful applications involve images, it is best to use Alaterm
+on a relatively large-screen device, with external keyboard and mouse.
+My own device is a 10.1 inch tablet. Right-click is supported!</p> 
+
+<p>Alaterm cannot perform any system manipulation unless that privilege is granted to Termux.
+For example, at the time I write this, Termux does not have the privilege to start
+most services and daemons, even if the software is installed. Therefore, you will be unable
+to start a CUPS printer in Alaterm, or a MIDI instrument controller.
+That may or may not change in the future, but it is beyond the control of Alaterm.</p>
+
+<p>When Alaterm is launched, you can manipulate some programs directly from the command line.
+In that situation, you do not need to launch VNC Viewer, as there is nothing to see.</p>
+
+<p>With VNC Viewer, you can see the LXDE graphical desktop at port 127.0.0.1:5901.
+But where is the button for exit or logout? There is none!
+You leave Alaterm from the terminal, using <b>logout</b> to return to Termux.</p>
+
+<p>Since Android is always active, you can flip back and forth between Alaterm and ordinary Android apps.
+So, you can check your E-mail in Android, while Alaterm sits idle or does something else.
+Likewise, you can do something in Alaterm, while an Android app plays music to Bluetooth earbuds.
+But remember that your device does not have the resources of a desktop computer.
+You have less RAM, no hard drive, and many background processes.
+That will limit how much you can do.</p>
+
+<p>As an ordinary user, you are granted superuser privileges within Alaterm.
+You can create, delete, and edit most Alaterm system files.
+In rare circumstances, you may use <b>sudo</b> for more privileges. No password needed.
+In the rarest of circumstances, you may fool Alaterm into thinking that you
+ar the root, by using <b>su</b> with password <b>root</b>.
+But this is only a deception. You do not gain root privileges in Android.</p>
+
+<p>Without launching Alaterm, Termux can create, delete, or edit files
+within the Alaterm installation. So there is no point to having secure passwords.
+If you uninstall Termux, then Alaterm is also deleted.</p>
+
+
+<a id="desktop"></a>
+<h2>2. LXDE Desktop, taskbar, and Menu</h2>
+
+<p>At the left corner of the taskbar is the application menu. Use it to launch programs.
+The initial setup is pre-configured with:<br/>
+<a href="https://wiki.lxde.org/en/GPicView">GPicView image viewer</a><br/>
+<a href="https://help.gnome.org/misc/release-notes/3.6/users-font-viewer.html">Gnome Font Viewer</a><br/>
+<a href="https://wiki.gnome.org/Apps/Evince">Evince document viewer for PDF</a><br/>
+<a href="https://wiki.gnome.org/Apps/Calculator">Gnome Calculator</a><br/>
+<a href="https://wiki.lxde.org/en/Leafpad">Leafpad plain text editor</a><br/>
+<a href="https://www.geany.org/">Geany text editor for programmers</a><br/>
+<a href="https://wiki.gnome.org/Apps/Ghex">GHex hex editor</a><br/>
+<a href="https://www.netsurf-browser.org/">NetSurf web browser</a><br/>
+<a href="https://wiki.lxde.org/en/PCManFM">PCManFM file manager</a><br/>
+Plus LXDE utilities for changing the look and feel of the desktop.
+</p>
+
+<p>The Menu is pre-configured so that it hides features that are known to fail in Alaterm.
+Most of them are system-level services, particularly daemons.</p>
+
+<p>Next to the LXDE Menu is the File Manager, named <b>PCManFM</b>.
+Several useful locations are pre-configured as shortcuts.
+The home folder for Alaterm is different than the Termux home.
+Likewise, Alaterm and Termux have their /usr software directories in different locations.
+There are shortcuts to places where Android allows file sharing.</p>
+
+<p>Because Alaterm sits within Termux, which sits within Android,
+Alaterm can only do what Termux and Android allow it to do.
+Thus, PCManFM can only see what Termux and Android allow it to see.</p>
+
+<p>Android does not allow Alaterm to start most system services.
+This is why audio-visual programs, and CUPS printing, are unlikely to work in Alaterm.
+If Termux ever gains those privileges, than perhaps Alatarm can take advantage.</p>
+
+<p>Bluetooth and Internet are managed by Android at all times.
+If an Alaterm program requires Bluetooth or Internet connection, it will probably work.</p>
+
+
+<a id="pacman"></a>
+<h2>3. Installing and removing software packages</h2>
+
+<p>Arch uses <b>pacman</b>
+to install, remove, and query software packages. Its syntax can be obscure.</p>
+
+<p>The most commonly-used pacman commands are case-sensitive:<br/>
+<code>pacman -Syu</code> updates all installed software.<br/>
+<code>pacman -S packagename</code> installs packagename, or re-installs it if requested.<br/>
+<code>pacman -R packagename</code> removes packagename, unless other installed packages depend on it.<br/>
+<code>pacman -Rsc packagename</code> removes packagename, its cache, and any dependencies
+that were installed at the same time. Use this when you try a package but it does not work as expected.
+<p>
+
+<p>Search the Internet for useful how-to info,
+such as <a href="https://wiki.archlinux.org/index.php/Pacman/Rosetta">here</a></p>
+
+
+<a id="soft"></a>
+<h2>4. Suggested Software</h2>
+
+<p>For a high-end image editor, use <a href="https://www.gimp.org/">GIMP</a>:<br/>
+<code>pacman -S gimp</code>
+</p>
+
+<p>You will get a very up-to-date version of GIMP, with full capabilities. Others will envy you.
+However, your device does not have enough computing power to handle multiple large images or many layers.</p>
+
+<p>The <a href="https://inkscape.org/">Inkscape</a> vector graphics editor can also be installed.
+It is a good drawing program,
+but a bit hard to understand if you have never used it before.</br/>
+<code>pacman -S inkscape</code>
+</p>
+
+<p>The <a href="http://hugin.sourceforge.net/">Hugin</a>, panorama photo stitcher, can be installed.
+However, photo stitching is inherently
+demanding of memory, CPU, and read-write temporary file access.
+For those reasons, you may find that Hugin is too much for your device.<br/>
+<code>pacman -S hugin</code>
+</p>
+
+<p>Using the command-line, ImageMagick can perform a great variety of image editing tasks.
+ImageMagick, and the similar GraphicsMagick, are widely used when image handling
+must be automated by script:
+<code>pacman -S imagemagick</code>
+</p>
+
+<p>Many modern handheld devices save screenshots and photos in <b>heic/heif</b> format,
+also known as <b>h265</b>. Alaterm image applications have the ability to read and write this format,
+in principle. In pracice, there is a bug in the software, at the time I write this.
+The easiest solution is to let an Android app convert heic/heif to something such as jpg or png,
+which can be edited in Alaterm. Another possibility is an online image conversion service.
+But if you really need Alaterm software to read and write heif/heic images,
+you can compile the necessary software. This takes about 250MB space and 40-60 minutes.
+Fortunately, there is a built-in script that does all the thinking for you:<br/>
+<code>compile-h265</code>
+</p>
+
+<p>You can create sophisticated new fonts, or edit existing fonts, using
+the most excellent <a href="https://fontforge.org/">FontForge</a>:<br/>
+<code>pacman -S fontforge</code>
+</p>
+
+<p>If you wish to install additional fonts, there are several ways to do it. One possibility is that
+you can simply install a prepared font package. Or, fonts can be manually installed.
+The various possibilities are described on
+<a href=https://wiki.archlinux.org/index.php/Fonts">this page</a>, but keep in mind that
+the selection of prepared packages may be smaller in Arch Linux ARM than in the full Arch Linux.</p>
+
+<p>The TeX typesetter, also known as LaTeX and TeXLive, works well.
+It can process via command line, or with GUI programs. To install TeX:<br/>
+<code>pacman -S texlive-most</code>
+</p>
+
+<p>That will ask you which parts you require. TeXLive is inherently a very large installation,
+perhaps up to a Gigabyte. Do not install parts that you do not expect to need.
+Although LuaTeX is not mentioned by name, it is part of some other packages there.</p>
+
+<p>Then, you may install a GUI, one or more of:<br />
+<code>pacman -S texworks texmaker texstudio</code>
+</p>
+
+<p>Paths in Arch are different than paths used by some other distributions.
+You may need to configure the GUI programs so that they can find the TeX installation.</p>
+
+<p>There is no <code>tlmgr</code> program for managing TeX.
+There is a user-created alternative to <code>tlmgr</code>,
+but I have found that occasional updates via pacman are adequate.</p>
+
+<p>You can install the <a href="https://www.libreoffice.org/">LibreOffice</a> suite:<br/>
+<code>pacman -S libreoffice-still</code>
+</p>
+
+<p>Do not install libreoffice-fresh. Do not install Java or its runtime.</p>
+
+<p>Before you install the very large LibreOffice suite: Are you sure you need it?
+Android has many native apps that can create documents, show slide presentations,
+calculate spreadsheets, and even maintain a small database.
+Many of them are linked to "cloud" storage via Microsoft or Google, or other providers.
+In some cases, your little device sends information to the greate computer in the sky,
+which does the heavy work for you, saves the information, and returns processed results to you.
+The only reason to use LibreOffice locally is if you are not often connected to cloud storage,
+or you have existing documents that must use the LibreOffice file formats.</p>
+
+<p>The Menu will show LibreOffice, and LibreOffice Writer. The other LibreOffice programs are there,
+but not shown on the Menu. Launching the main LibreOffice provides a choice.</p>
+
+<p>As with all other Arch programs, LibreOffice is designed for desktop computers with large resources.
+Do not even dream of creating a massive relational database on your device, even though the software is there.</p>
+
+<p>You might or might not be able to print to a Bluetooth printer.
+You can definitely export files to PDF, move the PDF to where Android can see it, then print from there.</p>
+
+<p>If you intend to play or manipulate multimedia files, then you are in for a world of hurt.</p>
+
+<p>At the time I write this, in late February 2020, Alaterm has only partial support for multimedia of any kind.
+This is because all multimedia must pass through Anrdoid, via Termux.
+Numerous Android apps have much better multimedia support.
+So, there is no reason to spend great effort doing multimedia in Alaterm.</p>
+
+<p>At some future time, maybe Termux will have greater multimedia support,
+which can be brought into Alaterm. But do not expect it, and do not ask for it.</p>
+
+
+</body>
+</html>
+
