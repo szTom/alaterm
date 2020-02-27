@@ -1,4 +1,4 @@
-# alaterm
+# Alaterm
 LXDE Desktop for Arch Linux ARM on Termux Android
 
 ![screenshot of LXDE desktop with expanded menu](alaterm-lxde.png)
