@@ -142,11 +142,14 @@ if [ "$removedUseless" != "yes" ] ; then
 	# Unlike a booted distributing Arch in proot cannot compile kernel modules.
 	if [ "$CPUABI" = "$CPUABI7" ] ; then
 		pacman -Rc linux-armv7 linux-firmware --noconfirm >/dev/null 2>&1
+		sleep .5
+		sed 's/#IgnorePkg/IgnorePkg = linux-armv7 linux-firmware/g' /etc/pacman.conf
 	fi
 	if [ "$CPUABI" = "$CPUABI8" ] ; then
 		pacman -Rc linux-aarch64 linux-firmware --noconfirm >/dev/null 2>&1
+		sleep .5
+		sed 's/#IgnorePkg/IgnorePkg = linux-aarch64 linux-firmware/g' /etc/pacman.conf
 	fi
-	sleep .5
 	pacman -Qdtq | pacman -Rc - --noconfirm >/dev/null 2>&1 # Autoremoves orphan stuff.
 	sleep .5
 	pacman -Qdtq | pacman -Rc - --noconfirm >/dev/null 2>&1 # Yes, again.
