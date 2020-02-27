@@ -89,12 +89,16 @@ cd "$termuxTop"
 termuxTop=`pwd` # Gets the full Android path, without any ../
 cd "$pwDir"
 declare archTop="$termuxTop/$installDirectory"
+declare PROBLEM="\e[1;91mPROBLEM.\e[0m" # Bold light red. Use with echo -e
+declare WARNING="\e[1;33mWARNING.\e[0m" # Bold yellow. Use with echo -e
+declare HELP="\e[1;92mHELP\e[0m" # Bold light green. Use with echo -e
+declare enter="\e[1;92menter\e[0m" # Bold light green. Use with echo -e
 # If the script cannot write in $termuxTop, then that is a problem:
 [ ! -w "$termuxTop" ] && sorry="yes"
 # If $termuxTop turns out to be Android root-level, then that is a problem:
 [ -w "$termuxTop/acct" ] && sorry="yes"
 if [ "$sorry" = "yes" ] ; then
-	echo -e "\nERROR. Termux is not at expected Android location."
+	echo -e "\n$PROBLEM. Termux is not at expected Android location."
 	echo "This script cannot install Arch Linux ARM on your device."
 	echo -e "Sorry about that. This script will now exit.\n" ; exit 1
 fi
@@ -187,10 +191,6 @@ else
 fi
 
 ## Definition of various variables:
-declare PROBLEM="\e[1;91mPROBLEM.\e[0m" # Bold light red. Use with echo -e
-declare WARNING="\e[1;33mWARNING.\e[0m" # Bold yellow. Use with echo -e
-declare HELP="\e[1;92mHELP\e[0m" # Bold light green. Use with echo -e
-declare enter="\e[1;92menter\e[0m" # Bold light green. Use with echo -e
 declare wakelockMessage="" # Nonempty if wakelock is started or released.
 # CPUABI is the system designation used by Android. Not same as version:
 hash getprop >/dev/null 2>&1
