@@ -143,12 +143,12 @@ if [ "$removedUseless" != "yes" ] ; then
 	if [ "$CPUABI" = "$CPUABI7" ] ; then
 		pacman -Rc linux-armv7 linux-firmware --noconfirm >/dev/null 2>&1
 		sleep .5
-		sed 's/#IgnorePkg/IgnorePkg = linux-armv7 linux-firmware/g' /etc/pacman.conf
+		sed -i 's/#IgnorePkg.*/IgnorePkg = linux-armv7 linux-firmware/g' /etc/pacman.conf
 	fi
 	if [ "$CPUABI" = "$CPUABI8" ] ; then
 		pacman -Rc linux-aarch64 linux-firmware --noconfirm >/dev/null 2>&1
 		sleep .5
-		sed 's/#IgnorePkg/IgnorePkg = linux-aarch64 linux-firmware/g' /etc/pacman.conf
+		sed -i 's/#IgnorePkg.*/IgnorePkg = linux-aarch64 linux-firmware/g' /etc/pacman.conf
 	fi
 	pacman -Qdtq | pacman -Rc - --noconfirm >/dev/null 2>&1 # Autoremoves orphan stuff.
 	sleep .5
