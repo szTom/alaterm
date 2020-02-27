@@ -44,12 +44,10 @@ cat << 'EOC' > .bash_profile # No hyphen. Quoted marker.
 # User customization goes in file /home/.bashrc.
 rm -r -f ~/.cache
 mkdir -p ~/.cache
-cat << EOC > ~/.cache/1-README
-This ~/.cache directory is emptied at each login.
-Do not put anything here, if you need it later.
-Anything in ~/.cache was created at current login
-and may increase during your current session.
-EOC
+echo "This ~/.cache directory is emptied at each login." > ~/.cache/1-README
+echo "Do not put anything here, if you need it later." >> ~/.cache/1-README
+echo "Anything in ~/.cache was created at current login" >> ~/.cache/1-README
+echo "and may increase during your current session." >> ~/.cache/1-README
 rm -f ~/.bash_history
 rm -f ~/.cache/lxsession/LXDE/run.log
 if [ -f ~/.Xauthority ] ; then
