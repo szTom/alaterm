@@ -48,8 +48,8 @@ declare installDirectory=archx
 #    * The alternative, by SDRausty, installs to Termux home/arch.
 #    * Advantage of installing to the default location is that
 #      Arch will not be accidentally removed, if you clean Termux home.
-# 2. To launch Arch from Termux. Default: launchcommand=launcharch
-declare launchCommand=launcharch
+# 2. To launch Arch from Termux. Default: launchCommand=alaterm
+declare launchCommand=alaterm
 #    * The alternative script, by SDRausty, uses: startarch
 # END OF USER-CUSTOMIZABLE SETTINGS.
 ##############################################################################
