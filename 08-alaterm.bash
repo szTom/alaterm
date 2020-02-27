@@ -17,7 +17,7 @@ fi
 create_launchCommand() {
 cat << EOC > "$launchCommand" # No hyphen. Unquoted marker.
 #!/bin/bash
-# This is the launch command for Alaterm, Arch Linux ARM in Termux.
+# This is the launch command for alaterm, Arch Linux ARM in Termux.
 #
 construct_prsUser() { # Tells Termux how to launch Arch.
 	prsUser="proot --kill-on-exit --link2symlink -v -1 -0 -r $archTop " # zero
@@ -70,41 +70,41 @@ query_vncserver() { # Arch vncserver conflicts with Termux vncserver.
 	fi
 }
 query_vncserver
-[ "$archTop" = "" ] && archTop=/data/data/com.termux/archx # Developer use.
 source "$archTop/status"
-hereiam="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
-source "$hereiam/10-preparedesktop.bash"
-source "$hereiam/11-scripts.bash"
 archstatnow="$(stat --format '%a' $archTop)"
 if [ "$archstatnow" = "100" ] ; then
 	chmod 700 "$archTop"
-	echo "INFO: The last time you used Arch, you did not logout correctly."
+	echo "INFO: The last time you used alaterm, you did not logout correctly."
 	echo "That caused a problem. It has now been fixed automatically."
 	echo "This launch script will now exit. You may re-launch it."
 	echo "Or, if you think the problem was caused by something else,"
-	echo "You can use Termux to fix Arch files, before launching Arch."
+	echo "You can use Termux to fix alaterm files, before launching alaterm."
 	exit 1
 fi
-chmod 100 "$archTop" # Makes Arch / invisible in pcmanfm.
+chmod 100 "$archTop" # Makes alaterm / invisible in PCManFM.
 construct_prsUser
-echo "unset LD_PRELOAD" > "$HOME/prsTmp"
-echo "exec $prsUser" >> "$HOME/prsTmp" # Termux home, not Arch /home.
-bash "$HOME/prsTmp" # Launches Arch.
-rm -f "$HOME/prsTmp" # After Arch logout.
-chmod 700 "$archTop" # Restores ability to edit Arch from Termux.
-echo -e "\e[1;33mYou have left Arch, and are now in Termux.\e[0m\n"
+echo "unset LD_PRELOAD" > "$HOME/prsTmp" # Termux home, not alaterm home.
+echo "exec $prsUser" >> "$HOME/prsTmp"
+bash "$HOME/prsTmp" # Launches alaterm.
+rm -f "$HOME/prsTmp" # After alaterm logout.
+chmod 700 "$archTop" # Restores ability to edit alaterm from Termux.
+echo -e "\e[1;33mYou have left alaterm, and are now in Termux.\e[0m\n"
 ##
 EOC
 }
 
 
 if [ "$nextPart" = 8 ] ; then
-	cd ~
+	cd "$archTop"
 	create_launchCommand
 	chmod 755 "$launchCommand"
 	cp "$launchCommand" "$PREFIX/bin"
-	mv "$launchCommand" "$archTop"
-	echo -e "\n\e[1;92mDONE. You can now launch Alaterm:  $launchCommand\e[0m\n"
+	cd ~
+	grep alaterm .bashrc >/dev/null 2>&1
+	if [ "$?" -ne 0 ] ; then
+		echo -e "echo \"To launch alaterm: $launchCommand.  View at 127.0.0.1:5901  password=password.\"\n" >> ~/.bashrc
+	fi
+	echo -e "\n\e[1;92mDONE. To launch alaterm: $launchCommand.  View at 127.0.0.1:5901  password=password.\e[0m\n"
 	let nextPart=9
 	echo "let nextPart=9" >> "$archTop/status"
 fi
