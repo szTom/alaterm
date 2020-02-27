@@ -555,6 +555,8 @@ if [ "$nextPart" -eq 0 ] ; then
 	echo -e "let nextPart=1" >> status
 fi
 
+cd "$pwDir"
+
 ## If necessary, download the component scripts to the current directory:
 mainurl="https://raw.githubusercontent.com/cargocultprog/alaterm/master"
 for nn in 01 02 03 04 05 06 07 08
