@@ -528,7 +528,9 @@ alatermTop="$alatermTop"
 launchCommand="$launchCommand"
 isRooted="$isRooted"
 termuxProxy="$termuxProxy"
-CPUABI="$CPUABI"
+CPUABI="$CPUABI" # Your device.
+CPUABI7="armeabi-v7a" # 32-bit. May or may not be Chromebook.
+CPUABI8="arm64-v8a" # 64-bit. Do not confuse with arm-v8l CPU.
 userSpace="$userSpace"
 priorInstall="$priorInstall"
 EOC
@@ -562,6 +564,7 @@ cd "$pwDir"
 
 ## If necessary, download the component scripts to the current directory:
 mainurl="https://raw.githubusercontent.com/cargocultprog/alaterm/master"
+cd "$hereiam"
 for nn in 01 02 03 04 05 06 07 08
 do
 	if [ ! -r "$nn-alaterm.bash" ] ;then
@@ -571,6 +574,7 @@ done
 
 ## Verify that the component scripts are here:
 allhere="yes"
+cd "$hereiam"
 for nn in 01 02 03 04 05 06 07 08
 do
 	if [ ! -r "$nn-alaterm.bash" ] ;then
@@ -587,6 +591,7 @@ fi
 start_termuxWakeLock # Needed from this point. Released by any exit or error.
 for nn in 01 02 03 04 05 06 07 08
 do
+	cd "$hereiam"
 	source "$nn-alaterm.bash"
 done
 
