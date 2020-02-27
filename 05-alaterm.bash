@@ -37,7 +37,8 @@ export EDITOR=/usr/bin/nano
 export BROWSER=/usr/bin/netsurf
 export ANDROID_DATA=/data
 export ANDROID_ROOT=/system
-export "$(env | grep BOOTCLASSPATH )" # Android jar files.
+tebcp="$(env | grep BOOTCLASSPATH )" # Android jar files.
+export $tebcp
 export EXTERNAL_STORAGE=/sdcard
 export TLDPRE="$PREFIX/lib/libtermux-exec.so"
 export TMPDIR=/tmp
