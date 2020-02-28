@@ -66,9 +66,9 @@ cat << EOC > "$launchCommand" # No hyphen. Unquoted marker.
 # But the launch script does not continue to launch. Instead, run it a second time.
 # This gives you the opportunity to manually identify the problem from Termux,
 # in case it was not fixed, without an infinite do-loop.
-alatermstatnow="$(stat --format '%a' $alatermTop)"
-if [ "$alatermstatnow" = "100" ] ; then
-	chmod 700 "$alatermTop"
+alatermstatnow="\$(stat --format '%a' $alatermTop)"
+if [ "\$alatermstatnow" = "100" ] ; then
+	chmod 755 "$alatermTop"
 	echo "INFO: The last time you used alaterm, you did not logout correctly."
 	echo "That caused a problem. It has now been fixed automatically."
 	echo "This launch script will now exit. You may re-launch it."

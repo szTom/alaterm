@@ -112,6 +112,14 @@ export PS1='\e[1;38;5;75m[alaterm:$(whoami)@\W]$\e[0m '
 EOC
 }
 
+create_etcBashlogout() { # In /etc.
+cat << EOC > bash.bash_logout # No hyphen. Unquoted marker.
+# File /etc/bash.bash_logout created by installer script.
+chmod 755 "$alatermTop" # Restores ability to edit alaterm from Termux.
+echo -e "\e[1;33mYou have left alaterm, and are now in Termux.\e[0m\n"
+##
+EOC
+}
 
 if [ "$nextPart" -eq 6 ] ; then
 	cd "$HOME" # Termux home. Ensures being outside alaterm.
@@ -134,6 +142,9 @@ if [ "$nextPart" -eq 6 ] ; then
 	recreate_userBashrc
 	cp .bash_profile "$alatermTop/etc/skel"
 	cp .bashrc "$alatermTop/etc/skel"
+	cd "$alatermTop/etc"
+	create_etcBashlogout
+	chmod 755 bash.bash_logout
 	cd "$alatermTop"
 	let nextPart=7
 	echo "let nextPart=7" >> status
