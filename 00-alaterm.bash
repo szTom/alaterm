@@ -221,6 +221,7 @@ declare partialArchive="no" # Yes if download interrupted and re-start.
 declare userLocale="en_US" # Default. Measured later. Always UTF-8.
 declare prsPre="" # Becomes part of the launch command.
 declare prsUser="" # Becomes part of the launch command.
+declare gotHelp="no" # Becomes yes when help file installed.
 let processors=0 # Becomes number of processors in CPU: 4, 6, 8.
 let nextPart=0 # Keeps track of progress. Recorded in status file.
 # Get variables stored by previously running this script, if any:
@@ -565,10 +566,11 @@ cd "$pwDir"
 ## If necessary, download the component scripts to the current directory:
 mainurl="https://raw.githubusercontent.com/cargocultprog/alaterm/master"
 cd "$hereiam"
+echo -e "\e[1;92mDownloading scripts from the alaterm repository at GitHub...\e[0m"
 for nn in 01 02 03 04 05 06 07 08
 do
 	if [ ! -r "$nn-alaterm.bash" ] ;then
-		wget "$mainurl/$nn-alaterm.bash"
+		wget "$mainurl/$nn-alaterm.bash" >/dev/null 2>&1
 	fi
 done
 
@@ -582,9 +584,13 @@ do
 	fi
 done
 if [ "$allhere" = "no" ] ; then
-	echo "One or more of the component scripts failed to download."
+	echo -e "$PROBLEM One or more of the component scripts failed to download."
 	echo "Wait awhile, then re-launch this script. Exit."
 	exit 1
+else
+	echo -e "\e[92mGot the scripts. Continuing...\e[0m"
+	echo "Android may ask if you wish to stop optimizing battery usage."
+	echo "You may allow or deny, but installation is faster if you allow."
 fi
 
 ## Process the component scripts:

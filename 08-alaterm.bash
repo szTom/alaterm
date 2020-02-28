@@ -119,7 +119,8 @@ if [ "$nextPart" = 8 ] ; then
 	cp "$launchCommand" "$PREFIX/bin"
 	grep alaterm ~/.bashrc >/dev/null 2>&1 # In Termux home.
 	if [ "$?" -ne 0 ] ; then
-		echo -e "echo \"To launch alaterm: $launchCommand.  View at 127.0.0.1:5901  password=password.\"\n" >> ~/.bashrc
+		echo -e "echo \"To launch alaterm: $launchCommand.  View at 127.0.0.1:5901  password=password.\n\"" >> ~/.bashrc
+		export ALATERM="$alatermTop"
 	fi
 	cd "$hereiam"
 	for nn in 01 02 03 04 05 06 07 08

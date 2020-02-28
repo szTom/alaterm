@@ -37,8 +37,8 @@ export EDITOR=/usr/bin/nano
 export BROWSER=/usr/bin/netsurf
 export ANDROID_DATA=/data
 export ANDROID_ROOT=/system
-tebcp="$(env | grep BOOTCLASSPATH )" # Android jar files.
-export $tebcp
+env | grep BOOTCLASSPATH # Android jar files, accessible to Termux.
+export BOOTCLASSPATH
 export EXTERNAL_STORAGE=/sdcard
 export TLDPRE="$PREFIX/lib/libtermux-exec.so"
 export TMPDIR=/tmp
@@ -263,6 +263,7 @@ if [ "$gotThem" != "yes" ] ; then
 		echo "Completed installation of new packages."
 		echo -e "gotThem=\"yes\"" >> /status
 	fi
+	##### Might want to double-check.
 fi
 sleep 1
 pacman -Rsc lxmusic --noconfirm >/dev/null 2>&1 # Will be replaced by Audacious.

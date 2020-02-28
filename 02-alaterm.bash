@@ -98,7 +98,10 @@ if [ "$nextPart" -eq 2 ] ; then
 	copy_mirror
 	copy_resolvConf
 	sleep .5
-	rm -f "$archAr" ; rm -f "$archAr.md5"
+	if [ ! -f ~/nodiscard ] ; then # Developer use.
+		rm -f "$archAr"
+		rm -f "$archAr.md5"
+	fi
 	echo "Successfully unpacked. Continuing..."
 	let nextPart=3
 	echo -e "let nextPart=3" >> status

@@ -275,30 +275,20 @@ EOC
 }
 
 create_bookmarks() { # In /home.
-	echo "trash:/// Trash" > .gtk-bookmarks
+	echo "file:///sdcard Android Shared" > .gtk-bookmarks
+	echo "file:///storage Removable Media" >> .gtk-bookmarks
 	echo "file://$HOME Termux Home" >> .gtk-bookmarks
-	if [ -e "$HOME/storage/downloads" ] ; then
-		echo "file://$HOME/storage/downloads Android Download" >> .gtk-bookmarks
-	fi
-	if [ -e "$HOME/storage/shared/documents" ] ; then
-		echo "file://$HOME/storage/shared/Documents Android Documents" >> .gtk-bookmarks
-	fi
-	if [ -e "$HOME/storage/pictures" ] ; then
-		echo "file://$HOME/storage/pictures Android Pictures" >> .gtk-bookmarks
-	fi
-	if [ -e "$HOME/storage/dcim" ] ; then
-		echo "file://$HOME/storage/dcim Android DCIM" >> .gtk-bookmarks
-	fi
-	if [ -e "$alatermTop/storage" ] ; then
-		echo "file://$alatermTop/storage Removable Storage" >> .gtk-bookmarks
-	fi
+	echo "trash:/// Trash" >> .gtk-bookmarks
 }
 
 download_help() { # In /usr/local
         wget https://raw.githubusercontent.com/cargocultprog/alaterm/master/help-alaterm.html
         if [ "$?" -ne 0 ] ; then
                 echo "Unable to download the help file. Not a fatal error. Continuing..."
-        fi
+        else
+		gotHelp="yes"
+		echo "gotHelp=\"yes\"" >> "$alatermTop/status"
+	fi
 }
 
 
@@ -319,9 +309,11 @@ if [ "$nextPart" -eq 7 ] ; then
 	chmod 755 mimeapps-list
 	create_defaultResolution
 	chmod 755 default-resolution
-	cd "$alatermTop/usr/local"
-	download_help
-	chmod 666 help-alaterm.html
+	if [ "$gotHelp" != "yes" ] ; then
+		cd "$alatermTop/usr/local"
+		download_help
+		chmod 666 help-alaterm.html
+	fi
 	cd "$alatermTop/etc/pacman.d/hooks"
 	create_banmenuitemsHook
 	create_mimeappslistHook
