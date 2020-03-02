@@ -174,6 +174,7 @@ if [ -f /usr/bin/gpicview ] ; then # Simple image viewer.
 	echo "image/x-tga=gpicview.desktop;" >> "$thisfile"
 	echo "image/heic=gpicview.desktop;" >> "$thisfile"
 	echo "image/heif=gpicview.desktop;" >> "$thisfile"
+fi
 if [ -f /usr/bin/netsurf ] ; then # Browser.
 	echo "application/xml=netsurf.desktop;" >> "$thisfile"
 	echo "text/html=netsurf.desktop;" >> "$thisfile"
@@ -254,7 +255,7 @@ create_configPanel() { # In $alatermTop/home.
 	printf "$t background=1$t backgroundfile=$lxdebackground\n}" >> panel
 	printf "\nPlugin {$t type=space$t Config {$f Size=2$t }\n}" >> panel
 	printf "\nPlugin {$t type=menu$t Config {$f image=$lxdeicon$f system {$f }$f separator {$f }" >> panel
-	printf "$f item {$s image=$helpicon$s name=HELP$s action=netsurf /usr/local/help-alaterm.html$f }$t }\n}" >> panel
+	printf "$f item {$s image=$helpicon$s name=HELP$s action=netsurf /usr/local/help/help-alaterm-00.html$f }$t }\n}" >> panel
 	printf "\nPlugin {$t type=space$t Config {$f Size=6$t }\n}" >> panel
 	printf "\nPlugin {$t type=launchbar$t Config {$f Button {$s id=pcmanfm.desktop$f }$t }\n}" >> panel
 	printf "\nPlugin {$t type=space$t Config {$f Size=111$t }\n}" >> panel
@@ -278,16 +279,40 @@ create_bookmarks() { # In /home.
 	echo "file:///sdcard Android Shared" > .gtk-bookmarks
 	echo "file:///storage Removable Media" >> .gtk-bookmarks
 	echo "file://$HOME Termux Home" >> .gtk-bookmarks
-	echo "trash:/// Trash" >> .gtk-bookmarks
+	echo "file:///home/.local/share/Trash Trash" >> .gtk-bookmarks
 }
 
-download_help() { # In /usr/local
-        wget https://raw.githubusercontent.com/cargocultprog/alaterm/master/help-alaterm.html
-        if [ "$?" -ne 0 ] ; then
-                echo "Unable to download the help file. Not a fatal error. Continuing..."
+create_fakeHelp() { # In usr/local/help, if necessary.
+cat << EOC > help-alaterm-00.html # No hyphen. Unquoted marker.
+<!DOCTYPE html>
+<html>
+<head>
+<title>OOPS</title>
+</head>
+<body>
+<p>You are reading this message because the help files failed to download when you installed alaterm.</p>
+<p>Look <a href="https://raw.githubusercontent.com/cargocultprog/alaterm/master/help-alaterm-00.html">online</a> instead.</p>
+<p>The help files may appear as plain text.</p>
+</body>
+</html>
+EOC
+}
+
+download_help() { # In /usr/local/help.
+	gotallhelp="yes"
+        wget -t 3 -T 3 https://raw.githubusercontent.com/cargocultprog/alaterm/master/help-alaterm-00.html
+	[ "$?" -ne 0 ] && gotallhelp="no"
+        wget -t 3 -T 3 https://raw.githubusercontent.com/cargocultprog/alaterm/master/help-alaterm-01.html
+	[ "$?" -ne 0 ] && gotallhelp="no"
+        wget -t 3 -T 3 https://raw.githubusercontent.com/cargocultprog/alaterm/master/help-alaterm-02.html
+	[ "$?" -ne 0 ] && gotallhelp="no"
+        wget -t 3 -T 3 https://raw.githubusercontent.com/cargocultprog/alaterm/master/help-alaterm-03.html
+	[ "$?" -ne 0 ] && gotallhelp="no"
+        if [ "$gotallhelp" = "no" ] ; then
+		create_fakeHelp
+                echo -e "$WARNING Unable to download the help files. Not a fatal error. Continuing..."
         else
-		gotHelp="yes"
-		echo "gotHelp=\"yes\"" >> "$alatermTop/status"
+		echo "gotallhelp=\"yes\"" >> "$alatermTop/status"
 	fi
 }
 
@@ -305,15 +330,15 @@ if [ "$nextPart" -eq 7 ] ; then
 	cd "$alatermTop/usr/local/scripts"
 	create_banMenuItems
 	chmod 755 ban-menu-items
+	ban-menu-items
 	create_mimeappsList
 	chmod 755 mimeapps-list
+	mimeapps-list
 	create_defaultResolution
 	chmod 755 default-resolution
-	if [ "$gotHelp" != "yes" ] ; then
-		cd "$alatermTop/usr/local"
-		download_help
-		chmod 666 help-alaterm.html
-	fi
+	mkdir -p "$alatermTop/usr/local/help"
+	cd "$alatermTop/usr/local/help"
+	download_help
 	cd "$alatermTop/etc/pacman.d/hooks"
 	create_banmenuitemsHook
 	create_mimeappslistHook

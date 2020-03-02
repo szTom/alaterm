@@ -25,18 +25,18 @@ cat << 'EOC' > query-tvnc # No hyphen. Quoted marker.
 # for having two servers. So this script does not attempt to do it.
 hash vncserver >/dev/null 2>&1 # Refers to Termux vncserver.
 if [ "$?" -eq 0 ] ; then
-	vrps="$( echo "$(vncserver -list)" | sed 's/.*://g' | sed 's/\s.*$//g' )"
-	vrpn="$( echo $vrps | grep -Eo '[0-9]{1}' )" >/dev/null 2>&1
+	vrps="$( vncserver -list | grep :[1234567890] )"
 	if [ "$?" -eq 0 ] ; then # Termux vncserver is on.
+		vrpn="$( echo $vrps | sed 's/\s.*//g' )"
 		echo -e "\e[1;33mWARNING.\e[0m Termux has its own vncserver active."
 		echo "It will conflict with the vncserver launched by alaterm."
 		echo "What do you wish to do?"
 		echo "  k = Kill the Termux vncserver, then continue to launch alaterm."
-		echo "  x = Exit script. Termux vncserver remains on, so alaterm will not launch."
+		echo "  x = Do not launch alaterm. Termux vncserver remains on."
 		while true ; do
-			printf "Now \e[1;92menter\e[0m your choice [k|X] : " ; read readvar
+			printf "Now \e[1;92menter\e[0m your choice [k|x] : " ; read readvar
 			case "$readvar" in
-				k*|K* ) vncserver -kill :$vrpn >/dev/null 2>&1
+				k*|K* ) vncserver -kill $vrpn >/dev/null 2>&1
 				if [ "$?" -eq 0 ] ; then
 					echo "Termux vncserver killed. Continuing to alaterm..."
 				else
@@ -45,7 +45,7 @@ if [ "$?" -eq 0 ] ; then
 					exit 1
 				fi
 				break ;;
-				x|X ) echo "Termux server remains on, so alaterm will not launch."
+				x|X ) echo "Script will exit without change."
 				exit 1 ; break ;;
 				* ) echo "No default. Choose k or x." ;;
 			esac
@@ -119,7 +119,7 @@ if [ "$nextPart" = 8 ] ; then
 	cp "$launchCommand" "$PREFIX/bin"
 	grep alaterm ~/.bashrc >/dev/null 2>&1 # In Termux home.
 	if [ "$?" -ne 0 ] ; then
-		echo -e "echo \"To launch alaterm: $launchCommand.  View at 127.0.0.1:5901  password=password.\n\"" >> ~/.bashrc
+		echo -e "echo \"To launch alaterm, command:  $launchCommand.\n\"" >> ~/.bashrc
 		export ALATERM="$alatermTop"
 	fi
 	cd "$hereiam"
@@ -127,7 +127,7 @@ if [ "$nextPart" = 8 ] ; then
 	do
 		rm -f "$nn-alaterm.bash"
 	done
-	echo -e "\n\e[1;92mDONE. To launch alaterm: $launchCommand.  View at 127.0.0.1:5901  password=password.\e[0m\n"
+	echo -e "\n\e[1;92mDONE. To launch alaterm, command:  $launchCommand.\e[0m\n"
 	let nextPart=9
 	echo "let nextPart=9" >> "$alatermTop/status"
 fi

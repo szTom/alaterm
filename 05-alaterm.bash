@@ -32,15 +32,15 @@ cat << EOC > "bash.bashrc" # No hyphen. Unquoted marker.
 # Created by installation script. Replaced original file.
 export THOME="$HOME" # Termux home directory, seen from within alaterm.
 export TUSR="$PREFIX" # This is the usr directory in Termux.
-export ALATERMDIR="$alatermTop"
+export ALATERMDIR="$alatermTop" # As seen from outside alaterm, by Termux.
 export EDITOR=/usr/bin/nano
 export BROWSER=/usr/bin/netsurf
 export ANDROID_DATA=/data
 export ANDROID_ROOT=/system
-env | grep BOOTCLASSPATH # Android jar files, accessible to Termux.
-export BOOTCLASSPATH
-export EXTERNAL_STORAGE=/sdcard
-export TLDPRE="$PREFIX/lib/libtermux-exec.so"
+$(env | grep BOOTCLASSPATH) >/dev/null 2>&1
+export BOOTCLASSPATH # Android *.jar files accessible to Termux.
+export EXTERNAL_STORAGE=/sdcard # Actually onboard storage, not removable.
+export TLDPRE="$PREFIX/lib/libtermux-exec.so" # Termux LD_PRELOAD.
 export TMPDIR=/tmp
 # Clear left-over tmp:
 rm -f /tmp/.*lock*
@@ -63,7 +63,22 @@ echo "\$PATH" | grep "files/usr/bin" >/dev/null 2>&1
 if [ "\$?" -ne 0 ] ; then PATH="\$PATH:/data/data/com.termux/files/usr/bin" ; export PATH ; fi
 echo "\$PATH" | grep "\$HOME/bin" >/dev/null 2>&1
 if [ "\$?" -ne 0 ] ; then PATH="\$HOME/bin:\$PATH" ; export PATH ; fi
-#
+# Aliases:
+alias top='/system/bin/top'
+alias ps='/system/bin/ps'
+alias ls='ls --color=auto'
+alias pacman='sudo pacman'
+alias fc-cache='sudo fc-cache'
+alias vncviewer='echo -e "\e[33mYou need to use the separate VNC Viewer app.\e[0m" \#'
+usepacman() {
+        echo "In alatermm, use pacman for package management."
+}
+alias apt='usepacman #'
+alias apt-get='usepacman #'
+alias aptitude='usepacman #'
+alias dpkg='usepacman #'
+alias pkg='usepacman #'
+##
 EOC
 }
 
@@ -143,14 +158,11 @@ if [ "$removedUseless" != "yes" ] ; then
 	# Unlike a booted distributing Arch in proot cannot compile kernel modules.
 	if [ "$CPUABI" = "$CPUABI7" ] ; then
 		pacman -Rc linux-armv7 linux-firmware --noconfirm >/dev/null 2>&1
-		sleep .5
-		sed -i 's/^#IgnorePkg.*/IgnorePkg = linux-armv7 linux-firmware/g' /etc/pacman.conf
 	fi
 	if [ "$CPUABI" = "$CPUABI8" ] ; then
 		pacman -Rc linux-aarch64 linux-firmware --noconfirm >/dev/null 2>&1
-		sleep .5
-		sed -i 's/^#IgnorePkg.*/IgnorePkg = linux-aarch64 linux-firmware/g' /etc/pacman.conf
 	fi
+	sleep .5
 	pacman -Qdtq | pacman -Rc - --noconfirm >/dev/null 2>&1 # Autoremoves orphan stuff.
 	sleep .5
 	pacman -Qdtq | pacman -Rc - --noconfirm >/dev/null 2>&1 # Yes, again.
@@ -171,7 +183,7 @@ fi
 if [ "$updgradedArch" != "yes" ] ; then
 	sleep .5
 	echo -e "Upgrading installed packages:\n"
-	pacman -Syu --noconfirm
+	pacman -Syuq --noconfirm
 	if [ "$?" -ne 0 ] ; then
 		exit 73
 	else
@@ -181,7 +193,7 @@ if [ "$updgradedArch" != "yes" ] ; then
 fi
 if [ "$gotSudo" != "yes" ] ; then
 	sleep .5
-	pacman -S --noconfirm sudo
+	pacman -Sq --noconfirm sudo
 	if [ "$?" -ne 0 ] ; then
 		exit 74
 	else
@@ -217,17 +229,14 @@ cat << 'EOC' > ".bashrc" # No hyphen, quoted marker.
 # File /root/.bashrc
 # Created by installation script.
 rm -f /root/.bash_history
-alias ls='ls --color=auto'
-# These responses from Android exist, but may be useless:
-alias top='/system/bin/top'
-alias ps='/system/bin/ps'
 export PS1='\e[1;38;5;75m[alaterm:\e[1;91mroot\e[1;38;5;75m@\W]#\e[0m '
 echo -e "\e[33mOnly use root if necessary. Root is within alaterm, not Android."
 echo -e "To leave root and return to ordinary alaterm user:  exit\e[0m"
 alias su='exit #'
 #
 ## Your custom commands, if any, go below:
-#
+
+##
 EOC
 }
 
@@ -246,16 +255,16 @@ getThese="nano wget python python-xdg python2-xdg python2-numpy python2-lxml pyg
 getThese+=" ghostscript tigervnc lxde evince poppler-data pstoedit poppler-glib pkgfile pigz freeglut"
 getThese+=" xterm gpicview netsurf leafpad geany geany-plugins ghex man"
 getThese+=" gnome-calculator gnome-font-viewer libraw libwmf openexr openjpeg2"
-pacman -Ss trash-cli >/dev/null # In case this package is unavailable.
+pacman -Ss -q trash-cli >/dev/null # In case this package is unavailable.
 if [ "$?" -eq 0 ] ; then
 	getThese+=" trash-cli"
-	declare -g gotTCLI="yes"
+	gotTCLI="yes"
 else
-	declare -g gotTCLI="no"
+	gotTCLI="no"
 fi
 if [ "$gotThem" != "yes" ] ; then
 	echo "Downloading new packages for LXDE Desktop..."
-	pacman -S --noconfirm --needed $getThese
+	pacman -Sq --noconfirm --needed $getThese
 	if [ "$?" -ne 0 ] ; then
 		exit 82
 	else
@@ -266,7 +275,7 @@ if [ "$gotThem" != "yes" ] ; then
 	##### Might want to double-check.
 fi
 sleep 1
-pacman -Rsc lxmusic --noconfirm >/dev/null 2>&1 # Will be replaced by Audacious.
+pacman -Rsc lxmusic --noconfirm >/dev/null 2>&1
 create_userVncConfig() { # In /home/.vnc.
 	echo "# File /home/.vnc/config created by installation script." > config
 	echo "# You may edit the following geometry to suit your needs." >> config
@@ -329,22 +338,20 @@ EOC
 
 create_trashReadme() { # In /home/.local/share/Trash.
 cat << 'EOC' > README-IMPORTANT # No hyphen. Quoted marker
-## README-IMPORTANT for TRASH
-# You do not have a graphical Trash bin.
-# The File Manager has "Go" to "Rubbish Bin"
-# but it is not implemented. Android blocks it.
-# The Trash exists. Use these command-line tools:
+## README-IMPORTANT for TRASH, also known as RUBBISH.
+# You do not have a graphical Trash bin. Android blocks it.
+# The Trash directory exists. Use these command-line tools:
 # To Trash files and/or folders:
-trash-put items to be trashed
+trash-put # choose items to be trashed
 # To empty Trash. Permanently deletes contents:
 trash-empty
 # To discover the contents of Trash:
 trash-list
 # To restore items, after using trash-list:
-trash-restore items to be restored
+trash-restore # items to be restored
 # To permanently delete specific items,
 # without emptying the entire Trash bin:
-trash-rm items to be deleted
+trash-rm # choose items to be deleted
 ##
 EOC
 }

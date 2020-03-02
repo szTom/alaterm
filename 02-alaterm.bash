@@ -98,9 +98,13 @@ if [ "$nextPart" -eq 2 ] ; then
 	copy_mirror
 	copy_resolvConf
 	sleep .5
-	if [ ! -f ~/nodiscard ] ; then # Developer use.
-		rm -f "$archAr"
-		rm -f "$archAr.md5"
+	cd "$hereiam"
+	if [ ! -f nodiscard ] ; then
+		rm -f "$alatermTop/$archAr"
+		rm -f "$alatermTop/$archAr.md5"
+	else # Developer use.
+		mv -f "$alatermTop/$archAr" . 2>/dev/null
+		mv -f "$alatermTop/$archAr" . 2>/dev/null
 	fi
 	echo "Successfully unpacked. Continuing..."
 	let nextPart=3

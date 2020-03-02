@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+
+<!-- This file is intended to be viewed in a web browser. -->
+<!-- Download into Alaterm is automatic. -->
+<!-- If you are reading this at GitHub, it may appear as plain text. -->
+<!-- let helpversion=1 -->
+
+<title>HELP for Alaterm - 3</title>
+
+<style type="text/css">
+code {font-size:large;}
+</style>
+
+</head>
+<body>
+
+<p><a href="help-alaterm-0.html" id="h">Return to Index</a></p>
+
+<a id="h3"></a>
+<h3>3. Adding and Removing Software Packages</h3>
+
+<p>
+  <ul>
+    <li><a href="#h3.1">Using pacman</a></li>
+    <li><a href="#h3.2">Installing Fonts</a></li>
+    <li><a href="#h3.3">GIMP Image Editor</a></li>
+    <li><a href="#h3.4">Inkscape Vector Drawing</a></li>
+    <li><a href="#h3.5">LibreOffice</a></li>
+    <li><a href="#h3.6">TeXLive and GUIs</a></li>
+    <li><a href="#h3.7">Selected Other Programs</a></li>
+    <li><a href="#h3.8">Multimedia: Good and Bad News</a></li>
+    <li><a href="#h3.9">HEIC/HEIF Images</a></li>
+  </ul>
+</p>
+
+
+<a id="h3.1"></a>
+<h4>3.1 Using pacman</h4>
+
+<p>Software is installed, removed, and updated from the terminal command line.
+The basic command is <b>pacman</b>. Its syntax can be obscure.
+Here are a few popular commands. They are case-sensitive:</p>
+
+<p>
+<code>pacman -Syu</code> updates all installed software.<br/>
+<code>pacman -S <i>packagename</i></code> installs a package, or re-installs it if requested.<br/>
+<code>pacman -R <i>packagename</i></code> removes a package, unless other installed packages depend on it.<br/>
+<code>pacman -Rsc <i>packagename</i></code> removes packagename, its cache, and any dependencies
+that were installed at the same time. Use this when you try a package but it does not work as expected.
+</p>
+
+<p>Search the Internet for useful how-to info,
+such as <a href="https://wiki.archlinux.org/index.php/Pacman/Rosetta">here</a></p>
+
+
+<p><a id="h3.2" href="#h">(return to top)</a></p>
+<h4>3.2. Installing Fonts</h4>
+
+<p>Alaterm does not install hundreds of fonts that you do not need.
+You may install additional TrueType or Open Type fonts.
+
+<p>If you are lucky, the Arch Linux ARM project has a prepared package with suitable fonts.
+To search for possible fonts in alaterm:</p>
+<p><code>pacman -Ss font</code></p>
+<p>The will return the names of packages that have <i>font</i> in the name or description.
+Some of them are font-handling software (rather than fonts), and some are specialized or bitmap fonts.
+For ordinary purposes in word processing and image labeling, you want TrueType or OpenType fonts.</p>
+
+<p>Among the available font packages, I recommend the Linux Libertine fonts:</p>
+<p><code>pacman -S ttf-linux-libertine</code></p>
+
+<p>Otherwise, you can install fonts manually. Terminology: A <b>font family</b> consists of
+one or more font files, with the same basic name. Thus, "Dribble Dorf Serif" and "Dribble Dorf Italic"
+and "Dribble Dorf Bold" are all members of the "Dribble Dorf" font family. But "Drabble Dorf Serif"
+and "Dribble Drat Serif" belong to different families. In many cases, members of a font family
+are distributed as a single download.</p>
+
+<p>Put the font family in a single folder, with the base family name. No spaces in the folder name.
+So, the folder might be named "dirbble-dorf" (capitalization does not matter).</p>
+
+<p>Put that folder into /usr/share/fonts.</p>
+
+<p>Then update the font database:</p>
+<p><code>fc-cache</code</p>
+
+<p>Check that they are now available:</p>
+<p><code>fc-list</code></p>
+
+<p>If you are using TeXLive, be aware that TeX has its own method for fonts. But you knew that.</p>
+
+
+
+<p><a id="h3.3" href="#h">(return to top)</a></p>
+<h4>3.3. GIMP Image Editor</h4>
+
+<p>For a high-end image editor, use <a href="https://www.gimp.org/">GIMP</a>:<br/>
+<code>pacman -S gimp</code>
+</p>
+
+<p>You will get a very up-to-date version of GIMP, with full capabilities. Others will envy you.
+However, your device does not have enough computing power to handle multiple large images or many layers.</p>
+
+
+<p><a id="h3.4" href="#h">(return to top)</a></p>
+<h4>3.4. Inkscape Vector Drawing</h4>
+
+<p>The <a href="https://inkscape.org/">Inkscape</a> vector graphics editor can also be installed.
+It is a good drawing program,
+but a bit hard to understand if you have never used it before.</br/>
+<code>pacman -S inkscape</code>
+</p>
+
+
+<p><a id="h3.5" href="#h">(return to top)</a></p>
+<h4>3.5. LibreOffice</h4>
+
+<p>You can install the <a href="https://www.libreoffice.org/">LibreOffice</a> suite:<br/>
+<code>pacman -S libreoffice-still</code>
+</p>
+
+<p>Do not install libreoffice-fresh. Do not install Java or its runtime.</p>
+
+<p>Before you install the very large LibreOffice suite: Are you sure you need it?
+Android has many native apps that can create documents, show slide presentations,
+calculate spreadsheets, and even maintain a small database.
+Many of them are linked to "cloud" storage via Microsoft or Google, or other providers.
+In some cases, your little device sends information to the greate computer in the sky,
+which does the heavy work for you, saves the information, and returns processed results to you.
+The only reason to use LibreOffice locally is if you are not often connected to cloud storage,
+or you have existing documents that must use the LibreOffice file formats.</p>
+
+<p>The Menu will show LibreOffice, and LibreOffice Writer. The other LibreOffice programs are there,
+but not shown on the Menu. Launching the main LibreOffice provides a choice.</p>
+
+<p>As with all other Arch programs, LibreOffice is designed for desktop computers with large resources.
+Do not even dream of creating a massive relational database on your device, even though the software is there.</p>
+
+<p>You might or might not be able to print to a Bluetooth printer.
+You can definitely export files to PDF, move the PDF to where Android can see it, then print from there.</p>
+
+
+<p><a id="h3.6" href="#h">(return to top)</a></p>
+<h4>3.6. TeXLive and GUIs</h4>
+
+<p>The TeX typesetter, also known as LaTeX and TeXLive, works well.
+It can process via command line, or with GUI programs. To install TeX:<br/>
+<code>pacman -S texlive-most</code>
+</p>
+
+<p>That will ask you which parts you require. TeXLive is inherently a very large installation,
+perhaps up to a Gigabyte. Do not install parts that you do not expect to need.
+Although LuaTeX is not mentioned by name, it is part of some other packages there.</p>
+
+<p>Then, you may install a GUI, one or more of:<br />
+<code>pacman -S texworks texmaker texstudio</code>
+</p>
+
+<p>Paths in Arch are different than paths used by some other distributions.
+You may need to configure the GUI programs so that they can find the TeX installation.</p>
+
+<p>There is no <code>tlmgr</code> program for managing TeX.
+There is a user-created alternative to <code>tlmgr</code>,
+but I have found that occasional updates via pacman are adequate.</p>
+
+<p>The resulting PDF files can be viewed by <b>Evince</b>, called "Document Viewer"
+in the LXDE Menu.</p>
+
+
+<p><a id="h3.7" href="#h">(return to top)</a></p>
+<h4>3.7. Selected Other Programs</h4>
+
+<p><b>ImageMagick.</b> This command-line
+<a href="https://imagemagick.org/index.php">command-line image editor</a>
+can perform a great variety of tasks. ImageMagick, or the similar GraphicsMagick,
+are widely used when image handling must be automated by script:
+<code>pacman -S imagemagick</code>
+</p>
+
+<p><b>Hugin.</b> This is a <a href="http://hugin.sourceforge.net/">panorama photo stitcher</a>.
+However, photo stitching is inherently demanding of memory, CPU,
+and read-write temporary file access. You may find that Hugin is too much for your device.<br/>
+<code>pacman -S hugin</code>
+</p>
+
+<p><b>FontForge.</b> You can create sophisticated new fonts, or edit existing fonts, using
+this excellent <a href="https://fontforge.org/">font editor</a>:<br/>
+<code>pacman -S fontforge</code>
+</p>
+
+<p>There are many other programs that can be installed. But understand that you can only
+install packages built for your device, from the Arch Linux ARM project. Not all Linux
+programs, indeed not all Arch Linux programs, are available.</p>
+
+
+<p><a id="h3.8" href="#h">(return to top)</a></p>
+<h4>3.8. Multimedia: Good and Bad News</h4>
+
+<p>If you intend to play or manipulate multimedia files, then you are in for a world of hurt.
+For this reason, alaterm does not come with multimedia support.</p>
+
+<p>This is because audio, in its various formats, is handled by Android. Termux has
+limited support for Android audio. Any program in alaterm would have to be referred
+to Termux, but only a few programs have the necessary interface.
+Since your Android device already has high-quality multimedia support,
+via native Android apps, there is no reason to use alaterm.</p>
+
+<p>The good news: If you do not need to play audio-video, but merely wish to edit
+the file, that can be done using the command-line program ffmpeg:</p>
+<p><code>pacman -S ffmpeg</code></p>
+
+<p>You can find many web pages describing how to use ffmpeg,
+such as <a href="https://www.ostechnix.com/20-ffmpeg-commands-beginners/">this one</a>.</p>
+
+
+<p><a id="h3.9" href="#h">(return to top)</a></p>
+<h4>3.9. HEIF/HEIC Images</h4>
+
+<p>Many modern handheld devices save screenshots and photos in <b>heic/heif</b> format,
+also known as <b>h265</b>. This is especially true for Apple phones.</p>
+
+<p>At the time I write this, the alaterm software for handling
+heif/heic is rejected by Android security policies. This is not a fundamental problem,
+because the software can be hacked and re-compiled so that it works. But until such
+time as the corrected software is available, you will have to deal with heic/heif images
+by a method outside of alaterm.</p>
+
+<p>If you have Android 9 or later (not sure about Android 8), then native Android apps
+can convert heic/heif to jpg or possibly png format.
+From there, you can bring the converted image into alaterm for editing.</p>
+
+<p>Or, you can use an online image converter. There are many web sites for this purpose.</p>
+
+
+<p><a id="h3.10" href="#h">(return to top)</a></p>
+
+
+</body>
+</html>
+

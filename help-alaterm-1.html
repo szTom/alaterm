@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+
+<!-- This file is intended to be viewed within alaterm, in a browser. -->
+<!-- Download into alaterm is automatic, during installation. -->
+<!-- File location /usr/local/help/help-alaterm-0.html -->
+<!-- If you are reading this at GitHub, it may appear as plain text. -->
+
+<title>HELP for alaterm - 1</title>
+
+<style type="text/css">
+code {font-size:large;}
+</style>
+
+</head>
+<body>
+
+<p><a href="help-alaterm-0.html" id="h">Return to Index</a></p>
+
+<a id="h1"></a>
+<h3>1. Capabilities and Limitations</h3>
+<p>
+<a href="#h1.1">What is alaterm?</a><br/>
+<a href="#h1.2">What can alaterm do?</a><br/>
+<a href="#h1.3">What cannot be done by alaterm?</a><br/>
+<a href="#h1.4">Passwords and Security</a><br/>
+<a href="#h1.5">Technical Details</a>
+</p>
+
+<a id="h1.1" href="#h">(return to top)</a>
+<h4>1.1 What is alaterm?</h4>
+
+<p>Alaterm is a customized installation of <a href="https://archlinuxarm.org/">Arch Linux ARM</a>,
+which is a version of <a href="https://www.archlinux.org/">Arch Linux</a>
+compiled for your <a href="https://www.watelectronics.com/arm-processor-architecture-working/">ARM</a> CPU architecture.
+Note that alaterm is not a Linux distribution.
+It does not provide software. It installs software provided by others, then configures the software
+for your <a href="https://en.m.wikipedia.org/wiki/Android_(operating_system)">Android</a> device.</p>
+
+<p>Unlike the independent <a href="https://wiki.termux.com/wiki/Arch">TermuxArch</a> project,
+alaterm is specifically configured for the benefit of desktop software users, rather than programmers.
+The screen is touch-sensitive, and will work on many small devices such as phones.
+However, the benefits of alaterm are best with a large tablet, external keyboard, and mouse.</p> 
+
+<p>To use alaterm, you need <a href="https://play.google.com/store/apps/details?id=com.termux">Termux</a>.
+This app is built with Android developer tools.
+Alaterm is not an Android app. It sits as a sub-system within Termux. If you do not need a
+graphical desktop, you can run alaterm command-line programs in Termux alone.</p>
+
+<p>When you also have the
+<a href="https://play.google.com/store/apps/details?id=com.realvnc.viewer.android">VNC Viewer</a> app,
+you can see alaterm on the LXDE graphical desktop, at 127.0.0.1:5901.
+Then you can use an image editor such as GIMP, or a document processor such as LibreOffice,
+in much the same way as on a laptop computer. The most important difference is that your
+device has less processing and storage resources than on a laptop, so this will limit
+what you can do.</p>
+
+<p>Alaterm is not a dual-boot. It does not "root" your device, or jailbreak it.
+If you have rooted your device on your own initiative, then the consequences of using
+alaterm are unknown.</p>
+
+
+<a id="h1.2" href="#h">(return to top)</a>
+<h4>1.2 What can alaterm do?</h4>
+
+<p>The installed software provides the essential elements of a graphical desktop.
+When viewed in VNC Viewer, you will see wallpaper, taskbar, Menu, and file manager.
+If using a mouse, right-click will display context menus.</p>
+
+<p>Some basic utility programs are pre-installed: calculator, font viewer, PDF viewer,
+text editor, programming editor, image viewer, web browser, preferences manager.</p>
+
+<p>From the command line. you can install additional software, including many programs
+with advanced features. They will almost always look and operate the same way
+as they do on a laptop computer.</p>
+
+<p>You can multi-task. Android is active at all times, and manages WiFi and Bluetooth.
+So, while alaterm is running, you can summon an Android Email app and check your mail,
+or listen to music from and Android app, or use an Android web browser. Then, you can
+return to what you were doing in alaterm.</p>
+
+<p>Be warned that due to limited resources, your device cannot have too many apps
+running at the same time. If overloaded, Android may close Termux. So if you
+multi-task, be sure to save your work in alaterm before doing something else.</p>
+
+
+<a id="h1.3" href="#h">(return to top)</a>
+<h4>1.3 What cannot be done by alaterm?</h4>
+
+<p>Alaterm can only interact with Android, via the intermediary of Termux. So if Termux
+is prohibited from doing something by Android security, then alaterm cannot do it,
+regardless of the software you installed.</p>
+
+<p>Termux has only a limited capability to manage services and daemons. This may change
+in the future. At this time, software requiring a service or daemon is unlikely to work.
+You cannot use a cups printer, but most useful applications can export either PDF
+or imnages. You cannot mount external devices, although alaterm may be able to see
+some devices (such as a removable storage card) if Android mounts them first.</p>
+
+<p>You cannot use audio programs in alaterm. Actually, there can be a limited audio
+capability. But it is hard to configure and is not as versatile as native Android apps,
+so there is not point to including it. The same applies to video. If your purpose
+is multimedia, then just do it with Android apps, not alaterm.</p>
+
+<p>The graphical Trash (Rubbish) Bin does not work. There is a Trash folder, but its
+contents can only be managed via command line. Why? Animated Linux Trash uses system
+resources that are blocked by Android security.</p>
+
+
+<a id="h1.4" href="#h">(return to top)</a>
+<h4>1.4 Passwords and Security</h4>
+
+<p>Your username is <b>user</b> and its password is <b>password</b>. It has super-user
+privileges within alaterm. Only on rare occasions will you need to use <b>sudo</b>
+to obtain a higher level of privilege. Only on the rarest occasions (probably never)
+will you need to use <b>su</b> to become the root user (internal to alaterm);
+its password is <b>root</b>.</p>
+
+<p>When you connect to VNC Viewer, your password is <b>password</b>.</p>
+
+<p>There is no point to using more secure passwords. This is because anyone who has
+access to Termux can create, remove, view, or edit any file in the alaterm sub-system,
+without launching alaterm. No passwords are required. For that matter, anyone who
+has access to your device, perhpas except for guest account, can simply remove
+the Termux app. That will remove all of alaterm as well.</p>
+
+
+<a id="h1.5" href="#h">(return to top)</a>
+<h4>1.5 Technical Details</h4>
+
+<p>You do not need to know this technical information. But if you are curious:</p>
+
+<p>Android is a Linux-like system. Your device storage has several partitions.
+Some of them can only be accessed by Android itself. Others can be accessed,
+but not modified, by installed apps. Others can be accessed and modified by
+various apps, if you grant them the privilege.</p>
+
+<p>One partition is /data. In general, it contains user-installed apps.
+Each app lives in its own private area, inacessible to other apps.
+Normally, Termux lives in /data/data/com.termux. Its home directory,
+which appears when you first launch Termux, is /data/data/com.termux/files/home.
+Most of its program software is in /data/data/com.termux/files/usr.
+There are other locations. Some are hidden from your view,
+even while you are within Termux.</p>
+
+<p>By default, alaterm creates /data/data/com.termux/alaterm as its top level.
+This location has the advantage that is is not accidentally removed, if you ever
+clean out your Termux home directory.</p>
+
+<p>Within that alaterm top directory are /bin, /etc, /usr, and other locations
+expected of an ordinary Linux system. Termux uses <b>proot</b> software
+to fool alaterm into thinking that it is installed at the system top level.
+This works well, as long as alaterm does not need to make system calls that
+are managed by the real system, which is Android.</p>
+
+<p>Alaterm is not entirely jailed. Some other parts of Android are mounted
+into alaterm. This allows alaterm to access your user files, if you have
+granted that privilege to Termux. It also allows alaterm to activate a few commands
+that are in Termux but not part of the alaterm software installation.</p>
+
+<p>When you launch alaterm, its script automatically launches a VNC server,
+which in turn launches the LXDE desktop. The desktop is there, but you can only
+see it using the separate VNC Viewer app. If you do not view the desktop,
+then you can still use the terminal to perform command-line operations.</p>
+
+
+<p><a id="h1.6" href="#h">(return to top)</a></p>
+
+</body>
+</html>
+

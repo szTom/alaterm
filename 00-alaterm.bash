@@ -210,6 +210,8 @@ declare isRooted="no" # Issues warning if your device is rooted.
 declare termuxProxy="no" # Issues warning if Termux has proxy server.
 declare priorInstall="no" # Yes if attempting to over-write previous.
 let userSpace=0 # Will become integer GB available for install.
+let priorUpdate=0 # Possible future use.
+let priorChecktime=0 # Possible future use.
 declare termuxPrefix="$PREFIX" # Equivalent of /usr, within Termux.
 declare termuxHome="$HOME" # Where Termux is, at start.
 let termuxTries=0 # Possibly used when intermittent downloads.
@@ -222,6 +224,7 @@ declare userLocale="en_US" # Default. Measured later. Always UTF-8.
 declare prsPre="" # Becomes part of the launch command.
 declare prsUser="" # Becomes part of the launch command.
 declare gotHelp="no" # Becomes yes when help file installed.
+declare gotTCLI="no" # Becomes yes if trash-cli installed.
 let processors=0 # Becomes number of processors in CPU: 4, 6, 8.
 let nextPart=0 # Keeps track of progress. Recorded in status file.
 # Get variables stored by previously running this script, if any:
@@ -525,15 +528,17 @@ termuxTop="$termuxTop"
 termuxPrefix="$PREFIX"
 termuxHome="$HOME"
 termuxLdPreload="$LD_PRELOAD"
-alatermTop="$alatermTop"
-launchCommand="$launchCommand"
-isRooted="$isRooted"
-termuxProxy="$termuxProxy"
+alatermTop="$alatermTop" # Where alaterm sits in Android.
+launchCommand="$launchCommand" # How to launch alaterm from Termux.
+isRooted="$isRooted" # Was a rooted device detected?
+termuxProxy="$termuxProxy" # Was a proxy detected?
 CPUABI="$CPUABI" # Your device.
 CPUABI7="armeabi-v7a" # 32-bit. May or may not be Chromebook.
 CPUABI8="arm64-v8a" # 64-bit. Do not confuse with arm-v8l CPU.
-userSpace="$userSpace"
-priorInstall="$priorInstall"
+userSpace="$userSpace" # Only checked once.
+priorInstall="$priorInstall" # If replacing an earlier installation.
+let priorUpdate=0 # Possible future use.
+let priorChecktime=0 # Possible future use.
 EOC
 }
 

@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+
+<!-- This file is intended to be viewed in a web browser. -->
+<!-- Download into Alaterm is automatic. -->
+<!-- If you are reading this at GitHub, it may appear as plain text. -->
+<!-- let helpversion=1 -->
+
+<title>HELP for alaterm - 2</title>
+
+<style type="text/css">
+code {font-size:large;}
+</style>
+
+</head>
+<body>
+
+<p><a href="help-alaterm-0.html" id="h">Return to Index</a></p>
+
+<a id="h2"></a>
+<h3>2. LXDE Desktop, taskbar, and Menu</h3>
+
+<p>
+  <ul>
+    <li><a href="#h2.1">Touchscreen vs. Mouse</a></li>
+    <li><a href="#h2.2">Screen Dimensions and Orientation</a></li>
+    <li><a href="#h2.3">LXDE Applications Menu</a></li>
+    <li><a href="#h2.4">PCManFM File Manager</a></li>
+    <li><a href="#h2.5">Trash? Rubbish!</a></li>
+  </ul>
+</p>
+
+
+<a id="h2.1" href="#h">(return to top)</a>
+<h4>2.1. Touchscreen vs. Mouse</h4>
+
+<p>The LXDE Desktop works with touchscreens. Usage is tricky. First, you move the cursor
+by sliding your finger. Then, when the cursor is over its destination, you tap.
+The trick is that your finger does not have to be over the cursor.</p>
+
+<p>Since most of the useful applications involve images, it is best to use Alaterm
+on a relatively large-screen device, with external keyboard and mouse.
+My own device is a 10.1 inch tablet. Right-click is supported, with context menus.</p> 
+
+
+<a id="h2.2" href="#h">(return to top)</a>
+<h4>2.2 Screen Dimensions and Orientation</h4>
+
+<p>The Desktop is initially configured for 1280x800 pixel screens.
+This assumes that you use your device in landscape mode, like a laptop.
+Many modern devices have high-resolution screens. My own is 1920x1200.
+However, use of full resolution will cause everything to appear very tiny,
+because the software assumes that you are viewing on a large-screen office computer.</p>
+
+<p>If you need a different screen resolution, particularly if your device
+has an aspect ratio other than 1.6:1, there are two wayts to change it.</p>
+
+<p>From the LXDE Menu, Preferences, Change Default Resolution.
+This offers you a choice of several values.
+You can try a value, and if it works for you, save it.
+The saved value will then be used each time you login.</p>
+
+<p>If none of the choices is what you need, then you can make a custom choice.
+This requires using the terminal, rather than the Menu. Command:</p>
+<p>default-resolution WxH</code></p>
+<p>where W and H are three or four digit numbers, representing the desired width and height.
+The effect is not immediate. To see it, you have to logout then re-launch alaterm.
+If you made a bad choice, you can re-try the command, or use the Menu.
+Remember that the initial default resolution is 1280x800.</p>
+ 
+<p>The LXDE Desktop does not understand device rotation.
+If you set the resolution in landcape orientation,
+then it will not fit properly if you rotate your device to portrait orientation, like a phone.
+So if you normally intend to use alaterm in portrait orientation,
+you should choose a default resolution with its height greater than its width.</p>
+
+
+<a id="h2.3" href="#h">(return to top)</a>
+<h4>2.3 LXDE Applications Menu</h4>
+
+<p>At the left corner of the taskbar is the applications menu.
+Use it to launch programs, and to change some preferences.
+The initial setup is pre-configured with:<br/>
+<a href="https://wiki.lxde.org/en/GPicView">GPicView image viewer</a><br/>
+<a href="https://help.gnome.org/misc/release-notes/3.6/users-font-viewer.html">Gnome Font Viewer</a><br/>
+<a href="https://wiki.gnome.org/Apps/Evince">Evince document viewer for PDF</a><br/>
+<a href="https://wiki.gnome.org/Apps/Calculator">Gnome Calculator</a><br/>
+<a href="https://wiki.lxde.org/en/Leafpad">Leafpad plain text editor</a><br/>
+<a href="https://www.geany.org/">Geany text editor for programmers</a><br/>
+<a href="https://wiki.gnome.org/Apps/Ghex">GHex hex editor</a><br/>
+<a href="https://www.netsurf-browser.org/">NetSurf web browser</a><br/>
+<a href="https://wiki.lxde.org/en/PCManFM">PCManFM file manager</a><br/>
+Preferences, for changing the look and feel of the desktop.<br/>
+HELP, which invokes this help file.
+</p>
+
+<p>Installation of additional software is performed from the command terminal, as described below.</p>
+
+<p>The Menu can be edited using PCManFM File Manager. However, this is not recommended,
+since it requires some expertise.</p>
+
+<p>LXDE installs a few utility programs that only work in office desktop computers.
+They cannot be uninstalled, since LXDE expects them to be there.
+For your convenience, Menu items leading to these useless programs
+have automatically been deleted.</p>
+
+
+<a id="h2.4" href="#h">(return to top)</a>
+<h4>2.4 PCManFM File Manager</h4>
+
+<p>Next to the LXDE Menu is the File Manager, named <b>PCManFM</b>.
+Several useful locations are pre-configured as shortcuts:<br/>
+<b>Home</b> is your alaterm home folder.<br/>
+<b>Desktop</b> is your alaterm Desktop, a sub-folder of Home.</br/>
+<b>Android Shared</b> leads to the Android directory that contains Documents, Downloads,
+Pictures, and other on-device locations that can be accessed from alaterm.<br/>
+<b>Removable Media</b> leads to an Android directory containing a removable SD card or USB pendrive.<br/>
+<b>Termux Home</b> is the home folder for Termux.
+This is the initial location when Termux launches.<br/>
+<b>Trash</b> leads to Trash at ~/.local/share/Trash.</p>
+
+<p>Note that only Android can mount media.
+So if you have a removable media device, be sure that it is mounted and recognized by Android,
+before you launch alaterm. Also note that Android gives obscure folder names to
+removable media, and also includes folders leading to inacessible locations.
+Finding your removable device is a matter of trial and error.</p>
+
+
+<a id="h2.5" href="#h">(return to top)</a>
+<h4>2.5 Trash? Rubbish!</h4>
+
+<p>The creator of PCManFM uses the UK term <b>rubbish</b> instead of the US term <b>trash</b>.</p>
+
+<p>There is no animated Trash Bin. This is because the necessary software would violate
+Android system policies, by attempting to access prohibited directories.
+Remember that the LXDE Desktop is not specifically written for Android.</p>
+
+<p>The Trash shorcut leads to alaterm Trash. It does not include Android Trash, if it exists.
+Even though you can send items to Trash easily,
+restoring items and emptying the Trash can only be done by command terminal.
+The README-TRASH file describes the commands, It is visible when you enter Trash.</p>
+
+
+<p><a id="h2.6" href="#h">(return to top)</a></p>
+
+</body>
+</html>
+
