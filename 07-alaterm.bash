@@ -223,7 +223,7 @@ configure_desktop() { # In $alatermTop/home.
 		sed -i 's/no_usb_trash.*/no_usb_trash=1/g' libfm.conf 2>/dev/null
 		sed -i 's/places_home.*/places_home=1/g' libfm.conf 2>/dev/null
 		sed -i 's/places_desktop.*/places_desktop=1/g' libfm.conf 2>/dev/null
-		sed -i 's/places_unmounted.*/places_unbmounted=0/g' libfm.conf 2>/dev/null
+		sed -i 's/places_unmounted.*/places_unmounted=0/g' libfm.conf 2>/dev/null
 		sed -i 's/places_network.*/places_network=0/g' libfm.conf 2>/dev/null
 		sed -i 's/places_root.*/places_root=0/g' libfm.conf 2>/dev/null
 		sed -i 's/places_computer.*/places_computer=0/g' libfm.conf 2>/dev/null
@@ -255,7 +255,7 @@ create_configPanel() { # In $alatermTop/home.
 	printf "$t background=1$t backgroundfile=$lxdebackground\n}" >> panel
 	printf "\nPlugin {$t type=space$t Config {$f Size=2$t }\n}" >> panel
 	printf "\nPlugin {$t type=menu$t Config {$f image=$lxdeicon$f system {$f }$f separator {$f }" >> panel
-	printf "$f item {$s image=$helpicon$s name=HELP$s action=netsurf /usr/local/help/help-alaterm-00.html$f }$t }\n}" >> panel
+	printf "$f item {$s image=$helpicon$s name=HELP$s action=xterm /usr/local/scripts/download-help$f }$t }\n}" >> panel
 	printf "\nPlugin {$t type=space$t Config {$f Size=6$t }\n}" >> panel
 	printf "\nPlugin {$t type=launchbar$t Config {$f Button {$s id=pcmanfm.desktop$f }$t }\n}" >> panel
 	printf "\nPlugin {$t type=space$t Config {$f Size=111$t }\n}" >> panel
@@ -282,38 +282,76 @@ create_bookmarks() { # In /home.
 	echo "file:///home/.local/share/Trash Trash" >> .gtk-bookmarks
 }
 
-create_fakeHelp() { # In usr/local/help, if necessary.
-cat << EOC > help-alaterm-00.html # No hyphen. Unquoted marker.
-<!DOCTYPE html>
-<html>
-<head>
-<title>OOPS</title>
-</head>
-<body>
-<p>You are reading this message because the help files failed to download when you installed alaterm.</p>
-<p>Look <a href="https://raw.githubusercontent.com/cargocultprog/alaterm/master/help-alaterm-00.html">online</a> instead.</p>
-<p>The help files may appear as plain text.</p>
-</body>
-</html>
+create_downloadHelp() { # In /usr/local/scripts, only created if necessary.
+cat << 'EOC' > download-help # No hyphen. Quoted marker.
+#!/bin/bash
+# File /usr/local/scripts/download-help created by installer script.
+# Auto-removed once help files are downloaded.
+echo "You are reading this message because the help files"
+echo "failed to download at the time you installed alaterm."
+printf "Would you like to download them now? [Y|n] : " ; read readvar
+case "$readvar" in
+	n*|N* ) echo "You answered no. Try again sometime."
+		printf "Press any key to close this window" ; read r
+		exit 0 ;;
+	* ) true ;;
+esac
+echo "Now contacting the alaterm site at GitHub..."
+alatermSite=https://raw.githubusercontent.com/cargocultprog/alaterm
+mkdir -p /usr/local/help
+cd /usr/local/help
+gotallhelp="yes"
+wget -t 3 -T 3 $alatermSite/master/help-alaterm-0.html
+[ "$?" -ne 0 ] && gotallhelp="no"
+wget -t 3 -T 3 $alatermSite/master/help-alaterm-1.html
+[ "$?" -ne 0 ] && gotallhelp="no"
+wget -t 3 -T 3 $alatermSite/master/help-alaterm-2.html
+[ "$?" -ne 0 ] && gotallhelp="no"
+wget -t 3 -T 3 $alatermSite/master/help-alaterm-3.html
+[ "$?" -ne 0 ] && gotallhelp="no"
+if [ "$gotallhelp" = "no" ] ; then
+	echo "Failed to download all help files. Try again sometime."
+	printf "Press any key to close this window." ; read r
+	exit 1
+else
+	thisfile=~/.config/lxpanel/LXDE/panels/panel
+	sed -i 's/xterm \/usr\/local\/scripts\/download-help/netsurf \/usr\/local\/help\/help-alaterm-0\.html/g' "$thisfile"
+	lxpanelctl restart
+	sleep .5
+	rm -f /usr/local/scripts/download-help
+	echo "Success! The next time you seek help, it will appear."
+	echo "Press any key to close this window." ; read r
+	exit 0
+fi
 EOC
 }
 
-download_help() { # In /usr/local/help.
+download_helpFiles() { # In /usr/local/help.
+	alatermSite=https://raw.githubusercontent.com/cargocultprog/alaterm
 	gotallhelp="yes"
-        wget -t 3 -T 3 https://raw.githubusercontent.com/cargocultprog/alaterm/master/help-alaterm-00.html
+	wget -t 3 -T 3 $alatermSite/master/help-alaterm-0.html
 	[ "$?" -ne 0 ] && gotallhelp="no"
-        wget -t 3 -T 3 https://raw.githubusercontent.com/cargocultprog/alaterm/master/help-alaterm-01.html
+	wget -t 3 -T 3 $alatermSite/master/help-alaterm-1.html
 	[ "$?" -ne 0 ] && gotallhelp="no"
-        wget -t 3 -T 3 https://raw.githubusercontent.com/cargocultprog/alaterm/master/help-alaterm-02.html
+	wget -t 3 -T 3 $alatermSite/master/help-alaterm-2.html
 	[ "$?" -ne 0 ] && gotallhelp="no"
-        wget -t 3 -T 3 https://raw.githubusercontent.com/cargocultprog/alaterm/master/help-alaterm-03.html
+	wget -t 3 -T 3 $alatermSite/master/help-alaterm-3.html
 	[ "$?" -ne 0 ] && gotallhelp="no"
         if [ "$gotallhelp" = "no" ] ; then
-		create_fakeHelp
-                echo -e "$WARNING Unable to download the help files. Not a fatal error. Continuing..."
+		cd "$alatermTop/usr/local/scripts"
+		create_downloadHelp
+		chmod 755 download-help
+                echo -e "$WARNING Unable to download the help files."
+		echo "Not a fatal error. Continuing..."
         else
-		echo "gotallhelp=\"yes\"" >> "$alatermTop/status"
+		thisfile=~/.config/lxpanel/LXDE/panels/panel
+		sed -i 's/xterm \/usr\/local\/scripts\/download-help/netsurf \/usr\/local\/help\/help-alaterm-0\.html/g' "$thisfile"
 	fi
+}
+
+create_Xdefaults() { # In /home.
+	echo "xterm*faceName: Source Code Pro" >> .Xdefaults
+	echo "xterm*faceSize: 12" >> .Xdefaults
 }
 
 
@@ -338,11 +376,14 @@ if [ "$nextPart" -eq 7 ] ; then
 	chmod 755 default-resolution
 	mkdir -p "$alatermTop/usr/local/help"
 	cd "$alatermTop/usr/local/help"
-	download_help
+	download_helpFiles
 	cd "$alatermTop/etc/pacman.d/hooks"
 	create_banmenuitemsHook
 	create_mimeappslistHook
-	cd "$alatermTop"
+	cd "$alatermTop/home"
+	create_Xdefaults
+	chmod 666 .Xdefaults
+	chmod "$alatermTop"
 	echo "Almost done..."
 	let nextPart=8
 	echo -e "let nextPart=8" >> status
