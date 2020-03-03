@@ -1,5 +1,6 @@
 # Part of the alaterm project, https://github.com/cargocultprog/alaterm/
 # This file is: https://raw.githubusercontent.com/cargocultprog/alaterm/master/02-alaterm.bash
+#
 
 echo "$(caller)" | grep -F 00-alaterm.bash >/dev/null 2>&1
 if [ "$?" -ne 0 ] ; then
@@ -98,6 +99,7 @@ if [ "$nextPart" -eq 2 ] ; then
 	copy_mirror
 	copy_resolvConf
 	sleep .5
+	echo -e "let nextPart=3" >> status
 	cd "$hereiam"
 	if [ ! -f nodiscard ] ; then
 		rm -f "$alatermTop/$archAr"
@@ -108,7 +110,6 @@ if [ "$nextPart" -eq 2 ] ; then
 	fi
 	echo "Successfully unpacked. Continuing..."
 	let nextPart=3
-	echo -e "let nextPart=3" >> status
 fi
 
 

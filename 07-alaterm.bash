@@ -1,5 +1,6 @@
 # Part of the alaterm project, https://github.com/cargocultprog/alaterm/
 # This file is: https://raw.githubusercontent.com/cargocultprog/alaterm/master/07-alaterm.bash
+#
 
 echo "$(caller)" | grep -F 00-alaterm.bash >/dev/null 2>&1
 if [ "$?" -ne 0 ] ; then
@@ -276,10 +277,12 @@ EOC
 }
 
 create_bookmarks() { # In /home.
-	echo "file:///sdcard Android Shared" > .gtk-bookmarks
-	echo "file:///storage Removable Media" >> .gtk-bookmarks
-	echo "file://$HOME Termux Home" >> .gtk-bookmarks
-	echo "file:///home/.local/share/Trash Trash" >> .gtk-bookmarks
+cat << EOC > .gtk-bookmarks # No hyphen. Unquoted marker.
+file:///sdcard Android Shared
+file:///storage Removable Media
+file://$HOME Termux Home
+file:///home/.local/share/Trash Trash
+EOC
 }
 
 create_downloadHelp() { # In /usr/local/scripts, only created if necessary.
@@ -314,7 +317,7 @@ if [ "$gotallhelp" = "no" ] ; then
 	printf "Press any key to close this window." ; read r
 	exit 1
 else
-	thisfile=~/.config/lxpanel/LXDE/panels/panel
+	thisfile="$alatermTop/home/.config/lxpanel/LXDE/panels/panel"
 	sed -i 's/xterm \/usr\/local\/scripts\/download-help/netsurf \/usr\/local\/help\/help-alaterm-0\.html/g' "$thisfile"
 	lxpanelctl restart
 	sleep .5
@@ -344,7 +347,7 @@ download_helpFiles() { # In /usr/local/help.
                 echo -e "$WARNING Unable to download the help files."
 		echo "Not a fatal error. Continuing..."
         else
-		thisfile=~/.config/lxpanel/LXDE/panels/panel
+		thisfile="$alatermTop/home/.config/lxpanel/LXDE/panels/panel"
 		sed -i 's/xterm \/usr\/local\/scripts\/download-help/netsurf \/usr\/local\/help\/help-alaterm-0\.html/g' "$thisfile"
 	fi
 }
@@ -359,7 +362,6 @@ if [ "$nextPart" -eq 7 ] ; then
 	cd "$alatermTop/home"
 	configure_desktop
 	create_configPanel
-	create_bookmarks
 	mkdir -p "$alatermTop/home/.config/menus"
 	cd "$alatermTop/home/.config/menus"
 	create_configMenusL
@@ -383,7 +385,8 @@ if [ "$nextPart" -eq 7 ] ; then
 	cd "$alatermTop/home"
 	create_Xdefaults
 	chmod 666 .Xdefaults
-	chmod "$alatermTop"
+	create_bookmarks
+	cd "$alatermTop"
 	echo "Almost done..."
 	let nextPart=8
 	echo -e "let nextPart=8" >> status

@@ -1,5 +1,6 @@
 # Part of the alaterm project, https://github.com/cargocultprog/alaterm/
 # This file is: https://raw.githubusercontent.com/cargocultprog/alaterm/master/08-alaterm.bash
+#
 
 echo "$(caller)" | grep -F 00-alaterm.bash >/dev/null 2>&1
 if [ "$?" -ne 0 ] ; then
@@ -100,7 +101,7 @@ prsUser+="/bin/su -l user"
 # The Termux LD_PRELOAD interferes with proot:
 unset LD_PRELOAD
 # Now to launch alaterm:
-exec $prsUser
+eval "exec $prsUser"
 # The above command continues to run, until logout of alaterm. After logout:
 chmod 755 "$alatermTop" # Restores ability to edit alaterm from Termux.
 echo -e "\e[1;33mYou have left alaterm, and are now in Termux.\e[0m\n"

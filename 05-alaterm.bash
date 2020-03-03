@@ -1,5 +1,6 @@
 # Part of the alaterm project, https://github.com/cargocultprog/alaterm/
 # This file is: https://raw.githubusercontent.com/cargocultprog/alaterm/master/05-alaterm.bash
+#
 
 echo "$(caller)" | grep -F 00-alaterm.bash >/dev/null 2>&1
 if [ "$?" -ne 0 ] ; then
@@ -67,9 +68,6 @@ if [ "\$?" -ne 0 ] ; then PATH="\$HOME/bin:\$PATH" ; export PATH ; fi
 alias top='/system/bin/top'
 alias ps='/system/bin/ps'
 alias ls='ls --color=auto'
-alias pacman='sudo pacman'
-alias fc-cache='sudo fc-cache'
-alias vncviewer='echo -e "\e[33mYou need to use the separate VNC Viewer app.\e[0m" \#'
 usepacman() {
         echo "In alatermm, use pacman for package management."
 }
@@ -385,7 +383,6 @@ if [ "$nextPart" -eq 5 ] ; then
 		exit 1
 	fi
 	rm -f "$HOME/prsTmp"
-	echo -e "alias pacman='sudo pacman'\n##" >> "$alatermTop/etc/bash.bashrc"
 	cd "$alatermTop/root"
 	recreate_rootBashrc
 	chmod 644 .bashrc
@@ -395,6 +392,7 @@ if [ "$nextPart" -eq 5 ] ; then
 	chmod 666 .bash_profile
 	create_userBashrc
 	chmod 666 .bashrc
+	touch .Xauthority
 	mkdir -p ".local/share/Trash/files"
 	mkdir -p ".local/share/Trash/info"
 	if [ "$gotTCLI" = "yes" ] ; then

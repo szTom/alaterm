@@ -4,10 +4,12 @@
 <meta charset="UTF-8">
 <meta http-equiv="content-type" content="text/html; charset=UTF-8">
 
+
 <!-- This file is intended to be viewed within alaterm, in a browser. -->
 <!-- Download into alaterm is automatic, during installation. -->
 <!-- File location /usr/local/help/help-alaterm-0.html -->
 <!-- If you are reading this at GitHub, it may appear as plain text. -->
+
 
 <title>HELP for alaterm - 1</title>
 
@@ -24,11 +26,12 @@ code {font-size:large;}
 <h3>1. Capabilities and Limitations</h3>
 <p>
 <a href="#h1.1">What is alaterm?</a><br/>
-<a href="#h1.2">What can alaterm do?</a><br/>
-<a href="#h1.3">What cannot be done by alaterm?</a><br/>
-<a href="#h1.4">Passwords and Security</a><br/>
-<a href="#h1.5">Technical Details</a><br/>
-<a href="#h1.6">Bug Reports, etc.</a>
+<a href="#h1.2">How does alaterm affect Termux and Android?</a><br/>
+<a href="#h1.3">What can alaterm do?</a><br/>
+<a href="#h1.4">What cannot be done by alaterm?</a><br/>
+<a href="#h1.5">Passwords and Security</a><br/>
+<a href="#h1.6">Technical Details</a><br/>
+<a href="#h1.7">Bug Reports, etc.</a>
 </p>
 
 <a id="h1.1" href="#h">(return to top)</a>
@@ -59,13 +62,29 @@ in much the same way as on a laptop computer. The most important difference is t
 device has less processing and storage resources than on a laptop, so this will limit
 what you can do.</p>
 
+
+<a id="h1.2" href="#h">(return to top)</a>
+<h4>1.2 How does alaterm affect Termux and Android?</h4>
+
+<p>Alaterm sits entirely within Termux. If you uninstall Termux, you lose alaterm.</p>
+
+<p>After alaterm is installed, you may continue to use Termux without launching alaterm.
+The only difference is that alaterm adds a short reminder message to the Termux greeting.
+If you subsequently remove alaterm, then Termux continues as before.</p>
+
+<p>Since Termux is no more than a set of files added to Termux, you can manipulate
+all alaterm files from Termux (without launching alaterm). You can manipulate many
+non-alaterm Termux files from within alaterm, but this is not very useful.</p>
+
+<p>Alaterm does not affect your Android desktop. It is not a separate app.</p>
+
 <p>Alaterm is not a dual-boot. It does not "root" your device, or jailbreak it.
 If you have rooted your device on your own initiative, then the consequences of using
 alaterm are unknown.</p>
 
 
-<a id="h1.2" href="#h">(return to top)</a>
-<h4>1.2 What can alaterm do?</h4>
+<a id="h1.3" href="#h">(return to top)</a>
+<h4>1.3 What can alaterm do?</h4>
 
 <p>The installed software provides the essential elements of a graphical desktop.
 When viewed in VNC Viewer, you will see wallpaper, taskbar, Menu, and file manager.
@@ -88,8 +107,8 @@ running at the same time. If overloaded, Android may close Termux. So if you
 multi-task, be sure to save your work in alaterm before doing something else.</p>
 
 
-<a id="h1.3" href="#h">(return to top)</a>
-<h4>1.3 What cannot be done by alaterm?</h4>
+<a id="h1.4" href="#h">(return to top)</a>
+<h4>1.4 What cannot be done by alaterm?</h4>
 
 <p>Alaterm can only interact with Android, via the intermediary of Termux. So if Termux
 is prohibited from doing something by Android security, then alaterm cannot do it,
@@ -111,8 +130,8 @@ contents can only be managed via command line. Why? Animated Linux Trash uses sy
 resources that are blocked by Android security.</p>
 
 
-<a id="h1.4" href="#h">(return to top)</a>
-<h4>1.4 Passwords and Security</h4>
+<a id="h1.5" href="#h">(return to top)</a>
+<h4>1.5 Passwords and Security</h4>
 
 <p>Your username is <b>user</b> and its password is <b>password</b>. It has super-user
 privileges within alaterm. Only on rare occasions will you need to use <b>sudo</b>
@@ -129,8 +148,8 @@ has access to your device, perhpas except for guest account, can simply remove
 the Termux app. That will remove all of alaterm as well.</p>
 
 
-<a id="h1.5" href="#h">(return to top)</a>
-<h4>1.5 Technical Details</h4>
+<a id="h1.6" href="#h">(return to top)</a>
+<h4>1.6 Technical Details</h4>
 
 <p>You do not need to know this technical information. But if you are curious:</p>
 
@@ -158,7 +177,7 @@ This works well, as long as alaterm does not need to make system calls that
 are managed by the real system, which is Android.</p>
 
 <p>Alaterm is not entirely jailed. Some other parts of Android are mounted
-into alaterm. This allows alaterm to access your user files, if you have
+into alaterm. This allows alaterm to access your shared files, if you have
 granted that privilege to Termux. It also allows alaterm to activate a few commands
 that are in Termux but not part of the alaterm software installation.</p>
 
@@ -168,7 +187,7 @@ see it using the separate VNC Viewer app. If you do not view the desktop,
 then you can still use the terminal to perform command-line operations.</p>
 
 
-<a id="h1.6" href="#h">(return to top)</a>
+<a id="h1.7" href="#h">(return to top)</a>
 <h4>1.7 Bug Reports, etc.</h4>
 
 <p>The alaterm project page is at:</p>
@@ -210,7 +229,7 @@ setting up a file server. Those are not the purpose of alaterm.</p>
 
 
 
-<p><a id="h1.7" href="#h">(return to top)</a></p>
+<p><a id="h1.8" href="#h">(return to top)</a></p>
 
 </body>
 </html>

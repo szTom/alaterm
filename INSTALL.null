@@ -1,4 +1,3 @@
-
 HOW TO INSTALL OR REMOVE ALATERM IN TERMUX
 
 You need the file 00-alaterm.bash. It will fetch the remaining files,
@@ -62,11 +61,19 @@ It is about 450MB. After download, its md5sum is checked.
 but does not provide much feedback. Be patient.
 
 8. The script logs into the unpacked installation as root. Please understand
-that this is only root relative to alaterm. It is not Android root. A new
-user is created with alaterm administrator privileges. Then root logs out.
+that this is only root relative to alaterm. It is not Android root. 
+The existing Arch Linux ARM files are updated. You may see warnings or
+errors regarding Arch attempts to re-create its kernel. Ignore them.
+Your installation does not have an Arch kernel, it uses Android kernel.
+A new user is created with alaterm administrator privileges.
+Then root logs out.
 
 9. The script logs in as the new user. Then it downloads and installs the
-LXDE graphical desktop. This is a large download.
+LXDE graphical desktop. This is a large download. During installation,
+there will be occasional messages about lack of bus connection,
+or lack of initialization. Not a problem. Normal for this installation.
+If your Internet connection is broken during download, simply wait
+awhile then re-launch the install script. It will continue from before.
 
 10. After LXDE is installed, the script creates or edits various files
 that configure the desktop and its pre-installed software.
