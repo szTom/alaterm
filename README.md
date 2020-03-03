@@ -14,7 +14,6 @@ Installation is very complex. For that purpose, I have written a lengthy BASH sc
 The script is written for the benefit of those who have little or no knowledge of programming. It is not a fork of the well-known TermuxArch project.
 
 **INSTALLATION (Android only):**
-(February 27, 2020: Do not install yet. I am still testing this site.)
 
 1. At the Google Play Store, install these two free, ad-free apps:
 ```
@@ -35,8 +34,11 @@ The script is written for the benefit of those who have little or no knowledge o
 ```
   wget https://raw.githubusercontent.com/cargocultprog/alaterm/master/00-alaterm.bash
 ```
-5, Run the script. This downloads the remainder of the alaterm scripts, then launches installation. First it adds some necessary programs to Termux. Then it will download a large archive from the Arch Linux ARM project, about 450MB. Then it will unpack the archive, taking a long time to do that. Unnecessary features will be removed. A new user is created. Then the software needed for the LXDE graphical desktop is downloaded, installed, and configured. All together, this may take an hour to complete, more or less, depending on your Internet speed. Are you ready? Command:
+5, Run the script:
+```
 bash 00-alaterm.bash install
+```
+This downloads the remainder of the alaterm scripts, then launches installation. First it adds some necessary programs to Termux. Then it will download a large archive from the Arch Linux ARM project, about 450MB. Then it will unpack the archive, taking a long time to do that. Unnecessary features will be removed. A new user is created. Then the software needed for the LXDE graphical desktop is downloaded, installed, and configured. All together, this may take an hour to complete, more or less, depending on your Internet speed.
 
 6. When it is all done, a launch command is installed where Termux can find it. To launch alaterm, command:
 ```
@@ -51,15 +53,15 @@ Be sure to save the password, so that you do not need to re-enter it each time.
 
 10. You are now ready to install some fancy applications, if your device can handle them. Installation is done from the terminal, not from the graphical desktop. Here are a few suggestions:
 ```
-  pkg install gimp
-  pkg install inkscape
-  pkg install libreoffice-still
+  pacman -S gimp
+  pacman -S inkscape
+  pacman -S libreoffice-still
 ```
 11. When you wish to leave alaterm, you do it from the terminal. Command:
 ```
   logout
 ```
-That brings you back to Termux. Then you can exit Termux. If you leaave the VNC Viewer running, then the next time you look at it, it will say that it lost the connection. This is normal behavior. If you re-launch alaterm, then VNC Viewer must be re-connected manually.
+That brings you back to Termux. Then you can exit Termux. If you leave the VNC Viewer running, then the next time you look at it, it will say that it lost the connection. This is normal behavior. If you re-launch alaterm, then VNC Viewer must be re-connected manually.
 
 12. If you fail to logout of alaterm properly, such as by shutting off your device while alaerm is running, then the next time you attempt to launch alaterm you will get a message saying that a problem was detected and (hopefully) fixed. Then you can issue the launch command a second time.
 
