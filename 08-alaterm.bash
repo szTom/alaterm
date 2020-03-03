@@ -120,7 +120,7 @@ if [ "$nextPart" = 8 ] ; then
 	cp "$launchCommand" "$PREFIX/bin"
 	grep alaterm ~/.bashrc >/dev/null 2>&1 # In Termux home.
 	if [ "$?" -ne 0 ] ; then
-		echo -e "echo \"To launch alaterm, command:  $launchCommand.\n\"" >> ~/.bashrc
+		echo "echo \"To launch alaterm, command:  $launchCommand\"" >> ~/.bashrc
 		export ALATERM="$alatermTop"
 	fi
 	cd "$hereiam"
