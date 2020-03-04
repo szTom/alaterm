@@ -15,22 +15,34 @@ fi
 ##############################################################################
 
 
-create_launchCommand() {
-cat << EOC > "$launchCommand" # No hyphen. Unquoted marker.
+start_launchCommand() {
+cat << EOC > "$launchCommand" # No hyphen. Unquoted marker. Single gt.
 #!/bin/bash
 # This is the launch command for alaterm, Arch Linux ARM in Termux.
 # It is placed in Termux $PREFIX/bin by the installer script.
 # A backup copy is placed in the top level of alaterm.
 # If necessary, copy the backup copy into Termux $PREFIX/bin.
 #
+source "$alatermTop/status"
+EOC
+}
+
+finish_launchCommand() { # Added to above.
+cat << 'EOC' >> "$launchCommand" # No hyphen. Quoted marker. Double gt.
+hash proot >/dev/null 2>&1
+if [ "$?" -ne 0 ] ; then
+	echo -e "\e[1;91mPROBLEM.\e[0m Termux does not have proot installed. Cannot launch alaterm."
+	echo -e "Use Termux pkg to install proot, then try again.\n"
+	exit 1
+fi
 # It is possible to install different vncservers in Termux, and in alaterm.
 # If Termux vncserver is running when alaterm is launched, there will be conflict.
 # This checks for active Termux vncserver:
 hash vncserver >/dev/null 2>&1 # Refers to Termux vncserver.
-if [ "\$?" -eq 0 ] ; then
-	vrps="\$( vncserver -list | grep :[1234567890] )"
-	if [ "\$?" -eq 0 ] ; then # Termux vncserver is on.
-		vrpn="\$( echo \$vrps | sed 's/\s.*//g' )"
+if [ "$?" -eq 0 ] ; then
+	vrps="$( vncserver -list | grep :[1234567890] )"
+	if [ "$?" -eq 0 ] ; then # Termux vncserver is on.
+		vrpn="$( echo \$vrps | sed 's/\s.*//g' )"
 		echo -e "\e[1;33mWARNING.\e[0m Termux has its own vncserver active."
 		echo "It will conflict with the vncserver launched by alaterm."
 		echo "What do you wish to do?"
@@ -38,19 +50,19 @@ if [ "\$?" -eq 0 ] ; then
 		echo "  x = Do not launch alaterm. Termux vncserver remains on."
 		while true ; do
 			printf "Now \e[1;92menter\e[0m your choice [k|x] : " ; read readvar
-			case "\$readvar" in
+			case "$readvar" in
 				k*|K* ) vncserver -kill $vrpn >/dev/null 2>&1
-				if [ "\$?" -eq 0 ] ; then
+				if [ "$?" -eq 0 ] ; then
 					rm -f ~/.Xauthority
 					touch ~/.Xauthority
 					rm -f ~/.ICEauthority
 					touch ~/.ICEauthority
-					rm -r -f "\$PREFIX/tmp/.X*"
-					rm -f "\$PREFIX/tmp/.X*"
+					rm -r -f "$termuxPrefix/tmp/.X*"
+					rm -f "$termuxPrefix/tmp/.X*"
 					rm -f ~/.vnc/localhost*
 					echo "Termux vncserver killed. Continuing to alaterm..."
 				else
-					echo -e "\e[1;91mPROBLEM.\e[0m Unable to automatically kill the Termux vncserver."
+					echo -e "\e[1;91mPROBLEM.\e[0m Unable to autokill the Termux vncserver."
 					echo "You may kill it manually, then try again."
 					exit 1
 				fi
@@ -68,15 +80,14 @@ fi
 # But the launch script does not continue to launch. Instead, run it a second time.
 # This gives you the opportunity to manually identify the problem from Termux,
 # in case it was not fixed, without an infinite do-loop.
-alatermstatnow="\$(stat --format '%a' $alatermTop)"
-if [ "\$alatermstatnow" = "100" ] ; then
+alatermstatnow="$(stat --format '%a' $alatermTop)"
+if [ "$alatermstatnow" = "100" ] ; then
 	chmod 755 "$alatermTop"
 	echo \e "\e[1;33mINFO:\e[0m The last time you used alaterm, you did not logout correctly."
 	echo "That caused a problem. It has now been fixed automatically."
 	echo "This launch script will now exit. You may re-launch it."
 	exit 1
 fi
-source "$alatermTop/status"
 chmod 100 "$alatermTop" # Makes alaterm / invisible in PCManFM.
 # The proot string tells how alaterm is configured within its proot confinement.
 # Actually, it is not much confinement, since alaterm can access most outside files,
@@ -96,7 +107,7 @@ prsUser+="/bin/su -l user"
 # The Termux LD_PRELOAD interferes with proot:
 unset LD_PRELOAD
 # Now to launch alaterm:
-eval "exec \$prsUser"
+eval "exec $prsUser"
 # The above command continues to run, until logout of alaterm. After logout:
 chmod 755 "$alatermTop" # Restores ability to edit alaterm from Termux.
 echo -e "\e[1;33mYou have left alaterm, and are now in Termux.\e[0m\n"
@@ -105,9 +116,10 @@ EOC
 }
 
 
-if [ "$nextPart" = 8 ] ; then
+if [ "$nextPart" >= 8 ] ; then # This part repeats, if necessary.
 	cd "$alatermTop"
-	create_launchCommand
+	start_launchCommand
+	finish_launchCommand
 	chmod 755 "$launchCommand"
 	cp "$launchCommand" "$PREFIX/bin"
 	grep alaterm ~/.bashrc >/dev/null 2>&1 # In Termux home.
@@ -121,6 +133,7 @@ if [ "$nextPart" = 8 ] ; then
 	done
 	echo -e "\n\e[1;92mDONE. To launch alaterm, command:  $launchCommand.\e[0m\n"
 	let nextPart=9
+	echo "let scriptRevision=2" >> "$alatermTop/status"
 	echo "let nextPart=9" >> "$alatermTop/status"
 fi
 
