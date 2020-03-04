@@ -65,5 +65,5 @@ That brings you back to Termux. Then you can exit Termux. If you leave the VNC V
 
 12. If you fail to logout of alaterm properly, such as by shutting off your device while alaerm is running, then the next time you attempt to launch alaterm you will get a message saying that a problem was detected and (hopefully) fixed. Then you can issue the launch command a second time.
 
-13. Remember that alaterm does not create applications. It merely installs and configures applications provided from somewhere else. So, there is not point to asking for new software or new features. You can ask for bug fixes in the scripts, but this is the wrong place to ask for bug fixes in the installed software.
+13. Remember that alaterm does not create applications. It merely installs and configures applications provided from somewhere else. So, there is no point to asking for new software or new features. You can ask for bug fixes in the scripts, but this is the wrong place to ask for bug fixes in the installed software.
 
