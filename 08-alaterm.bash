@@ -116,7 +116,7 @@ EOC
 }
 
 
-if [ "$nextPart" >= 8 ] ; then # This part repeats, if necessary.
+if [ "$nextPart" -ge 8 ] ; then # This part repeats, if necessary.
 	cd "$alatermTop"
 	start_launchCommand
 	finish_launchCommand
