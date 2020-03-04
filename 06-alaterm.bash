@@ -107,8 +107,6 @@ cat << 'EOC' > .bashrc # No hyphen, quoted marker.
 export PS1='\e[1;38;5;75m[alaterm:$(whoami)@\W]$\e[0m '
 ##
 # If you have any custom login code, put it below:
-
-
 ##
 EOC
 }
@@ -116,6 +114,7 @@ EOC
 create_etcBashlogout() { # In /etc.
 cat << EOC > bash.bash_logout # No hyphen. Unquoted marker.
 # File /etc/bash.bash_logout created by installer script.
+vncserver -autokill >/dev/null 2>&1
 chmod 755 "$alatermTop" # Restores ability to edit alaterm from Termux.
 echo -e "\e[1;33mYou have left alaterm, and are now in Termux.\e[0m\n"
 ##
