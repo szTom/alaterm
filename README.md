@@ -7,6 +7,8 @@ I have a 10.1in Samsung Galaxy Tab A 2019 WiFi tablet, no phone, not rooted. Usi
 
 ![screenshot of GIMP](alaterm-gimp.png)
 
+![screenshot of LIbreOffice](libreoffice.png)
+
 Installation is very complex. For that purpose, I have written a lengthy BASH script that does it all, complete with configuration. When done, it "just works" with a selection of basic utility programs, and is ready for immediate installation of bigger programs. Of course, this kind of device has limitations.
 
 The script is written for the benefit of those who have little or no knowledge of programming. It is not a fork of the well-known TermuxArch project.
