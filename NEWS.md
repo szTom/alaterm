@@ -3,6 +3,11 @@
 
 #### March 4, 2020:
 Minor enhancement to detect Termux-alaterm coordination.
+Issue fixed in launch command. If you installed alaterm, but it did not launch, have no fear!
+Re-run `bash 00-alaterm.bash install` to fix this.
+It does not re-download anything but small scripts from here. Only takes a few seconds.
+The fix simply re-writes the launch command so that it works for you,
+instead of just working for me.
 
 #### March 3, 2020:
 Initial public release.
