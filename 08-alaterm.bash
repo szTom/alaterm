@@ -83,7 +83,7 @@ fi
 alatermstatnow="$(stat --format '%a' $alatermTop)"
 if [ "$alatermstatnow" = "100" ] ; then
 	chmod 755 "$alatermTop"
-	echo \e "\e[1;33mINFO:\e[0m The last time you used alaterm, you did not logout correctly."
+	echo -e "\e[1;33mINFO:\e[0m The last time you used alaterm, you did not logout correctly."
 	echo "That caused a problem. It has now been fixed automatically."
 	echo "This launch script will now exit. You may re-launch it."
 	exit 1
