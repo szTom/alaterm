@@ -1,5 +1,6 @@
 # alaterm
 ## LXDE Desktop for Arch Linux ARM on Termux Android
+### No root
 
 ![screenshot of LXDE desktop with expanded menu](alaterm-lxde.png)
 
