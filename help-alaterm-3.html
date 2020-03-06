@@ -35,7 +35,7 @@ code {font-size:large;}
     <li><a href="#h3.6">TeXLive and GUIs</a></li>
     <li><a href="#h3.7">Selected Other Programs</a></li>
     <li><a href="#h3.8">Multimedia: Good and Bad News</a></li>
-    <li><a href="#h3.9">HEIC/HEIF Images</a></li>
+    <li><a href="#h3.9">HEIC/HEIF Images, h265</a></li>
   </ul>
 </p>
 
@@ -149,22 +149,44 @@ You can definitely export files to PDF, move the PDF to where Android can see it
 <h4>3.6. TeXLive and GUIs</h4>
 
 <p>The TeX typesetter, also known as LaTeX and TeXLive, works well.
-It can process via command line, or with GUI programs. To install TeX:<br/>
-<code>pacman -S texlive-most</code>
-</p>
+It can process via command line, or with GUI programs.</p>
+
+<p>The command-line TeXLive files can be installed directly into Termux,
+without the need for alaterm. Or they can binstalled into alaterm. Or both!
+TeX being what it is, the file installation differs in Termux and alaterm.
+Also, the methods for obtaining and updating TeX packages differs.
+But if you have used TeX before, you expected that, yes?</p>
+
+<p>If you already have a good, working TeX installation in Termux,
+and if you intend to use it by command-line and/or TeXWorks GUI,
+then you do not need to install TeX in alaterm. You can directly access
+the Termux command-line TeX programs, by typing the commands in alaterm.
+The software knows where to find what it needs. Likwise, you can install
+the TeXWorks GUI in alaterm, and it will be able to use the TeX software
+from Termux. In this case, be sure to configure TeXWorks so that it
+reaches for the executables in Termux. This is easy to do, since
+TeXWorks offers the choice in its drop-down menus.</p>
+
+<p>If you do not already have a good-working TeX installation in Termux,
+then you can install it in alaterm:</p>
+
+<p><code>pacman -S texlive-most</code></p>
 
 <p>That will ask you which parts you require. TeXLive is inherently a very large installation,
 perhaps up to a Gigabyte. Do not install parts that you do not expect to need.
 Although LuaTeX is not mentioned by name, it is part of some other packages there.</p>
 
-<p>Then, you may install a GUI, one or more of:<br />
-<code>pacman -S texworks texmaker texstudio</code>
+<p>You can install TeXMaker and TeXStudio in alaterm, but in these cases
+you will also have to install TeX into alaterm. TeXMaker and TeXstudio
+can see TeX executables in Termux, but they are unable to use that TeX.</p>
+
+<p>For the GUI, one or more of:<br/>
+<code>pacman -S texworks<br/>
+pacman -S texmaker<br/>
+pacman -S texstudio</code>
 </p>
 
-<p>Paths in Arch are different than paths used by some other distributions.
-You may need to configure the GUI programs so that they can find the TeX installation.</p>
-
-<p>There is no <code>tlmgr</code> program for managing TeX.
+<p>Theere is no <code>tlmgr</code> program for managing TeX in alaterm.
 There is a user-created alternative to <code>tlmgr</code>,
 but I have found that occasional updates via pacman are adequate.</p>
 
@@ -219,22 +241,35 @@ such as <a href="https://www.ostechnix.com/20-ffmpeg-commands-beginners/">this o
 
 
 <p><a id="h3.9" href="#h">(return to top)</a></p>
-<h4>3.9. HEIF/HEIC Images</h4>
+<h4>3.9. HEIF/HEIC Images, h265</h4>
 
 <p>Many modern handheld devices save screenshots and photos in <b>heic/heif</b> format,
 also known as <b>h265</b>. This is especially true for Apple phones.</p>
 
-<p>At the time I write this, the alaterm software for handling
+<p>At the time I write this, the native alaterm software for handling
 heif/heic is rejected by Android security policies. This is not a fundamental problem,
-because the software can be hacked and re-compiled so that it works. But until such
-time as the corrected software is available, you will have to deal with heic/heif images
-by a method outside of alaterm.</p>
+and perhaps it will be fixed in the future, if the Arch Linux ARM project does it.</p>
 
-<p>If you have Android 9 or later (not sure about Android 8), then native Android apps
-can convert heic/heif to jpg or possibly png format.
-From there, you can bring the converted image into alaterm for editing.</p>
+<p>In the meantime, you have choices:</p>
 
-<p>Or, you can use an online image converter. There are many web sites for this purpose.</p>
+<p>1. If you absolutely must open or save heic/heif still images within alaterm,
+you can compile the fixed version of the necessary software. The compiler suite
+takes up about 250MB space, and compilation takes about 25 minutes.
+At the GitHub alaterm project page, download script <b>compile-libde265<b>. Then:
+
+<p><code>bash compile-libde265</code></p>
+
+<p>If your existing installation was already fixed, the script will inform you,
+then exit. Otherwise, it will ask for confirmation, then download and install
+the compiler suite and the libde265 source code. Everything is automatic.
+When the script finishes, it runs a quick test, and lets you know the result.</p>
+
+<p>2. If you have Android 9 or later (not sure about 8), then there are numerous
+Android apps capable of opening heic/heif and exporting or saving to another
+format such as jpeg. Some of them will convert jpeg to heic/heif.</p>
+
+<p>3. There are online image converter services. Upload the heic/heif, then
+download the image converted to jpeg or whatever. Also works in reverse.</p>
 
 
 <p><a id="h3.10" href="#h">(return to top)</a></p>

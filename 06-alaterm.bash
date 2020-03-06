@@ -114,7 +114,7 @@ EOC
 create_etcBashlogout() { # In /etc.
 cat << EOC > bash.bash_logout # No hyphen. Unquoted marker.
 # File /etc/bash.bash_logout created by installer script.
-vncserver -autokill >/dev/null 2>&1
+vncserver -autokill >/dev/null 2>&1 || true
 chmod 755 "$alatermTop" # Restores ability to edit alaterm from Termux.
 echo -e "\e[1;33mYou have left alaterm, and are now in Termux.\e[0m\n"
 ##

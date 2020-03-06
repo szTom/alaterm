@@ -71,11 +71,21 @@ alias ls='ls --color=auto'
 usepacman() {
         echo "In alatermm, use pacman for package management."
 }
-alias apt='usepacman #'
-alias apt-get='usepacman #'
-alias aptitude='usepacman #'
-alias dpkg='usepacman #'
-alias pkg='usepacman #'
+for divertme in dpkg dpkg-deb dpkg-divert dpkg-query dpkg-split dpkg-trigger ; do
+        alias "$divertme"='usepacman #'
+done
+for divertme in pkg pkg-config aptitude apt apt-cache apt-config apt-get apt-key apt-mark ; do
+        alias "$divertme"='usepacman #'
+done
+#
+alias pacman='sudo pacman'
+alias vncviewer='echo -e "\e[33mYou need to use the separate VNC Viewer app.\e[0m" \#'
+#
+nofakeroot() {
+        echo "The makepkg and fakeroot commands do not work in alaterm."
+}
+alias makepkg='nofakeroot #'
+alias fakeroot='nofakeroot #'
 ##
 EOC
 }
