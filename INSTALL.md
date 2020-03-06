@@ -1,4 +1,4 @@
-## HOW TO INSTALL OR REMOVE ALATERM IN TERMUX
+## HOW TO INSTALL OR REMOVE ALATERM IN TERMUX. No Root.
 
 You need the file _00-alaterm.bash_. It will fetch the remaining files,
 unless you already have them in the same directory.
