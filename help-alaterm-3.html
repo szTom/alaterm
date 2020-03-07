@@ -43,233 +43,245 @@ code {font-size:large;}
 <a id="h3.1"></a>
 <h4>3.1 Using pacman</h4>
 
-<p>Software is installed, removed, and updated from the terminal command line.
-The basic command is <b>pacman</b>. Its syntax can be obscure.
-Here are a few popular commands. They are case-sensitive:</p>
+<ul>
 
-<p>
+<li>Software is installed, removed, and updated from the terminal command line.
+The basic command is <b>pacman</b>. Its syntax can be obscure.
+Here are a few popular commands. They are case-sensitive:<br/>
 <code>pacman -Syu</code> updates all installed software.<br/>
 <code>pacman -S <i>packagename</i></code> installs a package, or re-installs it if requested.<br/>
 <code>pacman -R <i>packagename</i></code> removes a package, unless other installed packages depend on it.<br/>
 <code>pacman -Rsc <i>packagename</i></code> removes packagename, its cache, and any dependencies
 that were installed at the same time. Use this when you try a package but it does not work as expected.
-</p>
+</li>
 
-<p>Search the Internet for useful how-to info,
-such as <a href="https://wiki.archlinux.org/index.php/Pacman/Rosetta">here</a></p>
+<li>Search the Internet for useful how-to info,
+such as <a href="https://wiki.archlinux.org/index.php/Pacman/Rosetta">here</a></li>
+
+</ul>
 
 
 <p><a id="h3.2" href="#h">(return to top)</a></p>
 <h4>3.2. Installing Fonts</h4>
 
-<p>Alaterm does not install hundreds of fonts that you do not need.
-You may install additional TrueType or Open Type fonts.
+<ul>
 
-<p>If you are lucky, the Arch Linux ARM project has a prepared package with suitable fonts.
-To search for possible fonts in alaterm:</p>
-<p><code>pacman -Ss font</code></p>
-<p>The will return the names of packages that have <i>font</i> in the name or description.
+<li>Alaterm does not install hundreds of fonts that you do not need.
+You may install additional TrueType or Open Type fonts.</li>
+
+<li>To search for font packages in alaterm:<br/>
+<code>pacman -Ss font</code><br/>
+That will return the names of packages that have <i>font</i> in the name or description.
 Some of them are font-handling software (rather than fonts), and some are specialized or bitmap fonts.
-For ordinary purposes in word processing and image labeling, you want TrueType or OpenType fonts.</p>
+For ordinary purposes in word processing and image labeling, you want TrueType or OpenType fonts.</li>
 
-<p>Among the available font packages, I recommend the Linux Libertine fonts:</p>
-<p><code>pacman -S ttf-linux-libertine</code></p>
+<li>Among the available font packages, I recommend the Linux Libertine fonts:<br/>
+<code>pacman -S ttf-linux-libertine</code></li>
 
-<p>Otherwise, you can install fonts manually. Terminology: A <b>font family</b> consists of
+<li>Otherwise, you can install fonts manually.
+<ul>
+<li>Terminology: A <b>font family</b> consists of
 one or more font files, with the same basic name. Thus, "Dribble Dorf Serif" and "Dribble Dorf Italic"
 and "Dribble Dorf Bold" are all members of the "Dribble Dorf" font family. But "Drabble Dorf Serif"
 and "Dribble Drat Serif" belong to different families. In many cases, members of a font family
-are distributed as a single download.</p>
+are distributed as a single download.</li>
+<li>Put the font family in a single folder, with the base family name. No spaces in the folder name.
+So, the folder might be named "dirbble-dorf" (capitalization does not matter).</li>
+<li>Put that folder into /usr/share/fonts.</li>
+<li>Then update the font database:<br/>
+<code>fc-cache</code></li>
+<li>Check that they are now available:<br/>
+<code>fc-list</code></li>
+</ul>
+</li>
 
-<p>Put the font family in a single folder, with the base family name. No spaces in the folder name.
-So, the folder might be named "dirbble-dorf" (capitalization does not matter).</p>
+<li>If you are using TeXLive, be aware that TeX has its own method for fonts. But you knew that.</li>
 
-<p>Put that folder into /usr/share/fonts.</p>
-
-<p>Then update the font database:</p>
-<p><code>fc-cache</code</p>
-
-<p>Check that they are now available:</p>
-<p><code>fc-list</code></p>
-
-<p>If you are using TeXLive, be aware that TeX has its own method for fonts. But you knew that.</p>
-
+</ul>
 
 
 <p><a id="h3.3" href="#h">(return to top)</a></p>
 <h4>3.3. GIMP Image Editor</h4>
 
-<p>For a high-end image editor, use <a href="https://www.gimp.org/">GIMP</a>:<br/>
-<code>pacman -S gimp</code>
-</p>
+<ul>
 
-<p>You will get a very up-to-date version of GIMP, with full capabilities. Others will envy you.
-However, your device does not have enough computing power to handle multiple large images or many layers.</p>
+<li>For a high-end image editor, use <a href="https://www.gimp.org/">GIMP</a>:<br/>
+<code>pacman -S gimp</code>
+</li>
+
+<li>You will get a very up-to-date version of GIMP, with full capabilities. Others will envy you.
+However, your device does not have enough computing power to handle multiple large images or many layers.</li>
+
+</ul>
 
 
 <p><a id="h3.4" href="#h">(return to top)</a></p>
 <h4>3.4. Inkscape Vector Drawing</h4>
 
-<p>The <a href="https://inkscape.org/">Inkscape</a> vector graphics editor can also be installed.
+<ul>
+
+<li>The <a href="https://inkscape.org/">Inkscape</a> vector graphics editor can also be installed.
 It is a good drawing program,
 but a bit hard to understand if you have never used it before.</br/>
 <code>pacman -S inkscape</code>
-</p>
+</li>
+
+</ul>
 
 
 <p><a id="h3.5" href="#h">(return to top)</a></p>
 <h4>3.5. LibreOffice</h4>
 
-<p>You can install the <a href="https://www.libreoffice.org/">LibreOffice</a> suite:<br/>
+<ul>
+
+<li>You can install the <a href="https://www.libreoffice.org/">LibreOffice</a> suite:<br/>
 <code>pacman -S libreoffice-still</code>
-</p>
+</li>
 
-<p>Do not install libreoffice-fresh. Do not install Java or its runtime.</p>
+<li>Do not install libreoffice-fresh. Do not install Java or its runtime.</li>
 
-<p>Before you install the very large LibreOffice suite: Are you sure you need it?
+<li>Before you install the very large LibreOffice suite: Are you sure you need it?
 Android has many native apps that can create documents, show slide presentations,
 calculate spreadsheets, and even maintain a small database.
 Many of them are linked to "cloud" storage via Microsoft or Google, or other providers.
 In some cases, your little device sends information to the greate computer in the sky,
 which does the heavy work for you, saves the information, and returns processed results to you.
 The only reason to use LibreOffice locally is if you are not often connected to cloud storage,
-or you have existing documents that must use the LibreOffice file formats.</p>
+or you have existing documents that must use the LibreOffice file formats.</li>
 
-<p>The Menu will show LibreOffice, and LibreOffice Writer. The other LibreOffice programs are there,
-but not shown on the Menu. Launching the main LibreOffice provides a choice.</p>
+<li>The Menu will show LibreOffice, and LibreOffice Writer. The other LibreOffice programs are there,
+but not shown on the Menu. Launching the main LibreOffice provides a choice.</li>
 
-<p>As with all other Arch programs, LibreOffice is designed for desktop computers with large resources.
-Do not even dream of creating a massive relational database on your device, even though the software is there.</p>
+<li>LibreOffice is designed for desktop computers with large resources.
+Do not even dream of creating a massive relational database on your device.</li>
 
-<p>You might or might not be able to print to a Bluetooth printer.
-You can definitely export files to PDF, move the PDF to where Android can see it, then print from there.</p>
+<li>You might or might not be able to print to a Bluetooth printer.
+You can definitely export files to PDF, move the PDF to where Android can see it, then print from there.</li>
+
+</ul>
 
 
 <p><a id="h3.6" href="#h">(return to top)</a></p>
 <h4>3.6. TeXLive and GUIs</h4>
 
-<p>The TeX typesetter, also known as LaTeX and TeXLive, works well.
-It can process via command line, or with GUI programs.</p>
+<ul>
 
-<p>The command-line TeXLive files can be installed directly into Termux,
-without the need for alaterm. Or they can be installed into alaterm. Or both!
-TeX being what it is, the file installation differs in Termux and alaterm.
-Also, the methods for obtaining and updating TeX packages differs.
-But if you have used TeX before, you expected that, yes?</p>
+<li>The TeX typesetter, also known as LaTeX and TeXLive, works well.
+It can process via command line, or with GUI programs.</li>
 
-<p>If you already have a good, working TeX installation in Termux,
+<li>The command-line TeXLive files can be installed directly into Termux,
+without the need for alaterm. Or they can be installed into alaterm. Or both!</li>
+
+<li>If you already have a good, working TeX installation in Termux,
 and if you intend to use it by command-line and/or TeXWorks GUI,
-then you do not need to install TeX in alaterm. You can directly access
-the Termux command-line TeX programs, by typing the commands in alaterm.
-TeX knows where to find what it needs. Likewise, you can install
-the TeXWorks GUI in alaterm, and it will be able to use the TeX software
-from Termux. In this case, be sure to configure TeXWorks so that it
-reaches for the executables in Termux. This is easy to do, since
-TeXWorks offers the choice in its drop-down menus.</p>
+then you do not need to install TeX in alaterm.
+<ul>
+<li>You can directly access the Termux command-line TeX programs, by typing its commands in alaterm.</li>
+<li>You can install the TeXWorks GUI in alaterm, and it will be able to use the TeX software
+from Termux.</li>
+</ul>
+</li>
 
-<p>If you do not already have a good, working TeX installation in Termux,
-then you can install it in alaterm:</p>
+<li>If you do not already have a good, working TeX installation in Termux,
+then you can install it in alaterm:<br/>
+<code>pacman -S texlive-most</code><br/>
+That will ask you which parts you require. TeXLive is inherently a very large installation,
+perhaps up to a Gigabyte. Do not install parts that you do not expect to need.</li>
 
-<p><code>pacman -S texlive-most</code></p>
+<li>You can install TeXMaker and TeXStudio in alaterm, but in these cases
+you will also have to install TeX into alaterm.</li>
 
-<p>That will ask you which parts you require. TeXLive is inherently a very large installation,
-perhaps up to a Gigabyte. Do not install parts that you do not expect to need.
-Although LuaTeX is not mentioned by name, it is part of some other packages there.</p>
+<li>There is no <b>tlmgr</b> program for managing TeX in alaterm.</li>
 
-<p>You can install TeXMaker and TeXStudio in alaterm, but in these cases
-you will also have to install TeX into alaterm. TeXMaker and TeXstudio
-can see TeX executables in Termux, but they are unable to use that TeX.</p>
+<li>The resulting PDF files can be viewed by <b>Evince</b>, called "Document Viewer"
+in the LXDE Menu.</li>
 
-<p>For the GUI, one or more of:<br/>
-<code>pacman -S texworks<br/>
-pacman -S texmaker<br/>
-pacman -S texstudio</code>
-</p>
-
-<p>Theere is no <code>tlmgr</code> program for managing TeX in alaterm.
-There is a user-created alternative to <code>tlmgr</code>,
-but I have found that occasional updates via pacman are adequate.</p>
-
-<p>The resulting PDF files can be viewed by <b>Evince</b>, called "Document Viewer"
-in the LXDE Menu.</p>
+</ul>
 
 
 <p><a id="h3.7" href="#h">(return to top)</a></p>
 <h4>3.7. Selected Other Programs</h4>
 
-<p><b>ImageMagick.</b> This command-line
+<ul>
+
+<li><b>ImageMagick.</b> This command-line
 <a href="https://imagemagick.org/index.php">command-line image editor</a>
 can perform a great variety of tasks. ImageMagick, or the similar GraphicsMagick,
-are widely used when image handling must be automated by script:
+are widely used when image handling must be automated by script:<br/>
 <code>pacman -S imagemagick</code>
-</p>
+</li>
 
-<p><b>Hugin.</b> This is a <a href="http://hugin.sourceforge.net/">panorama photo stitcher</a>.
+<li><b>Hugin.</b> This is a <a href="http://hugin.sourceforge.net/">panorama photo stitcher</a>.
 However, photo stitching is inherently demanding of memory, CPU,
 and read-write temporary file access. You may find that Hugin is too much for your device.<br/>
 <code>pacman -S hugin</code>
-</p>
+</li>
 
-<p><b>FontForge.</b> You can create sophisticated new fonts, or edit existing fonts, using
+<li><b>FontForge.</b> You can create sophisticated new fonts, or edit existing fonts, using
 this excellent <a href="https://fontforge.org/">font editor</a>:<br/>
 <code>pacman -S fontforge</code>
-</p>
+</li>
 
-<p>There are many other programs that can be installed. But understand that you can only
+<li>There are many other programs that can be installed. But understand that you can only
 install packages built for your device, from the Arch Linux ARM project. Not all Linux
-programs, indeed not all Arch Linux programs, are available.</p>
+programs, indeed not all Arch Linux programs, are available.</li>
+
+</ul>
 
 
 <p><a id="h3.8" href="#h">(return to top)</a></p>
 <h4>3.8. Multimedia: Good and Bad News</h4>
 
-<p>If you intend to play or manipulate multimedia files, then you are in for a world of hurt.
-For this reason, alaterm does not come with multimedia support.</p>
+<ul>
 
-<p>This is because audio, in its various formats, is handled by Android. Termux has
-limited support for Android audio. Any program in alaterm would have to be referred
-to Termux, but only a few programs have the necessary interface.
-Since your Android device already has high-quality multimedia support,
-via native Android apps, there is no reason to use alaterm.</p>
+<li>If you intend to play or manipulate multimedia files, then you are in for a world of hurt.
+For this reason, alaterm does not come with multimedia support.</li>
 
-<p>The good news: If you do not need to play audio-video, but merely wish to edit
-the file, that can be done using the command-line program ffmpeg:</p>
-<p><code>pacman -S ffmpeg</code></p>
+<li>Since your Android device already has high-quality multimedia support,
+via native Android apps, there is no reason to use alaterm.</li>
 
-<p>You can find many web pages describing how to use ffmpeg,
-such as <a href="https://www.ostechnix.com/20-ffmpeg-commands-beginners/">this one</a>.</p>
+<li>The good news: If you do not need to play audio-video, but merely wish to edit
+the file, that can be done using the command-line program ffmpeg:<br/>
+<code>pacman -S ffmpeg</code></li>
+
+<li>You can find many web pages describing how to use ffmpeg,
+such as <a href="https://www.ostechnix.com/20-ffmpeg-commands-beginners/">this one</a>.</li>
+
+</ul>
 
 
 <p><a id="h3.9" href="#h">(return to top)</a></p>
 <h4>3.9. HEIF/HEIC Images, h265</h4>
 
-<p>Many modern handheld devices save screenshots and photos in <b>heic/heif</b> format,
-also known as <b>h265</b>. This is especially true for Apple phones.</p>
+<ul>
 
-<p>At the time I write this, the native alaterm software for handling
+<li>Many modern handheld devices save screenshots and photos in <b>heic/heif</b> format,
+also known as <b>h265</b>. This is especially true for Apple phones.</li>
+
+<li>At the time I write this, the native alaterm software for handling
 heif/heic is rejected by Android security policies. This is not a fundamental problem,
-and perhaps it will be fixed in the future, if the Arch Linux ARM project does it.</p>
+and perhaps it will be fixed in the future, if the Arch Linux ARM project does it.</li>
 
-<p>In the meantime, you have choices:</p>
-
-<p>1. If you absolutely must open or save heic/heif still images within alaterm,
+<li>In the meantime, you have choices:
+<ul>
+<li>1. If you absolutely must open or save heic/heif still images within alaterm,
 you can compile the fixed version of the necessary software. The compiler suite
 takes up about 250MB space, and compilation takes about 25 minutes.
-At the GitHub alaterm project page, download script <b>compile-libde265</b>. Then:
-
-<p><code>bash compile-libde265</code></p>
-
-<p>If your existing installation was already fixed, the script will inform you,
+At the GitHub alaterm project page, download script <b>compile-libde265</b>. Then:<br/>
+<code>bash compile-libde265</code><br/>
+If your existing installation was already fixed, the script will inform you,
 then exit. Otherwise, it will ask for confirmation, then download and install
 the compiler suite and the libde265 source code. Everything is automatic.
-When the script finishes, it runs a quick test, and lets you know the result.</p>
-
-<p>2. If you have Android 9 or later (not sure about 8), then there are numerous
+When the script finishes, it runs a quick test, and lets you know the result.</li>
+<li>2. If you have Android 9 or later (not sure about 8), then there are numerous
 Android apps capable of opening heic/heif and exporting or saving to another
-format such as jpeg. Some of them will convert jpeg to heic/heif.</p>
+format such as jpeg. Some of them will convert jpeg to heic/heif.</li>
+<li>3. There are online image converter services. Upload the heic/heif, then
+download the image converted to jpeg or whatever. Also works in reverse.</li>
+</ul>
+</li>
 
-<p>3. There are online image converter services. Upload the heic/heif, then
-download the image converted to jpeg or whatever. Also works in reverse.</p>
+</ul>
 
 
 <p><a id="h3.10" href="#h">(return to top)</a></p>
