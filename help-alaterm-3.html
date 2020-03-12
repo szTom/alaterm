@@ -255,34 +255,39 @@ such as <a href="https://www.ostechnix.com/20-ffmpeg-commands-beginners/">this o
 
 
 <p><a id="h3.9" href="#h">(return to top)</a></p>
-<h4>3.9. HEIF/HEIC Images, h265</h4>
+<h4>3.9. HEIF/HEIC libde265, libmad, libmpeg2</h4>
 
 <ul>
 
-<li>Many modern handheld devices save screenshots and photos in <b>heic/heif</b> format,
-also known as <b>h265</b>. This is especially true for Apple phones.</li>
-
-<li>At the time I write this, the native alaterm software for handling
+<li><b>HEIC/HEIF and libde265</b><br/>
+Many modern handheld devices save screenshots and photos in <b>heic/heif</b> format,
+also known as <b>h265</b>. This is especially true for Apple phones.
+At the time I write this, the native alaterm software for handling
 heif/heic is rejected by Android security policies. This is not a fundamental problem,
-and perhaps it will be fixed in the future, if the Arch Linux ARM project does it.</li>
-
-<li>In the meantime, you have choices:
+and perhaps it will be fixed in the future, if the Arch Linux ARM project does it.
+In the meantime, you have choices:
 <ul>
 <li>1. If you absolutely must open or save heic/heif still images within alaterm,
-you can compile the fixed version of the necessary software. The compiler suite
-takes up about 250MB space, and compilation takes about 25 minutes.
-At the GitHub alaterm project page, download script <b>compile-libde265</b>. Then:<br/>
-<code>bash compile-libde265</code><br/>
-If your existing installation was already fixed, the script will inform you,
-then exit. Otherwise, it will ask for confirmation, then download and install
-the compiler suite and the libde265 source code. Everything is automatic.
-When the script finishes, it runs a quick test, and lets you know the result.</li>
+you can compile the fixed version of the necessary software, <b>libde265</b>.
+The compiler suite takes up about 250MB space, and compilation takes about 25 minutes.
+For your convenience, alaterm includes a script that does it all:<br/>
+<code>compile-libde265</code>
+</li>
 <li>2. If you have Android 9 or later (not sure about 8), then there are numerous
 Android apps capable of opening heic/heif and exporting or saving to another
 format such as jpeg. Some of them will convert jpeg to heic/heif.</li>
 <li>3. There are online image converter services. Upload the heic/heif, then
 download the image converted to jpeg or whatever. Also works in reverse.</li>
 </ul>
+</li>
+
+<li><b>libmad and libmpeg2</b><br/>
+Although alaterm does not normally support multimedia, some programs will run after
+clever hacking. Maybe some day I will tell you how to do it, maybe not. In any case,
+programs requiring libmad or libmpeg2 will fail, unless you replace the alaterm packages
+with locally compiled versions. Fortunately, alaterm has scripts for that:<br/>
+<code>compile-libmad</code><br/>
+<code>compile-libmpeg2</code>
 </li>
 
 </ul>
