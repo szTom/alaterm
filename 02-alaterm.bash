@@ -70,7 +70,7 @@ create_usrLocalReadme() { # In $alatermTop/usr/local.
 
 create_usrLocalScriptsReadme() { # In $alatermTop/usr/local/scripts.
 	echo -e "# File $alatermTop/usr/local/scripts/README created by installation script.\n" > README
-	echo "# The installer placed a number of useful scripts in this directory." >> README
+	echo "The installer placed a number of useful scripts in this directory." >> README
 	echo "Some are invoked silently and automatically during certain operations." >> README
 	echo "Others are utilities that you may optionally run from time to time." >> README
 	echo "You may add your own scripts here, but do not delete the ones installed." >> README

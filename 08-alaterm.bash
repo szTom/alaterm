@@ -115,8 +115,31 @@ echo -e "\e[1;33mYou have left alaterm, and are now in Termux.\e[0m\n"
 EOC
 }
 
+create_fakeLaunch() { # In alaterm /usr/bin.
+fakelc="# File "
+fakelc+="$alatermTop/usr/bin/$launchCommand."
+cat << EOC > "$launchCommand" # No hyphen. Unquoted marker.
+#!/bin/bash
+$fakelc
+# Fake launch script.
+echo -e "\e[33mYou cannot launch alaterm from within alaterm.\e[0m"
+##
+EOC
+}
+
 
 if [ "$nextPart" -ge 8 ] ; then # This part repeats, if necessary.
+	cd "$hereiam"
+	source fixexst-scripts.bash
+	cd "$alatermTop/usr/local/scripts"
+	create_compileLibde265
+	chmod 755 compile-libde265
+	create_compileLibmad
+	chmod 755 compile-libmad
+	create_compileLibmpeg2
+	chmod 755 compile-libmpeg2
+	create_autoremove
+	chmod 755 autoremove
 	cd "$alatermTop"
 	start_launchCommand
 	finish_launchCommand
@@ -126,14 +149,18 @@ if [ "$nextPart" -ge 8 ] ; then # This part repeats, if necessary.
 	if [ "$?" -ne 0 ] ; then
 		echo -e "echo \"To launch alaterm, command:  $launchCommand\n\"" >> ~/.bashrc
 	fi
+	cd "$alatermTop/usr/bin"
+	create_fakeLaunch
+	chmod 755 "$launchCommand" # Not the real one.
 	cd "$hereiam"
 	for nn in 01 02 03 04 05 06 07 08
 	do
 		rm -f "$nn-alaterm.bash"
 	done
+	rm -f fixexst-scripts.bash
 	echo -e "\n\e[1;92mDONE. To launch alaterm, command:  $launchCommand.\e[0m\n"
 	let nextPart=9
-	echo "let scriptRevision=2" >> "$alatermTop/status"
+	echo "let scriptRevision=4" >> "$alatermTop/status"
 	echo "let nextPart=9" >> "$alatermTop/status"
 fi
 
