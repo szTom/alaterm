@@ -42,12 +42,20 @@ or because you lost Internet connection, then re-launch 00-alaterm.bash.
 It will resume where it left off.
 
 3. If necessary, other alaterm scripts are downloaded from the alaterm
-project at GitHub. If you unpacked a downloaded *.zip file, then the
+project at GitHub. If you unpacked a downloaded zip file, then the
 local files are used.
 
 4. Your device is examined for compatibility. In most cases, the result
 is accept or reject. In some marginal cases, you will be asked whether or not
 you wish to install. If your device is accepted, installation continues.
+
+An acceptable device runs Android 8 or later, has kernel 4 or later, has
+ARM 32-bit or 64-bit processor, no root, no proxy, and has 5GB free space.
+The basic installation uses less than 3GB, but since the purpose of this
+setup is to use advanced programs, you will need more space later.
+If free space is between 3GB and 5GB, you will be asked what to do.
+If your device is rooted (test is not foolproof) or is set to use a
+proxy server, then you will be asked what to do. Anything else is rejected.
 
 5. The script will request a wakelock. Android may ask if you will allow it
 to stop battery optimization. You may allow or deny. The script may complete
@@ -61,17 +69,21 @@ It is about 450MB. After download, its md5sum is checked.
 but does not provide much feedback. Be patient.
 
 8. The script logs into the unpacked installation as root. Please understand
-that this is only root relative to alaterm. It is not Android root. 
+that this is only root relative to alaterm. It is not Android root.
+
 The existing Arch Linux ARM files are updated. You may see warnings or
 errors regarding Arch attempts to re-create its kernel. Ignore them.
 Your installation does not have an Arch kernel, it uses Android kernel.
+
 A new user is created with alaterm administrator privileges.
-Then root logs out.
+Then alaterm root logs out.
 
 9. The script logs in as the new user. Then it downloads and installs the
-LXDE graphical desktop. This is a large download. During installation,
-there will be occasional messages about lack of bus connection,
+LXDE graphical desktop. This is a large download.
+
+During installation, there will be messages about lack of bus connection,
 or lack of initialization. Not a problem. Normal for this installation.
+
 If your Internet connection is broken during download, simply wait
 awhile then re-launch the install script. It will continue from before.
 
@@ -83,7 +95,7 @@ You are notified of completion. Termux displays information regarding
 how to launch alaterm. The default launch command is:  alaterm
 
 You do not need a password to launch alaterm. You do not need a password
-to install or update software. Actually, there is a password (it is password)
+to install or update software. Actually, there is a password (it is *password*)
 but it is applied automatically.
 
 12. When alaterm is launched, you may use the command-line terminal
@@ -92,7 +104,10 @@ command line. Some programs use the command line.
 
 To see the LXDE graphical desktop, keep Termux running, and open the
 VNC Viewer app. You will see alaterm at 127.0.0.1:5901.
-Its password is password.
+Its password is *password*.
+
+The HTML help files, available here, are automatically installed.
+You can see them via the HELP button on the LXDE Menu.
 
 
 
@@ -107,6 +122,10 @@ and that will enable a new capability in alaterm.
 You can check for possible new information in the NEWS.md file,
 at the alaterm project page on GitHub.
 
+If you re-run `bash 00-alaterm.bash install` from Termux home (not within alaterm),
+it does not re-install a completed alaterm installation. However, it may check
+here at GitHub for any enhancements, and apply them.
+
 
 
 ### ABOUT BUGS AND SOFTWARE AVAILABILITY
@@ -116,4 +135,7 @@ install software provided by the Arch Linux ARM project.
 
 So, if you have a package request, or found a software bug, do not report it
 to the alaterm project.
+
+If the installation script fails, but you think it should have worked for your device,
+then report an issue here.
 
