@@ -1,9 +1,9 @@
 ## HOW TO INSTALL OR REMOVE ALATERM IN TERMUX
 
-You only need the file _00-alaterm.bash_. It will fetch the remaining files,
+You only need the file **00-alaterm.bash**. It will fetch the remaining files,
 unless you already have them in the same directory.
 
-_Requirements:_ Android 8 or later. Tested with Android 9.
+**Requirements:** Android 8 or later. Tested with Android 9.
 ARM CPU 32- or 64-bit. Includes many tablets, phones, and some Chromebooks.
 Kernel 4 or later. You almost certainly have this, with recent Android.
 3GB free space for minimal setup. 4GB to be useful, 5GB for serious work.
@@ -19,23 +19,23 @@ pkg install wget
 wget https://raw.githubusercontent.com/cargocultprog/alaterm/master/00-alaterm.bash
 bash 00-alaterm.bash ACTION
 ```
-where ACTION is one of:  `install  remove  help  version`
+where **ACTION** is one of:  `install  remove  help  version`
 
-_install_
+**install**
 Installs a customized version of Arch Linux ARM within Termux.
 Continues a partial installation that was interrupted.
 Possibly adds new features (if any) to existing installation.
 Does not over-write existing installation without requesting permission.
 
-_remove_
+**remove**
 Removes an existing installation, in the default location.
 You will be asked for confirmation.
 If you installed somewhere else, the script cannot find it.
 
-_help_
+**help**
 Provides a short help message.
 
-_version_
+**version**
 Provides script version information.
 
 
@@ -58,7 +58,7 @@ bash 00-alaterm.bash install
 It will resume where it left off.
 
 3. If necessary, other alaterm scripts are downloaded from GitHub.
-If you unpacked a downloaded *.zip file, then the local files are used.
+If you unpacked a downloaded zip file, then the local files are used.
 
 4. Your device is examined for compatibility.
 In most cases, the result is accept or reject.
@@ -73,7 +73,7 @@ Battery optimization is restored when the script completes or fails.
 6. A large archive is downloaded from the Arch Linux ARM project.
 It is about 450MB. After download, its md5sum is checked.
 
-7. After successful download, the archive is unpacked into _proot_ susbsystem.
+7. After successful download, the archive is unpacked into **proot** susbsystem.
 This step takes time, but does not provide much feedback. Be patient.
 
 8. The script logs into the unpacked installation as root.
@@ -114,12 +114,12 @@ If you use a mouse, right-click is enabled for context menus.
 ### UPDATES TO ALATERM
 
 Once alaterm is installed and running, that is all you need to do.
-Programs such as _gimp_ and _libreoffice-still_ are installed via command line.
+Programs such as **gimp** and **libreoffice-still** are installed via command line.
+Caution: Installation of Java, or its runtime, may conflict with Android. 
 
 It is always possible that something needs to be corrected,
 without re-installation. Or, a new capability may appear in Termux,
 and that will enable a new capability in alaterm.
-
 You can check for possible new information in the NEWS.md file,
 at the alaterm project page on GitHub.
 
@@ -144,9 +144,9 @@ If necessary, you may copy the launch script to `$PREFIX/bin`.
 Please understand that alaterm does not provide software.
 All it does is install software provided by the Arch Linux ARM project.
 
-If you have a request, or found a software bug, _do not_ report it here.
+If you have a request, or found a software bug, **do not** report it here.
 
-If you found a bug in the installation script, then _do_ report it here.
+If you found a bug in the installation script, then **do** report it here.
 
 Alaterm is not configured for multimedia. Absence of audio is not a bug. 
 
