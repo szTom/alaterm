@@ -1,5 +1,7 @@
 ### NEWS for alaterm at GitHub.
 
+#### March 16, 2020:
+Minor enhancements and spelling fixes.
 
 #### March 4, 2020:
 Minor enhancement to detect Termux-alaterm coordination.
