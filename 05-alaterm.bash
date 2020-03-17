@@ -223,7 +223,7 @@ if [ "$gotSudo" != "yes" ] ; then
 	#
 	echo "alias pacman='sudo pacman'" >> /etc/bash.bashrc
 	echo "alias fc-cache='sudo fc-cache'" >> /etc/bash.bashrc
-	echo "alias vncviewer='echo -e \"\e[33mYou need to use the separate VNC Viewer app.\e[0m\" \#'" >> /etc/bash.bashrc
+	echo "alias vncviewer='echo -e \"\e[33mUse the separate VNC Viewer app.\e[0m\" \#'" >> /etc/bash.bashrc
 	echo "##" >> /etc/bash.bashrc
 fi
 sleep 1

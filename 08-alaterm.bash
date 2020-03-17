@@ -127,6 +127,46 @@ echo -e "\e[33mYou cannot launch alaterm from within alaterm.\e[0m"
 EOC
 }
 
+ensure_noTVNC() { # In Termux home. Ensures no leftovers, if user runs vncserver outside alaterm.
+	grep alaterm_installer .bash_logout >/dev/null 2>&1
+	if [ "$?" -ne 0 ] ; then
+		echo "vncserver -autokill >/dev/null 2>&1 || true # By_alaterm_installer." >> .bash_logout
+	fi
+}
+
+restore_launchCommand() { # In Termux home. Deals with situation where $PREFIX is deleted and renewed.
+	grep alaterm_installer .bashrc >/dev/null 2>&1
+	if [ "$?" -ne 0 ] ; then
+		echo "alatermTop=$alatermTop # By_alaterm_installer." >> .bashrc
+		echo "launchCommand=$launchCommand # By_alaterm_installer." >> .bashrc
+	fi
+	if [ ! -f "$PREFIX/bin/$launchCommand" ] ; then
+		grep alaterm_installer .bashrc >/dev/null 2>&1
+		if [ "$?" -ne 0 ] ; then
+			cp "$alatermTop/$launchCommand" "$PREFIX/bin" 2>/dev/null
+			if [ "$?" -ne 0 ] ; then
+				echo "WARNING. Did not find backup copy of alaterm launch command."
+				echo "To restore alaterm, re-run:  bash 00-alaterm.bash install"
+				echo "Whether that takes a minute, or much longer, is unclear."
+			else
+				echo -e "\e[1;92mRestoring alaterm to renewed Termux."
+				echo -e "Only takes a minute. May require Termux update...\e[0m"
+				sleep 3
+				needem=""
+				hash proot >/dev/null 2>&1
+				[ "$?" -ne 0 ] && needem=proot
+				hash wget >/dev/null 2>&1
+				[ "$?" -ne 0 ] && needem+=" wget"
+				if [ "$needem" != "" ] ; then
+					pkg update
+					pkg install $needem # No quotes.
+				fi
+			fi
+			echo -e "\e[1;92mDONE.\e[0m You may now launch alaterm. Command: $launchCommand"
+		fi
+	fi
+}
+
 
 if [ "$nextPart" -ge 8 ] ; then # This part repeats, if necessary.
 	cd "$hereiam"
@@ -152,15 +192,19 @@ if [ "$nextPart" -ge 8 ] ; then # This part repeats, if necessary.
 	cd "$alatermTop/usr/bin"
 	create_fakeLaunch
 	chmod 755 "$launchCommand" # Not the real one.
+	cd "$HOME" # Termux home
+	ensure_noTVNC
+	restore_launchCommand
 	cd "$hereiam"
-	for nn in 01 02 03 04 05 06 07 08
-	do
-		rm -f "$nn-alaterm.bash"
-	done
-	rm -f fixexst-scripts.bash
+	if [[ ! "$hereiam" =~ TAexp ]] ; then
+		for nn in 01 02 03 04 05 06 07 08
+		do
+			rm -f "$nn-alaterm.bash"
+		done
+	fi
 	echo -e "\n\e[1;92mDONE. To launch alaterm, command:  $launchCommand.\e[0m\n"
 	let nextPart=9
-	echo "let scriptRevision=4" >> "$alatermTop/status"
+	echo "let scriptRevision=5" >> "$alatermTop/status"
 	echo "let nextPart=9" >> "$alatermTop/status"
 fi
 
